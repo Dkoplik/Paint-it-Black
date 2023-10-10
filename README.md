@@ -1,4 +1,4 @@
-# Paint-it-Black (RU)
+# Paint-it-Black
 
 ## Описание идеи
 

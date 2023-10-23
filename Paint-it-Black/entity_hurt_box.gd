@@ -9,7 +9,8 @@ class_name EntityHurtBox
 signal damaged(damage: int)
 
 ## Приватное поле, хранящее ссылку на дочерний узел компоненты [HP]
-var _hp_component: HP: set = set_hp_component
+var _hp_component: HP:
+	set = set_hp_component
 
 
 func _ready():
@@ -19,15 +20,20 @@ func _ready():
 	pass
 
 
-func set_hp_component(value):
-	if (_hp_component != null):
-			push_warning("Попытка изменить приватное поле")
-	elif (value is HP):
-		_hp_component = value as HP
-
-
 ## Обрабатывает входящую атаку [param Attack].
 func _process_attack(attack: Attack) -> void:
 	# ToDo: сделать обработку урона. Урон получить из attack и применить к
 	# компоненте hp (стоит посмотреть документацию по HP через справка > HP).
 	pass
+
+
+## Setter для приватного поля [member _hp_component]. Позволяет только
+## инициализировать переменную. При попытке изменить существующее значение
+## или если [param value] не является [HP], то поднимает предупреждение.
+func set_hp_component(value):
+	if (_hp_component != null):
+		push_warning("Попытка изменить приватное поле")
+	elif (value is HP):
+		_hp_component = value as HP
+	else:
+		push_warning("Попытка присвоить узел, отличный от HP")

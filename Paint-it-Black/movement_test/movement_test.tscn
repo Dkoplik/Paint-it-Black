@@ -1,14 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3eovkvc0f3nl"]
+[gd_scene load_steps=5 format=3 uid="uid://b3eovkvc0f3nl"]
 
 [ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://sprite/icon.svg" id="1_74ju3"]
 [ext_resource type="Script" path="res://movement_test/CharacterBody2D.gd" id="1_ne436"]
-[ext_resource type="Texture2D" uid="uid://ny468qu8qi4" path="res://sprite/green-ground-texture.jpg" id="2_s3y7o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0f2xx"]
 size = Vector2(127, 127)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pt0lq"]
-size = Vector2(910, 107)
+size = Vector2(910, 109)
 
 [node name="MovementTest" type="Node2D"]
 
@@ -27,10 +26,10 @@ texture = ExtResource("1_74ju3")
 position = Vector2(470, 297)
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(1, 0)
-scale = Vector2(0.304, 0.06625)
-texture = ExtResource("2_s3y7o")
+position = Vector2(-5.50747e-05, 0.5)
+scale = Vector2(7.10937, 0.851562)
+texture = ExtResource("1_74ju3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1, 0.5)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_pt0lq")

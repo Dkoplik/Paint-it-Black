@@ -4,6 +4,10 @@
 
 # Источники
 
+- Все раскадровки с префиксом `storyboard_` в названии были созданы самостоятельно в [Blender 3.6.5](https://www.blender.org/), но с применением готовых моделей:
+  - [Basic Human Male](https://sketchfab.com/3d-models/basic-human-male-598d1d1866df48f999fabadb017429d1) by [DNC44](https://sketchfab.com/DNC44) is licensed under [Creative Commons Attribution](http://creativecommons.org/licenses/by/4.0/)
+  - [Demon Slayer](https://sketchfab.com/3d-models/demon-slayer-5a2c8adc941849578f6bf9930ec22068) by [diddlydohm](https://sketchfab.com/diddlydohm) is licensed under [Creative Commons Attribution](http://creativecommons.org/licenses/by/4.0/)
+
 - Картинки `black&white_style_example1.png` и `black&white_style_example2.png` это просто скриншоты из клипа [SIAMÉS "The Wolf" [Official Animated Music Video]](https://youtu.be/lX44CAz-JhU)
 
 - `reinhard_from_re_zero.png` – арт Рейнхарда из [Re:Zero](https://en.wikipedia.org/wiki/Re:Zero), сам арт взят [отсюда](https://versus-compendium.fandom.com/wiki/Reinhard_van_Astrea)

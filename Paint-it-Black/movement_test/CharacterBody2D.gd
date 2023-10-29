@@ -7,6 +7,8 @@ extends CharacterBody2D
 @export var max_movement_speed = 2000.0
 @export var max_fall_speed = 2000.0
 @export var gravity = 2000
+@export var sliding_acceleration = 1000
+@export var max_sliding_speed = 1000
 
 # Ограничивает максимальную скорость передвежения игрока
 func player_speed():
@@ -27,11 +29,19 @@ func fall_speed(speed):
 func _physics_process(delta):
 	# Добавляет гравитацию.
 	if not is_on_floor():
-		velocity.y += fall_speed(gravity * delta)
-		
+		if is_on_wall():  # скольжение по стене (падает медленее).
+			velocity.y += sliding_acceleration*delta
+		else:	# обычная гравитация
+			velocity.y += fall_speed(gravity * delta)
+
 	# Прыжок.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = jump_speed
+	if Input.is_action_just_pressed("ui_accept"): 
+		if is_on_floor():
+			velocity.y = jump_speed
+		if is_on_wall():
+			
+			velocity.y = jump_speed
+			velocity.x = jump_speed
 
 	# Получение направления ввода (с клавиатуры т.е. куда пользователь хочет пойти) и обработайтка движения/замедления.
 	var direction = Input.get_axis("left", "right")
@@ -41,6 +51,6 @@ func _physics_process(delta):
 		if is_on_floor(): 
 			velocity.x = lerp(velocity.x, 0.0, 0.15)
 		else: 
-			velocity.x = lerp(velocity.x, 0.0, 0.05) #более плавная остановка в прыжке
+			velocity.x = lerp(velocity.x, 0.0, 0.05) #более плавная остановка в прыжке	
 
 	move_and_slide()

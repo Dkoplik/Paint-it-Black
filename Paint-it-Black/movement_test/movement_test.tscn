@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3eovkvc0f3nl"]
+[gd_scene load_steps=7 format=3 uid="uid://b3eovkvc0f3nl"]
 
 [ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://sprite/icon.svg" id="1_74ju3"]
 [ext_resource type="Script" path="res://movement_test/CharacterBody2D.gd" id="1_ne436"]
+[ext_resource type="PackedScene" uid="uid://sda8cq4a3e4d" path="res://static body/static_body_2d.tscn" id="3_pajbj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0f2xx"]
 size = Vector2(127, 127)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pt0lq"]
 size = Vector2(910, 109)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3chba"]
+size = Vector2(128, 470)
 
 [node name="MovementTest" type="Node2D"]
 
@@ -22,14 +26,32 @@ shape = SubResource("RectangleShape2D_0f2xx")
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("1_74ju3")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="floor" type="StaticBody2D" parent="."]
 position = Vector2(470, 297)
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="floor"]
 position = Vector2(-5.50747e-05, 0.5)
 scale = Vector2(7.10937, 0.851562)
 texture = ExtResource("1_74ju3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_pt0lq")
+
+[node name="wall" type="StaticBody2D" parent="."]
+position = Vector2(688, 180)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall"]
+position = Vector2(0, -174)
+shape = SubResource("RectangleShape2D_3chba")
+
+[node name="Sprite2D" type="Sprite2D" parent="wall"]
+position = Vector2(0, -173)
+scale = Vector2(1, 3.70313)
+texture = ExtResource("1_74ju3")
+
+[node name="StaticBody2D" parent="." instance=ExtResource("3_pajbj")]
+position = Vector2(-12, 51)
+
+[node name="StaticBody2D2" parent="." instance=ExtResource("3_pajbj")]
+position = Vector2(91, 179)

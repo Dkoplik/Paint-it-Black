@@ -19,4 +19,4 @@
 - `style_example_1.png` и `style_example_2.png` – скриншоты из клипа [永遠甚だしい / Self Cover  MV](https://youtu.be/oykg2y1KHGg?list=LL)
 - `style_example_3.png` – скриншот из видео [Memories (1995) || Cannon Fodder - Blasting The Cannon Scene](https://youtu.be/V-OQFslDKiI)
 - `styl_example_4.png` – скришнот из видео [Arcane | Vi and Jayce Fight Scene](https://youtu.be/3JUO-idpH3s)
-
+- `katana_zero_run_1.png`, `katana_zero_run_2.png` и `katana_zero_run_3.png` – скрины из игры [Katana ZERO](https://store.steampowered.com/app/460950/Katana_ZERO/)

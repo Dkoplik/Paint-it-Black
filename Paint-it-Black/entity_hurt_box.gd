@@ -9,22 +9,21 @@ class_name EntityHurtBox
 signal damaged(damage: int)
 
 ## Приватное поле, хранящее ссылку на дочерний узел компоненты [HP]
-var _hp_component: HP:
+var _hp_component: HP = null:
 	set = set_hp_component
 
 
 func _ready():
-	# ToDo: найти дочерний узел HP. Если их несколько, то бросить ошибку через
-	# push_error(). Если нет ни одного, то тоже бросить ошибку через
-	# push_error()
-	pass
+	for node in get_children():
+		if node is HP:
+			assert(_hp_component == null, "Найдено несколько компонентов HP")
+			_hp_component = node
+	assert(_hp_component != null, "Не найден компонент HP")
 
 
 ## Обрабатывает входящую атаку [param Attack].
 func _process_attack(attack: Attack) -> void:
-	# ToDo: сделать обработку урона. Урон получить из attack и применить к
-	# компоненте hp (стоит посмотреть документацию по HP через справка > HP).
-	pass
+	_hp_component.deal_damage(attack.damage)
 
 
 ## Setter для приватного поля [member _hp_component]. Позволяет только

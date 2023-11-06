@@ -1,6 +1,6 @@
 extends Resource
 class_name BasicMovementData
-## Набор параметров для класса [BasicCharacterMovement]
+## Набор параметров для класса [BasicCharacterMovement].
 ##
 ## Этот ресурс содержит основные параметры для движения и падения, которые
 ## нужны для работы компоненты [BasicCharacterMovement].

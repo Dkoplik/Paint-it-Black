@@ -11,11 +11,9 @@ signal started_sliding
 # узел, который двигаем
 @export var character_body: CharacterBody2D
 
-
 func _physics_process(delta):
 	_gravity_and_slide(delta)
 	character_body.move_and_slide()
-
 
 func move(direction:float, delta):
 	var speed = _speed(delta)
@@ -31,15 +29,15 @@ func move(direction:float, delta):
 
 func jump():
 	if character_body.is_on_floor(): # простой прыжок
-		character_body.position.y = movement_resource.jump_speed
+		character_body.velocity.y -= movement_resource.jump_speed
 	if character_body.is_on_wall(): # прыжок от стены
 		var wall_position = character_body.get_wall_normal()
 		if wall_position.x>0: # стена слева
-			character_body.position.y = movement_resource.jump_speed
-			character_body.position.x -= movement_resource.jump_speed
+			character_body.velocity.y = movement_resource.jump_speed
+			character_body.velocity.x += movement_resource.jump_speed
 		else: # стена справа
-			character_body.position.y = movement_resource.jump_speed
-			character_body.position.x = movement_resource.jump_speed
+			character_body.velocity.y = movement_resource.jump_speed
+			character_body.velocity.x -= movement_resource.jump_speed
 
 # вычисление скорости
 func _speed(delta):

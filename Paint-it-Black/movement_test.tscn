@@ -10,12 +10,12 @@
 script = ExtResource("3_jiq6o")
 movement_acceleration = 49.5
 max_movement_speed = 61.2
-gravity = 100.0
-jump_speed = 5.6
-max_fall_speed = 100.0
-sliding_acceleration = 5.5
-max_sliding_speed = 18.9
-jump_angle = 6.0
+gravity = 500.0
+jump_speed = 300.0
+max_fall_speed = 5000.0
+sliding_acceleration = 10.8
+max_sliding_speed = 25.0
+jump_angle = 19.1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kqd5g"]
 size = Vector2(26, 64)

@@ -33,10 +33,10 @@ func jump():
 	if character_body.is_on_wall(): # прыжок от стены
 		var wall_position = character_body.get_wall_normal()
 		if wall_position.x>0: # стена слева
-			character_body.velocity.y = movement_resource.jump_speed
+			character_body.velocity.y -= movement_resource.jump_speed
 			character_body.velocity.x += movement_resource.jump_speed
 		else: # стена справа
-			character_body.velocity.y = movement_resource.jump_speed
+			character_body.velocity.y -= movement_resource.jump_speed
 			character_body.velocity.x -= movement_resource.jump_speed
 
 # вычисление скорости

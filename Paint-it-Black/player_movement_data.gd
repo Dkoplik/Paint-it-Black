@@ -1,5 +1,9 @@
 extends BasicMovementData
 class_name PlayerMovementData
+## Набор параметров для класса [PlayerMovement].
+##
+## Этот ресурс содержит параметры для прыжка и скольжения, которые нужны для
+## работы компоненты [PlayerMovement].
 
 ## Параметры прыжка
 @export_group("Jumping")

@@ -10,6 +10,5 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump"):
 		_movement_component.jump()	
 	
-	var direction = Input.get_axis("left", "right")
-	
-	_movement_component.move(direction, delta)	
+	var direction = Vector2(Input.get_axis("left", "right"), 0)
+	_movement_component.move(direction)	

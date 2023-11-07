@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhftrqet4eo4p"]
+
+[ext_resource type="Script" path="res://basic_hit_box_test/test.gd" id="1_kwaxs"]
+[ext_resource type="Script" path="res://player_hurt_box.gd" id="1_o53xt"]
+[ext_resource type="Script" path="res://basic_hit_box_test/MouseFollow.gd" id="2_mqc0y"]
+[ext_resource type="Script" path="res://basic_hit_box.gd" id="3_du6py"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mpfst"]
+size = Vector2(258, 245)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fsds4"]
+
+[node name="test" type="Node2D"]
+script = ExtResource("1_kwaxs")
+
+[node name="PlayerHurtBox" type="Area2D" parent="."]
+position = Vector2(874, 292)
+script = ExtResource("1_o53xt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox"]
+shape = SubResource("RectangleShape2D_mpfst")
+
+[node name="MouseFollow" type="Node2D" parent="."]
+script = ExtResource("2_mqc0y")
+
+[node name="BasicHitBox" type="Area2D" parent="MouseFollow"]
+script = ExtResource("3_du6py")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseFollow/BasicHitBox"]
+shape = SubResource("CircleShape2D_fsds4")
+debug_color = Color(0.980392, 0, 0.364706, 0.419608)
+
+[connection signal="hurt" from="PlayerHurtBox" to="." method="_on_player_hurt_box_hurt"]

@@ -55,7 +55,9 @@ func jump():
 		character_body.velocity.y -= movement_resource.jump_speed
 	if character_body.is_on_wall(): # прыжок от стены
 		var wall_position = character_body.get_wall_normal()
-		var jump_direction = Vector2(sin(movement_resource.jump_angle) * movement_resource.jump_speed, cos(movement_resource.jump_angle) * movement_resource.jump_speed) #направление прыжка
+		var jump_direction =\
+		Vector2(cos(deg_to_rad(90 - movement_resource.jump_angle)) * movement_resource.jump_speed,
+		sin(deg_to_rad(-90 + movement_resource.jump_angle)) * movement_resource.jump_speed) #направление прыжка
 		if wall_position.x>0: # стена слева
 			character_body.velocity += jump_direction
 		else:

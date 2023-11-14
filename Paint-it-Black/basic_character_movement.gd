@@ -23,7 +23,8 @@ func _ready() -> void:
 	# ToDo: проверка наличия movement_data и chracter_body. То есть, они должны
 	# быть не null, иначе компонент не будет работать. По этому проверку
 	# выполнять в assert, чтобы программа прерывалась.
-	pass
+	assert(movement_data != null)
+	assert(character_body != null)
 
 
 func _physics_process(delta) -> void:
@@ -45,8 +46,37 @@ func move(direction: Vector2) -> void:
 	# скорости по горизонтали. А ещё, соответсвенно, обработка горизонтальной
 	# скорости с использование ускорения как в обычной физике. Никакие сигналы
 	# тут испускать не стоит, эта функция отвечает чисто за движение по запросу.
-	pass
+	if direction.x:
+		character_body.velocity.x = _speed(direction.x)
+	else: 
+		character_body.velocity.x = _stop()
 
+
+## вычисляет, и ограничивает скорость
+## direction - направление движения по x (1/-1)
+func _speed(direction):
+	var velocity = character_body.velocity.x # текущая скорость персонажа по х
+	velocity += movement_data.movement_acceleration*direction
+	if(abs(velocity) > movement_data.max_movement_speed):
+		return movement_data.max_movement_speed * direction
+	else: 
+		return velocity
+
+## отвечает за плавную остановку
+func _stop():
+	var velocity = character_body.velocity.x
+	if(velocity < 0):
+		if(velocity + movement_data.movement_acceleration >=0):
+			return 0
+		else: 
+			return velocity + movement_data.movement_acceleration
+	if(velocity > 0):
+		if(velocity - movement_data.movement_acceleration <=0):	
+			return 0
+		else:
+			return velocity - movement_data.movement_acceleration
+	if(velocity == 0):
+		return 0
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
 ## вектор скорости [param velocity]. Эта функция нужна для тех случаев, когда на
@@ -54,25 +84,23 @@ func move(direction: Vector2) -> void:
 ## откидывание при получении урона.
 func add_velocity(velocity: Vector2) -> void:
 	# ToDo. Просто к текущей скорости добавляет указанную в функции.
-	pass
+	character_body.velocity.x += velocity.x
 
 
 ## Приватный метод. Проверяет персонажа на отсутствие движения и испускает
 ## сигнал [signal started_idle].
 func _check_idle() -> void:
-	# ToDo.
-	pass
-
+	if character_body.velocity:
+		started_idle.emit()
 
 ## Приватный метод. Проверяет персонажа на наличие движения по оси x и испускает
 ## при сигнал [signal started_walking].
 func _check_walking() -> void:
-	# ToDo.
-	pass
-
+	if character_body.velocity.x:
+		started_walking.emit()
 
 ## Приватный метод. Проверяет персонажа на падениe и испускает сигнал
 ## [signal started_falling].
 func _check_falling() -> void:
-	# ToDo.
-	pass
+	if character_body.velocity.y:
+		started_falling.emit()

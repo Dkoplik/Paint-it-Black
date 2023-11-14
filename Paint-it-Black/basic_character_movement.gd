@@ -28,6 +28,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
+	character_body.move_and_slide()
 	# ToDo: Тут тупо разместить приватные функции с нужными проверками и
 	# изменениями. Проблема в том, что эта виртуальная функция будет
 	# перезаписана при наследовании, из-за чего весь нужный функционал должен
@@ -77,6 +78,7 @@ func _stop():
 			return velocity - movement_data.movement_acceleration
 	if(velocity == 0):
 		return 0
+
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
 ## вектор скорости [param velocity]. Эта функция нужна для тех случаев, когда на

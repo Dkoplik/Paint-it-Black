@@ -29,6 +29,7 @@ func _ready() -> void:
 
 func _physics_process(delta) -> void:
 	character_body.move_and_slide()
+	_gravity_and_slide(delta)
 	# ToDo: Тут тупо разместить приватные функции с нужными проверками и
 	# изменениями. Проблема в том, что эта виртуальная функция будет
 	# перезаписана при наследовании, из-за чего весь нужный функционал должен
@@ -79,6 +80,18 @@ func _stop():
 	if(velocity == 0):
 		return 0
 
+## Создаёт гравитацию
+func _gravity_and_slide(delta):
+	if not character_body.is_on_floor():
+		if character_body.is_on_wall():  # скольжение по стене (падает медленее).
+			character_body.velocity.y += movement_data.sliding_acceleration * delta
+		else:	# обычная гравитация
+			character_body.velocity.y += _fall_speed(movement_data.gravity * delta)
+
+## Вычисляет скорость падения
+func _fall_speed(speed):
+	if speed<movement_data.max_fall_speed:
+		return speed
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
 ## вектор скорости [param velocity]. Эта функция нужна для тех случаев, когда на

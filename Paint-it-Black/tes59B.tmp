@@ -11,9 +11,9 @@ size = Vector2(31.9563, 63.6139)
 
 [sub_resource type="Resource" id="Resource_irq5k"]
 script = ExtResource("2_g878e")
-movement_acceleration = 400.0
-max_movement_speed = 200.0
-gravity = 300.0
+movement_acceleration = 20.0
+max_movement_speed = 100.0
+gravity = 7.0
 max_fall_speed = 1000.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oxs18"]

@@ -17,7 +17,7 @@ signal started_falling
 @export var movement_data: BasicMovementData
 ## Ссылка на [CharacterBody2D], который данная компонента будет двигать.
 @export var character_body: CharacterBody2D
-
+var current_delta
 
 func _ready() -> void:
 	# ToDo: проверка наличия movement_data и chracter_body. То есть, они должны
@@ -28,6 +28,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
+	current_delta = delta
 	_gravity_and_slide(delta)
 	character_body.move_and_slide()
 	# ToDo: Тут тупо разместить приватные функции с нужными проверками и
@@ -58,7 +59,7 @@ func move(direction: Vector2) -> void:
 ## direction - направление движения по x (1/-1)
 func _speed(direction):
 	var velocity = character_body.velocity.x # текущая скорость персонажа по х
-	velocity += movement_data.movement_acceleration*direction
+	velocity += movement_data.movement_acceleration * direction # * current_delta
 	if(abs(velocity) > movement_data.max_movement_speed):
 		return movement_data.max_movement_speed * direction
 	else: 
@@ -71,24 +72,28 @@ func _stop():
 		if(velocity + movement_data.movement_acceleration >=0):
 			return 0
 		else: 
-			return velocity + movement_data.movement_acceleration
+			return velocity + movement_data.movement_acceleration * current_delta
 	if(velocity > 0):
 		if(velocity - movement_data.movement_acceleration <=0):	
 			return 0
 		else:
-			return velocity - movement_data.movement_acceleration
+			return velocity - movement_data.movement_acceleration * current_delta
 	if(velocity == 0):
 		return 0
 
 ## Создаёт гравитацию
 func _gravity_and_slide(delta):
 	if not character_body.is_on_floor():
-		character_body.velocity.y += _fall_speed(movement_data.gravity * delta)
+		character_body.velocity.y = _fall_speed(delta)
 
 ## Вычисляет скорость падения
-func _fall_speed(speed):
+func _fall_speed(delta):
+	var speed = character_body.velocity.y
+	speed += (movement_data.gravity * delta)
 	if speed<movement_data.max_fall_speed:
 		return speed
+	else: 
+		return movement_data.max_fall_speed
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
 ## вектор скорости [param velocity]. Эта функция нужна для тех случаев, когда на

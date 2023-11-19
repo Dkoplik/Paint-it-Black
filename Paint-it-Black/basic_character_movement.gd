@@ -28,6 +28,9 @@ func _physics_process(delta) -> void:
 	current_delta = delta
 	_gravity_and_slide(delta)
 	character_body.move_and_slide()
+	_check_idle()
+	_check_falling()
+	_check_walking()
 
 
 ## Задаёт ходьбу или бег (зависит от скорости в [BasicMovementData]) в заданном
@@ -45,7 +48,7 @@ func move(direction: Vector2) -> void:
 
 ## вычисляет, и ограничивает скорость
 ## direction - вектор движения персонажа
-func _speed(direction: Vector2):
+func _speed(direction: Vector2) -> float:
 	var velocity = character_body.velocity.x # текущая скорость персонажа по х
 	velocity += movement_data.movement_acceleration * direction.x * current_delta
 	if(abs(velocity) > movement_data.max_movement_speed):
@@ -54,7 +57,7 @@ func _speed(direction: Vector2):
 		return velocity
 
 ## отвечает за плавную остановку
-func _stop():
+func _stop() -> float:
 	var velocity:float = character_body.velocity.x
 	if(velocity < 0):
 		if(velocity + movement_data.movement_acceleration >=0):
@@ -71,12 +74,12 @@ func _stop():
 ## Создаёт гравитацию
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
 ## вычисленный параметр из функции _fall_speed()
-func _gravity_and_slide(delta):
+func _gravity_and_slide(delta) -> void:
 	if not character_body.is_on_floor():
 		character_body.velocity.y = _fall_speed(delta)
 
 ## Вычисляет скорость падения
-func _fall_speed(delta):
+func _fall_speed(delta) -> float:
 	var speed = character_body.velocity.y
 	speed += (movement_data.gravity * delta)
 	if speed<movement_data.max_fall_speed:
@@ -95,7 +98,7 @@ func add_velocity(velocity: Vector2) -> void:
 ## Приватный метод. Проверяет персонажа на отсутствие движения и испускает
 ## сигнал [signal started_idle].
 func _check_idle() -> void:
-	if character_body.velocity:
+	if (character_body.velocity.x == 0) and (character_body.velocity.y == 0):
 		started_idle.emit()
 
 ## Приватный метод. Проверяет персонажа на наличие движения по оси x и испускает
@@ -107,5 +110,5 @@ func _check_walking() -> void:
 ## Приватный метод. Проверяет персонажа на падениe и испускает сигнал
 ## [signal started_falling].
 func _check_falling() -> void:
-	if character_body.velocity.y:
+	if character_body.velocity.y !=0:
 		started_falling.emit()

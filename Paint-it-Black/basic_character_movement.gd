@@ -13,6 +13,10 @@ signal started_walking
 ## Испускается, когда персонаж начал падать
 signal started_falling
 
+var is_idle: bool
+var is_walking: bool
+var is_falling: bool
+
 ## Ресурс [BasicMovementData], необходимый для работы данной компоненты.
 @export var movement_data: BasicMovementData
 ## Ссылка на [CharacterBody2D], который данная компонента будет двигать.
@@ -28,9 +32,9 @@ func _physics_process(delta) -> void:
 	current_delta = delta
 	_gravity_and_slide(delta)
 	character_body.move_and_slide()
-	_check_idle()
 	_check_falling()
 	_check_walking()
+	_check_idle()
 
 
 ## Задаёт ходьбу или бег (зависит от скорости в [BasicMovementData]) в заданном
@@ -60,12 +64,12 @@ func _speed(direction: Vector2) -> float:
 func _stop() -> float:
 	var velocity:float = character_body.velocity.x
 	if(velocity < 0):
-		if(velocity + movement_data.movement_acceleration >=0):
+		if(velocity + movement_data.movement_acceleration >= 0):
 			return 0
 		else: 
 			return velocity + movement_data.movement_acceleration * current_delta
 	if(velocity > 0):
-		if(velocity - movement_data.movement_acceleration <=0):	
+		if(velocity - movement_data.movement_acceleration <= 0):	
 			return 0
 		else:
 			return velocity - movement_data.movement_acceleration * current_delta
@@ -97,18 +101,29 @@ func add_velocity(velocity: Vector2) -> void:
 
 ## Приватный метод. Проверяет персонажа на отсутствие движения и испускает
 ## сигнал [signal started_idle].
-func _check_idle() -> void:
-	if (character_body.velocity.x == 0) and (character_body.velocity.y == 0):
+func _check_idle():
+	if (character_body.velocity.x == 0) and (character_body.velocity.y == 0) and not is_idle and not is_walking:
 		started_idle.emit()
+		is_idle = true
+		print("is idle")
+	if !((character_body.velocity.x == 0) and (character_body.velocity.y == 0)) and is_idle:
+		is_idle = false
 
 ## Приватный метод. Проверяет персонажа на наличие движения по оси x и испускает
 ## при сигнал [signal started_walking].
-func _check_walking() -> void:
-	if character_body.velocity.x:
-		started_walking.emit()
+func _check_walking():
+	if character_body.velocity.x and not is_walking and not is_falling:
+		is_walking = true
+		print("is walking")
+	if !character_body.velocity.x and is_walking:
+		is_walking = false
 
 ## Приватный метод. Проверяет персонажа на падениe и испускает сигнал
 ## [signal started_falling].
-func _check_falling() -> void:
-	if character_body.velocity.y !=0:
+func _check_falling():
+	if character_body.velocity.y and not is_falling:
 		started_falling.emit()
+		is_falling = true
+		print("is falling")
+	if !character_body.velocity.y and is_falling:
+		is_falling = false

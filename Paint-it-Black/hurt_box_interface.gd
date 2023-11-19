@@ -11,12 +11,17 @@ signal hurt(attack: AttackData)
 
 ## Приватное поле. Содержит ссылку на компоненту [HP], необходимую для работы
 ## [HurtBoxInterface]. При отсутсвии [HP] выполнение скрипта прерывается.
-var _hp: HP
+var _hp: HP = null
 
 
 func _ready() -> void:
 	# ToDo. Сделать поиск дочернего узла-компоненты HP. Если их количество
 	# отлично от 1, то бросить ошибку через assert().
+	for node in get_children():
+		if node is HP:
+			assert(_hp == null, "Найдено несколько компонентов HP")
+			_hp = node
+	assert(_hp != null, "Не найден компонент HP")
 	pass
 
 

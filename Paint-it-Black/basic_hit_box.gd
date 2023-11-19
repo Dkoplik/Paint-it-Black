@@ -20,14 +20,14 @@ signal hit(hurt_box: HurtBoxInterface)
 ## Связывает сигнал [signal area_entered] из родительского класса [Area2D] с
 ## приватным методом [method _on_area_entered].
 func _init() -> void:
-	# ToDo: реализуется через функцию connect()
-	pass
+	connect("area_entered", _on_area_entered)
 
 
 ## Обрабатывает пересечение с [Area2D]: если [Area2D] является
 ## [HurtBoxInterface], то передаёт ему данные об атаке [member attack_data].
 func _on_area_entered(area: Area2D) -> void:
-	# ToDo: проверить, является ли area классом HurtBoxInterface (через is)
-	# и воспроизвести на нём атаку (см документацию по HurtBoxInterface через
-	# справку справа сверху).
-	pass
+	if area is HurtBoxInterface:
+		hit.emit(area)
+		area._hurt(attack_data)
+		
+		

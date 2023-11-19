@@ -20,9 +20,6 @@ signal started_falling
 var current_delta
 
 func _ready() -> void:
-	# ToDo: проверка наличия movement_data и chracter_body. То есть, они должны
-	# быть не null, иначе компонент не будет работать. По этому проверку
-	# выполнять в assert, чтобы программа прерывалась.
 	assert(movement_data != null)
 	assert(character_body != null)
 
@@ -31,11 +28,6 @@ func _physics_process(delta) -> void:
 	current_delta = delta
 	_gravity_and_slide(delta)
 	character_body.move_and_slide()
-	# ToDo: Тут тупо разместить приватные функции с нужными проверками и
-	# изменениями. Проблема в том, что эта виртуальная функция будет
-	# перезаписана при наследовании, из-за чего весь нужный функционал должен
-	# быть в отдельных приватных функциях.
-	pass
 
 
 ## Задаёт ходьбу или бег (зависит от скорости в [BasicMovementData]) в заданном
@@ -45,29 +37,25 @@ func _physics_process(delta) -> void:
 ## увеличение или уменьшение текущей скорости персонажа происходит с ускорением
 ## [member BasicMovementData.movement_acceleration].
 func move(direction: Vector2) -> void:
-	# ToDo. Здесь просиходит только прибавление к character_body.velocity
-	# скорости по горизонтали. А ещё, соответсвенно, обработка горизонтальной
-	# скорости с использование ускорения как в обычной физике. Никакие сигналы
-	# тут испускать не стоит, эта функция отвечает чисто за движение по запросу.
 	if direction.x:
-		character_body.velocity.x = _speed(direction.x)
+		character_body.velocity.x = _speed(direction)
 	else: 
 		character_body.velocity.x = _stop()
 
 
 ## вычисляет, и ограничивает скорость
-## direction - направление движения по x (1/-1)
-func _speed(direction):
+## direction - вектор движения персонажа
+func _speed(direction: Vector2):
 	var velocity = character_body.velocity.x # текущая скорость персонажа по х
-	velocity += movement_data.movement_acceleration * direction # * current_delta
+	velocity += movement_data.movement_acceleration * direction.x * current_delta
 	if(abs(velocity) > movement_data.max_movement_speed):
-		return movement_data.max_movement_speed * direction
+		return movement_data.max_movement_speed * direction.x
 	else: 
 		return velocity
 
 ## отвечает за плавную остановку
 func _stop():
-	var velocity = character_body.velocity.x
+	var velocity:float = character_body.velocity.x
 	if(velocity < 0):
 		if(velocity + movement_data.movement_acceleration >=0):
 			return 0
@@ -78,10 +66,11 @@ func _stop():
 			return 0
 		else:
 			return velocity - movement_data.movement_acceleration * current_delta
-	if(velocity == 0):
-		return 0
+	return 0
 
 ## Создаёт гравитацию
+## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
+## вычисленный параметр из функции _fall_speed()
 func _gravity_and_slide(delta):
 	if not character_body.is_on_floor():
 		character_body.velocity.y = _fall_speed(delta)
@@ -100,7 +89,6 @@ func _fall_speed(delta):
 ## движение персонажа влияют какие-то внешние явления, по типу атаки игрока или
 ## откидывание при получении урона.
 func add_velocity(velocity: Vector2) -> void:
-	# ToDo. Просто к текущей скорости добавляет указанную в функции.
 	character_body.velocity.x += velocity.x
 
 

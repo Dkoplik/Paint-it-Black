@@ -83,15 +83,15 @@ func _stop() -> float:
 ## Создаёт гравитацию
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
 ## вычисленный параметр из функции _fall_speed()
-func _gravity_and_slide(delta) -> void:
+func _gravity_and_slide(delta:float) -> void:
 	if not character_body.is_on_floor():
 		character_body.velocity.y = _fall_speed(delta)
 
 ## Вычисляет скорость падения
-func _fall_speed(delta) -> float:
+func _fall_speed(delta:float) -> float:
 	var speed = character_body.velocity.y
 	speed += (movement_data.gravity * delta)
-	if speed<movement_data.max_fall_speed:
+	if speed < movement_data.max_fall_speed:
 		return speed
 	else: 
 		return movement_data.max_fall_speed
@@ -110,7 +110,6 @@ func _check_idle():
 	if (character_body.velocity.x == 0) and (character_body.velocity.y == 0) and not _is_idle and not _is_walking:
 		started_idle.emit()
 		_is_idle = true
-		print("is idle")
 	if !((character_body.velocity.x == 0) and (character_body.velocity.y == 0)) and _is_idle:
 		_is_idle = false
 

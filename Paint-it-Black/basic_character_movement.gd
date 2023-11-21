@@ -101,7 +101,7 @@ func _fall_speed(delta:float) -> float:
 ## движение персонажа влияют какие-то внешние явления, по типу атаки игрока или
 ## откидывание при получении урона.
 func add_velocity(velocity: Vector2) -> void:
-	character_body.velocity.x += velocity.x
+	character_body.velocity += velocity
 
 
 ## Приватный метод. Проверяет персонажа на отсутствие движения и испускает

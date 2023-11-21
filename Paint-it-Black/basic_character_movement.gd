@@ -24,7 +24,9 @@ var _is_falling: bool
 @export var movement_data: BasicMovementData
 ## Ссылка на [CharacterBody2D], который данная компонента будет двигать.
 @export var character_body: CharacterBody2D
-var current_delta
+## Переменная, которую будем использовать вместо дельты, за пределами
+## функции _physics_process
+var _current_delta:float
 
 func _ready() -> void:
 	assert(movement_data != null)
@@ -32,7 +34,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
-	current_delta = delta
+	_current_delta = delta
 	_gravity_and_slide(delta)
 	character_body.move_and_slide()
 	_check_falling()
@@ -57,7 +59,7 @@ func move(direction: Vector2) -> void:
 ## direction - вектор движения персонажа
 func _speed(direction: Vector2) -> float:
 	var velocity = character_body.velocity.x # текущая скорость персонажа по х
-	velocity += movement_data.movement_acceleration * direction.x * current_delta
+	velocity += movement_data.movement_acceleration * direction.x * _current_delta
 	if(abs(velocity) > movement_data.max_movement_speed):
 		return movement_data.max_movement_speed * direction.x
 	else: 
@@ -70,12 +72,12 @@ func _stop() -> float:
 		if(velocity + movement_data.movement_acceleration >= 0):
 			return 0
 		else: 
-			return velocity + movement_data.movement_acceleration * current_delta
+			return velocity + movement_data.movement_acceleration * _current_delta
 	if(velocity > 0):
 		if(velocity - movement_data.movement_acceleration <= 0):	
 			return 0
 		else:
-			return velocity - movement_data.movement_acceleration * current_delta
+			return velocity - movement_data.movement_acceleration * _current_delta
 	return 0
 
 ## Создаёт гравитацию

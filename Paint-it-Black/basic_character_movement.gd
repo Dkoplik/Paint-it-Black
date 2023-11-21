@@ -13,9 +13,12 @@ signal started_walking
 ## Испускается, когда персонаж начал падать.
 signal started_falling
 
-var is_idle: bool
-var is_walking: bool
-var is_falling: bool
+## флаг персонажа стоящего на месте
+var _is_idle: bool
+## флаг идущего персонажа
+var _is_walking: bool
+## флаг падающего персонажа
+var _is_falling: bool
 
 ## Ресурс [BasicMovementData], необходимый для работы данной компоненты.
 @export var movement_data: BasicMovementData
@@ -102,28 +105,28 @@ func add_velocity(velocity: Vector2) -> void:
 ## Приватный метод. Проверяет персонажа на отсутствие движения и испускает
 ## сигнал [signal started_idle].
 func _check_idle():
-	if (character_body.velocity.x == 0) and (character_body.velocity.y == 0) and not is_idle and not is_walking:
+	if (character_body.velocity.x == 0) and (character_body.velocity.y == 0) and not _is_idle and not _is_walking:
 		started_idle.emit()
-		is_idle = true
+		_is_idle = true
 		print("is idle")
-	if !((character_body.velocity.x == 0) and (character_body.velocity.y == 0)) and is_idle:
-		is_idle = false
+	if !((character_body.velocity.x == 0) and (character_body.velocity.y == 0)) and _is_idle:
+		_is_idle = false
 
 ## Приватный метод. Проверяет персонажа на наличие движения по оси x и испускает
 ## при сигнал [signal started_walking].
 func _check_walking():
-	if character_body.velocity.x and not is_walking and not is_falling:
-		is_walking = true
+	if character_body.velocity.x and not _is_walking and not _is_falling:
+		_is_walking = true
 		print("is walking")
-	if !character_body.velocity.x and is_walking:
-		is_walking = false
+	if !character_body.velocity.x and _is_walking:
+		_is_walking = false
 
 ## Приватный метод. Проверяет персонажа на падениe и испускает сигнал
 ## [signal started_falling].
 func _check_falling():
-	if character_body.velocity.y and not is_falling:
+	if character_body.velocity.y and not _is_falling:
 		started_falling.emit()
-		is_falling = true
+		_is_falling = true
 		print("is falling")
-	if !character_body.velocity.y and is_falling:
-		is_falling = false
+	if !character_body.velocity.y and _is_falling:
+		_is_falling = false

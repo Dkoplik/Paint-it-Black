@@ -107,7 +107,7 @@ func add_velocity(velocity: Vector2) -> void:
 ## Приватный метод. Проверяет персонажа на отсутствие движения и испускает
 ## сигнал [signal started_idle].
 func _check_idle():
-	if (character_body.velocity.x == 0) and (character_body.velocity.y == 0) and not _is_idle and not _is_walking:
+	if (character_body.velocity == Vector2.ZERO) and not _is_idle and not _is_walking:
 		started_idle.emit()
 		_is_idle = true
 	if !((character_body.velocity.x == 0) and (character_body.velocity.y == 0)) and _is_idle:
@@ -117,8 +117,8 @@ func _check_idle():
 ## при сигнал [signal started_walking].
 func _check_walking():
 	if character_body.velocity.x and not _is_walking and not _is_falling:
+		started_walking.emit()
 		_is_walking = true
-		print("is walking")
 	if !character_body.velocity.x and _is_walking:
 		_is_walking = false
 
@@ -128,6 +128,5 @@ func _check_falling():
 	if character_body.velocity.y and not _is_falling:
 		started_falling.emit()
 		_is_falling = true
-		print("is falling")
 	if !character_body.velocity.y and _is_falling:
 		_is_falling = false

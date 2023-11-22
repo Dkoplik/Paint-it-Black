@@ -26,10 +26,8 @@ var current_hp: int:
 
 func _ready():
 	current_hp = initial_hp
-	if current_hp == 0:
-		emit_signal("killed")
-	if current_hp > max_hp:
-		push_warning()
+	if initial_hp > max_hp:
+		push_warning("initial_hp превосходит max_hp")
 
 ## Setter для приватного поля [member current_hp], устанавливает его
 ## значение равное значению [param value], не допуская выход за границы
@@ -42,8 +40,8 @@ func set_current_hp(value: int) -> void:
 
 	current_hp = value
 	if current_hp == 0:
-		emit_signal("killed")
-		emit_signal("hp_changed")
+		killed.emit()
+		hp_changed.emit(current_hp, value)
 
 ## Getter для приватного поля [member current_hp], возвращает его значение.
 func get_current_hp() -> int:
@@ -75,7 +73,6 @@ func deal_damage(value: int) -> int:
 	current_hp -= value
 	if current_hp < 0:
 		current_hp = 0
-		emit_signal("killed")
 	return current_hp
 
 
@@ -83,4 +80,3 @@ func deal_damage(value: int) -> int:
 ## есть приравнивает их к значению 0.
 func kill() ->  void:
 	current_hp = 0
-	emit_signal("killed")

@@ -28,9 +28,12 @@ var _is_falling: bool
 ## функции _physics_process
 var _current_delta:float
 
+
 func _ready() -> void:
-	assert(movement_data != null)
-	assert(character_body != null)
+	# ToDo: проверка наличия movement_data и chracter_body. То есть, они должны
+	# быть не null, иначе компонент не будет работать. По этому проверку
+	# выполнять в assert, чтобы программа прерывалась.
+	pass
 
 
 func _physics_process(delta) -> void:
@@ -65,6 +68,7 @@ func _speed(direction: Vector2) -> float:
 	else: 
 		return velocity
 
+
 ## отвечает за плавную остановку
 func _stop() -> float:
 	var velocity:float = character_body.velocity.x
@@ -80,12 +84,14 @@ func _stop() -> float:
 			return velocity - movement_data.movement_acceleration * _current_delta
 	return 0
 
+
 ## Создаёт гравитацию
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
 ## вычисленный параметр из функции _fall_speed()
 func _gravity_and_slide(delta:float) -> void:
 	if not character_body.is_on_floor():
 		character_body.velocity.y = _fall_speed(delta)
+
 
 ## Вычисляет скорость падения
 func _fall_speed(delta:float) -> float:
@@ -95,6 +101,7 @@ func _fall_speed(delta:float) -> float:
 		return speed
 	else: 
 		return movement_data.max_fall_speed
+
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
 ## вектор скорости [param velocity]. Эта функция нужна для тех случаев, когда на
@@ -113,6 +120,7 @@ func _check_idle():
 	if !((character_body.velocity.x == 0) and (character_body.velocity.y == 0)) and _is_idle:
 		_is_idle = false
 
+
 ## Приватный метод. Проверяет персонажа на наличие движения по оси x и испускает
 ## при сигнал [signal started_walking].
 func _check_walking():
@@ -121,6 +129,7 @@ func _check_walking():
 		_is_walking = true
 	if !character_body.velocity.x and _is_walking:
 		_is_walking = false
+
 
 ## Приватный метод. Проверяет персонажа на падениe и испускает сигнал
 ## [signal started_falling].

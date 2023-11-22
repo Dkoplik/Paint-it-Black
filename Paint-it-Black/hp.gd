@@ -17,41 +17,33 @@ signal hp_changed(previous_hp: int, new_hp: int)
 
 
 ## Стартовое значение очков здоровья при запуске узла.
-@export_range(0, 100) var initial_hp: int # ToDo: значение можно поставить от 0 до max_hp
+@export_range(0, 100) var initial_hp: int
 
 ## Текущее количество очков здоровья. При старте значение приравнивается
 ## значению [member initial_hp].
 var current_hp: int:
 	get = get_current_hp, set = set_current_hp
 
-
 func _ready():
-	# ToDo присвоить current_hp начальное значение, причём если оно 0,
-	# то ещё испустить сигнал killed (а то будет какой-то мёртворождённый)
 	current_hp = initial_hp
-	if initial_hp == 0:
+	if current_hp == 0:
 		emit_signal("killed")
-	pass 
-
+	if current_hp > max_hp:
+		push_warning()
 
 ## Setter для приватного поля [member current_hp], устанавливает его
 ## значение равное значению [param value], не допуская выход за границы
 ## от 0 до [member max_hp].
 func set_current_hp(value: int) -> void:
-	# ToDo, причём если ставится значение 0, то нужно запустить сигнал killed
-	# Также для любой смены значения нужно испускать сигнал hp_changed с
-	# соответствующими параметрами
 	if value < 0:
 		value = 0
-	
 	elif value > max_hp:
 		value = max_hp
 
 	current_hp = value
 	if current_hp == 0:
 		emit_signal("killed")
-	pass
-
+		emit_signal("hp_changed")
 
 ## Getter для приватного поля [member current_hp], возвращает его значение.
 func get_current_hp() -> int:
@@ -63,11 +55,9 @@ func get_current_hp() -> int:
 ## Возвращает новое значение [member current_hp].
 func restore_hp(value: int) -> int:
 	assert(value > 0)
-	assert(value <= max_hp)
-	current_hp = value
-	# ToDo, не забыть про проверку value > 0 и испускание сигналов
-	if current_hp == 0:
-		emit_signal("killed")
+	if value > max_hp:
+		value = max_hp
+	current_hp += value
 	return current_hp
 
 
@@ -75,9 +65,6 @@ func restore_hp(value: int) -> int:
 ## есть приравнивает их к значению [member max_hp].
 func full_restore_hp() -> void:
 	current_hp = max_hp
-	# ToDo, не забыть про испускание сигналов
-	emit_signal("hp_changed")
-	pass
 
 
 ## Убавляет количество текущих жизней [member current_hp] на значение
@@ -97,5 +84,3 @@ func deal_damage(value: int) -> int:
 func kill() ->  void:
 	current_hp = 0
 	emit_signal("killed")
-	# ToDo, не забыть про испускание сигналов
-	pass

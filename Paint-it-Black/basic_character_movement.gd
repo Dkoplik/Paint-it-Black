@@ -88,13 +88,13 @@ func _stop() -> float:
 ## Создаёт гравитацию.
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
 ## вычисленный параметр из функции _fall_speed().
-func _gravity_and_slide(delta:float) -> void:
+func _gravity_and_slide(delta: float) -> void:
 	if not character_body.is_on_floor():
 		character_body.velocity.y = _fall_speed(delta)
 
 
 ## Вычисляет скорость падения.
-func _fall_speed(delta:float) -> float:
+func _fall_speed(delta: float) -> float:
 	var speed = character_body.velocity.y
 	speed += (movement_data.gravity * delta)
 	if speed < movement_data.max_fall_speed:

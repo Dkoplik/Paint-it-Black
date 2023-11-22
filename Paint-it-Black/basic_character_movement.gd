@@ -13,11 +13,11 @@ signal started_walking
 ## Испускается, когда персонаж начал падать.
 signal started_falling
 
-## флаг персонажа стоящего на месте
+## Флаг персонажа стоящего на месте.
 var _is_idle: bool
-## флаг идущего персонажа
+## Флаг идущего персонажа.
 var _is_walking: bool
-## флаг падающего персонажа
+## Флаг падающего персонажа.
 var _is_falling: bool
 
 ## Ресурс [BasicMovementData], необходимый для работы данной компоненты.
@@ -69,9 +69,9 @@ func _speed(direction: Vector2) -> float:
 		return velocity
 
 
-## отвечает за плавную остановку
+## Отвечает за плавную остановку.
 func _stop() -> float:
-	var velocity:float = character_body.velocity.x
+	var velocity: float = character_body.velocity.x
 	if(velocity < 0):
 		if(velocity + movement_data.movement_acceleration >= 0):
 			return 0
@@ -85,15 +85,15 @@ func _stop() -> float:
 	return 0
 
 
-## Создаёт гравитацию
+## Создаёт гравитацию.
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
-## вычисленный параметр из функции _fall_speed()
+## вычисленный параметр из функции _fall_speed().
 func _gravity_and_slide(delta:float) -> void:
 	if not character_body.is_on_floor():
 		character_body.velocity.y = _fall_speed(delta)
 
 
-## Вычисляет скорость падения
+## Вычисляет скорость падения.
 func _fall_speed(delta:float) -> float:
 	var speed = character_body.velocity.y
 	speed += (movement_data.gravity * delta)

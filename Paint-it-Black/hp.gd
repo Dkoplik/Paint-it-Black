@@ -13,11 +13,10 @@ signal killed
 signal hp_changed(previous_hp: int, new_hp: int)
 
 ## Максимально возможное количество жизней
-@export var max_hp: int # ToDo: через export_range сделать так, чтобы max_hp
-						# нельзя было поставить ниже 0
+@export_range(0, 100) var max_hp: int 
 
 ## Стартовое значение очков здоровья при запуске узла.
-@export var initial_hp: int # ToDo: значение можно поставить от 0 до max_hp
+@export_range(0, 100) var initial_hp: int
 
 ## Текущее количество очков здоровья. При старте значение приравнивается
 ## значению [member initial_hp].
@@ -26,19 +25,23 @@ var current_hp: int:
 
 
 func _ready():
-	# ToDo присвоить current_hp начальное значение, причём если оно 0,
-	# то ещё испустить сигнал killed (а то будет какой-то мёртворождённый)
-	pass 
+	current_hp = initial_hp
+	if initial_hp > max_hp:
+		push_warning("initial_hp превосходит max_hp")
 
 
 ## Setter для приватного поля [member current_hp], устанавливает его
 ## значение равное значению [param value], не допуская выход за границы
 ## от 0 до [member max_hp].
 func set_current_hp(value: int) -> void:
-	# ToDo, причём если ставится значение 0, то нужно запустить сигнал killed
-	# Также для любой смены значения нужно испускать сигнал hp_changed с
-	# соответствующими параметрами
-	pass
+	if value < 0:
+		value = 0
+	elif value > max_hp:
+		value = max_hp
+	hp_changed.emit(current_hp, value)
+	current_hp = value
+	if current_hp == 0:
+		killed.emit()
 
 
 ## Getter для приватного поля [member current_hp], возвращает его значение.
@@ -50,27 +53,31 @@ func get_current_hp() -> int:
 ## [param value], при этом не позволяет превысить границу [member max_hp].
 ## Возвращает новое значение [member current_hp].
 func restore_hp(value: int) -> int:
-	# ToDo, не забыть про проверку value > 0 и испускание сигналов
-	return 0
+	assert(value > 0)
+	current_hp += value
+	if current_hp > max_hp:
+		current_hp = max_hp
+	return current_hp
 
 
 ## Полностью восстанавливает количество текущих жизней [member current_hp], то
 ## есть приравнивает их к значению [member max_hp].
 func full_restore_hp() -> void:
-	# ToDo, не забыть про испускание сигналов
-	pass
+	current_hp = max_hp
 
 
 ## Убавляет количество текущих жизней [member current_hp] на значение
 ## [param value], при этом не позволяет выйти за границу 0.
 ## Возвращает новое значение [member current_hp].
 func deal_damage(value: int) -> int:
-	# ToDo, не забыть про проверку value > 0 и испускание сигналов
-	return 0
+	assert(value > 0)
+	current_hp -= value
+	if current_hp < 0:
+		current_hp = 0
+	return current_hp
 
 
 ## Полностью убавляет количество текущих жизней [member current_hp], то
 ## есть приравнивает их к значению 0.
 func kill() ->  void:
-	# ToDo, не забыть про испускание сигналов
-	pass
+	current_hp = 0

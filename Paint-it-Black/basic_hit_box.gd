@@ -29,5 +29,3 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is HurtBoxInterface:
 		hit.emit(area)
 		area._hurt(attack_data)
-		
-		

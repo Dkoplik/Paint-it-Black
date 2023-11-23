@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://b5qdqaaw2hat6"]
 
-[ext_resource type="PackedScene" uid="uid://vqasngn8txv2" path="res://player_skeleton.tscn" id="1_4b025"]
-[ext_resource type="Script" path="res://player_controller.gd" id="1_kt7rl"]
-[ext_resource type="Script" path="res://player_movement.gd" id="2_02ofg"]
-[ext_resource type="Script" path="res://player_hurt_box.gd" id="3_ovg4b"]
-[ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player_movement_data.tres" id="3_pti2n"]
+[ext_resource type="PackedScene" uid="uid://vqasngn8txv2" path="res://player/player_skeleton.tscn" id="1_4b025"]
+[ext_resource type="Script" path="res://player/player_controller.gd" id="1_kt7rl"]
+[ext_resource type="Script" path="res://player/player_movement.gd" id="2_02ofg"]
+[ext_resource type="Script" path="res://player/player_hurt_box.gd" id="3_ovg4b"]
+[ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/player_movement_data.tres" id="3_pti2n"]
 [ext_resource type="Script" path="res://attack_data.gd" id="3_uws4i"]
 [ext_resource type="Script" path="res://hp.gd" id="4_c5cf2"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://vqasngn8txv2"]
 
-[ext_resource type="Texture2D" uid="uid://emsw5ldv6r5u" path="res://Player_Sheet.png" id="1_ulm0a"]
+[ext_resource type="Texture2D" uid="uid://emsw5ldv6r5u" path="res://player/Player_Sheet.png" id="1_ulm0a"]
 
 [sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_4o8sb"]
 enabled = true

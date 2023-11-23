@@ -18,7 +18,9 @@ func _ready() -> void:
 	# выполнять в assert, чтобы программа прерывалась.
 	# Более того, нужно проверить, что movement_data не просто
 	# BasicMovementData, а именно PlayerMovementData (проверить через is).
-	pass
+	assert(movement_data != null and character_body != null)
+	## проверка на то, что мы используем ресурсы игрока, а не что-то иное.
+	assert(movement_data is PlayerMovementData)
 
 
 func _process(delta):
@@ -36,5 +38,15 @@ func _process(delta):
 ## если на стене, то учитывается ещё параметр
 ## [member PlayerMovementData.jump_angle].
 func jump() -> void:
-	# ToDo
-	pass
+	if character_body.is_on_floor(): # простой прыжок
+		character_body.velocity.y -= movement_data.jump_speed
+	if character_body.is_on_wall(): # прыжок от стены
+		var wall_position = character_body.get_wall_normal()
+		var jump_direction =\
+		Vector2(cos(deg_to_rad(90 - movement_data.jump_angle)) * movement_data.jump_speed,
+		sin(deg_to_rad(-90 + movement_data.jump_angle)) * movement_data.jump_speed) #направление прыжка
+		if wall_position.x>0: # стена слева
+			character_body.velocity += jump_direction
+		else:
+			jump_direction.x *= -1
+			character_body.velocity += jump_direction

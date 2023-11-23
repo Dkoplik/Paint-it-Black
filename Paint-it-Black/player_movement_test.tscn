@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://b08i2khfp2tkm"]
+
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_hwqao"]
+[ext_resource type="Script" path="res://player_movement.gd" id="1_i5rae"]
+[ext_resource type="Texture2D" uid="uid://dc8gh025icytu" path="res://player.png" id="1_yb6h7"]
+[ext_resource type="Script" path="res://player_movement_data.gd" id="2_iif0x"]
+[ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://icon.svg" id="2_l8eij"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oavhk"]
+size = Vector2(31, 63)
+
+[sub_resource type="Resource" id="Resource_1pp4p"]
+script = ExtResource("2_iif0x")
+jump_speed = 200.0
+jump_angle = 10.5
+sliding_acceleration = 0.0
+max_sliding_speed = 0.0
+movement_acceleration = 100.0
+max_movement_speed = 200.0
+gravity = 500.0
+max_fall_speed = 500.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3q30r"]
+size = Vector2(128, 128)
+
+[node name="PlayerMovementTest" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(342.616, 112.878)
+script = ExtResource("1_hwqao")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_yb6h7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_oavhk")
+
+[node name="PlayerMovement" type="Node" parent="CharacterBody2D" node_paths=PackedStringArray("character_body")]
+script = ExtResource("1_i5rae")
+movement_data = SubResource("Resource_1pp4p")
+character_body = NodePath("..")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(354.073, 230.342)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("2_l8eij")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-0.0732422, -0.341736)
+shape = SubResource("RectangleShape2D_3q30r")

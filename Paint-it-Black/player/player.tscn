@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="PackedScene" uid="uid://vqasngn8txv2" path="res://player/player_skeleton.tscn" id="1_4b025"]
-[ext_resource type="Script" path="res://player/player_controller.gd" id="1_kt7rl"]
-[ext_resource type="Script" path="res://player/player_movement.gd" id="2_02ofg"]
-[ext_resource type="Script" path="res://player/player_hurt_box.gd" id="3_ovg4b"]
-[ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/player_movement_data.tres" id="3_pti2n"]
+[ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
+[ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
+[ext_resource type="Script" path="res://player/scripts/player_hurt_box.gd" id="3_ovg4b"]
+[ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/resources/player_movement_data.tres" id="3_pti2n"]
 [ext_resource type="Script" path="res://attack_data.gd" id="3_uws4i"]
 [ext_resource type="Script" path="res://hp.gd" id="4_c5cf2"]
 
@@ -13,12 +13,12 @@ script = ExtResource("3_uws4i")
 damage = 3
 knockback_velocity = Vector2(0, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_20xhv"]
-size = Vector2(25, 63)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ilph4"]
 radius = 9.0
 height = 62.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_20xhv"]
+size = Vector2(25, 63)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 4
@@ -26,23 +26,23 @@ script = ExtResource("1_kt7rl")
 movement_data = ExtResource("3_pti2n")
 attack_data = SubResource("Resource_p1jjy")
 
-[node name="PhysicsShape" type="CollisionShape2D" parent="."]
-position = Vector2(-3.5, -5.5)
-shape = SubResource("RectangleShape2D_20xhv")
+[node name="Skeleton" parent="." instance=ExtResource("1_4b025")]
 
-[node name="PlayerSkeleton" parent="." instance=ExtResource("1_4b025")]
-
-[node name="PlayerMovement" type="Node" parent="." node_paths=PackedStringArray("character_body")]
+[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("character_body")]
 script = ExtResource("2_02ofg")
 character_body = NodePath("..")
 
-[node name="PlayerHurtBox" type="Area2D" parent="."]
+[node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource("3_ovg4b")
 
-[node name="HP" type="Node" parent="PlayerHurtBox"]
+[node name="HP" type="Node" parent="HurtBox"]
 script = ExtResource("4_c5cf2")
 
-[node name="HurtBoxShape" type="CollisionShape2D" parent="PlayerHurtBox"]
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(-1, -5)
 shape = SubResource("CapsuleShape2D_ilph4")
 debug_color = Color(0.0504, 0.63, 0.20496, 0.392157)
+
+[node name="PhysicsShape" type="CollisionShape2D" parent="."]
+position = Vector2(-3.5, -5.5)
+shape = SubResource("RectangleShape2D_20xhv")

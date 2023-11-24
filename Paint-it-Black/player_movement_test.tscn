@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b08i2khfp2tkm"]
+[gd_scene load_steps=10 format=3 uid="uid://b08i2khfp2tkm"]
 
 [ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_hwqao"]
 [ext_resource type="Script" path="res://player_movement.gd" id="1_i5rae"]
@@ -12,16 +12,19 @@ size = Vector2(31, 63)
 [sub_resource type="Resource" id="Resource_1pp4p"]
 script = ExtResource("2_iif0x")
 jump_speed = 200.0
-jump_angle = 10.5
-sliding_acceleration = 0.0
-max_sliding_speed = 0.0
+jump_angle = 48.3
+sliding_acceleration = 40.9
+max_sliding_speed = 41.5
 movement_acceleration = 100.0
 max_movement_speed = 200.0
-gravity = 500.0
+gravity = 400.0
 max_fall_speed = 500.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3q30r"]
-size = Vector2(128, 128)
+size = Vector2(467, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_po4d8"]
+size = Vector2(131, 333)
 
 [node name="PlayerMovementTest" type="Node2D"]
 
@@ -45,8 +48,22 @@ character_body = NodePath("..")
 position = Vector2(354.073, 230.342)
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(-0.0732422, -0.341736)
+scale = Vector2(3.64005, 1)
 texture = ExtResource("2_l8eij")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-0.0732422, -0.341736)
+position = Vector2(0.426758, -0.341736)
 shape = SubResource("RectangleShape2D_3q30r")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(89.2755, 51.6194)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+position = Vector2(0, -52.1194)
+scale = Vector2(1, 2.60156)
+texture = ExtResource("2_l8eij")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-0.775528, -53.1194)
+shape = SubResource("RectangleShape2D_po4d8")

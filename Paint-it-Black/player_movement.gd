@@ -24,12 +24,13 @@ func _ready() -> void:
 
 
 func _process(delta):
-	# ToDo обработку прочего движения, например, скольжения по стене. При этом
-	# каждую такую обработку делать в отдельной приватной функции (не забыть про
-	# документирующие комментарии). Также не забыть вызвать все приватные
-	# функции из родительского класса BasicCharacterMovement.
-	pass
-
+	_current_delta = delta
+	_gravity_and_slide(delta)
+	character_body.move_and_slide()
+	_check_falling()
+	_check_walking()
+	_check_idle()
+	
 
 ## Осуществляет прыжок игрока, причём как обычный, так и от стен, и испускает
 ## сигнал [signal started_jump]. Если игрок не находится ни на полу, ни на
@@ -50,3 +51,17 @@ func jump() -> void:
 		else:
 			jump_direction.x *= -1
 			character_body.velocity += jump_direction
+
+## Отвечает за создание гравитации и скольжение по стенам.
+## Создаёт гравитацию.
+## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
+## вычисленный параметр из функции _fall_speed().
+## Создаёт скольжение.
+## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
+## параметр movement_data.sliding_acceleration * delta
+func _gravity_and_slide(delta: float) -> void:
+	if not character_body.is_on_floor():
+		if character_body.is_on_wall():
+			character_body.velocity.y += movement_data.sliding_acceleration * delta
+		else:
+			character_body.velocity.y = _fall_speed(delta)

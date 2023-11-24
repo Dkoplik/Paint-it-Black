@@ -11,9 +11,9 @@ signal started_jump
 ## Испускается, когда игрок начал скользить по стене.
 signal started_sliding
 
-## Флаг прыжка. 
+## Флаг прыжка. Устанавливается на true в момент прыжка, от стены/от пола. 
 var _is_started_jump: bool
-## Флаг скольжения.
+## Флаг скольжения. Устанавливается на true в момент начала скольжения по стене.
 var _is_started_sliding: bool
 
 
@@ -36,7 +36,7 @@ func _process(delta):
 	_check_walking()
 	_check_idle()
 	_check_sliding()
-
+	_check_jumping()
 
 ## Осуществляет прыжок игрока, причём как обычный, так и от стен, и испускает
 ## сигнал [signal started_jump]. Если игрок не находится ни на полу, ни на
@@ -46,8 +46,10 @@ func _process(delta):
 ## [member PlayerMovementData.jump_angle].
 func jump() -> void:
 	if character_body.is_on_floor(): # простой прыжок
+		_is_started_jump = true
 		character_body.velocity.y -= movement_data.jump_speed
 	if character_body.is_on_wall(): # прыжок от стены
+		_is_started_jump = true
 		var wall_position = character_body.get_wall_normal()
 		var jump_direction =\
 		Vector2(cos(deg_to_rad(90 - movement_data.jump_angle)) * movement_data.jump_speed,
@@ -78,11 +80,12 @@ func _check_sliding():
 	if character_body.is_on_wall_only() and not _is_started_sliding:
 		started_sliding.emit()
 		_is_started_sliding = true
-	if !character_body.is_on_wall_only() and _is_started_sliding:
+	elif !character_body.is_on_wall_only() and _is_started_sliding:
 		_is_started_sliding = false
 
 func _check_jumping():
-	pass
-	
+	if _is_started_jump and not character_body.is_on_floor():
+		started_jump.emit()
+		_is_started_jump = false
 	
 

@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2jg8t5k7ymap"]
+[gd_scene load_steps=6 format=3 uid="uid://vqasngn8txv2"]
 
 [ext_resource type="Texture2D" uid="uid://emsw5ldv6r5u" path="res://Player_Sheet.png" id="1_j83ql"]
-[ext_resource type="Animation" path="res://player_run_anim.res" id="1_mwb4r"]
+[ext_resource type="Animation" uid="uid://hev8s0yjetxb" path="res://player_run_anim.res" id="1_mwb4r"]
 
 [sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_4o8sb"]
 enabled = true
@@ -523,20 +523,22 @@ libraries = {
 [node name="LeftArm" type="Node2D" parent="."]
 
 [node name="LeftLowerArmSprite" type="Sprite2D" parent="LeftArm"]
-position = Vector2(35.4295, -6.45343)
+position = Vector2(7.98708, -4.07086)
+rotation = 0.0426383
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(87, 51, 13, 9)
 
 [node name="LeftUpperArmSprite" type="Sprite2D" parent="LeftArm"]
-position = Vector2(24.4295, -2.45337)
-rotation = -1.57079
+position = Vector2(0.416962, -8.50363)
+rotation = 0.0872703
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(75, 43, 9, 17)
 
 [node name="LeftHandSprite" type="Sprite2D" parent="LeftArm"]
-position = Vector2(41.9295, -8.95343)
+position = Vector2(14.5877, -6.29153)
+rotation = 0.0426383
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(104, 46, 7, 6)
@@ -553,28 +555,30 @@ region_rect = Rect2(77, 65, 49, 17)
 [node name="LeftLeg" type="Node2D" parent="."]
 
 [node name="LeftFootBone" type="Sprite2D" parent="LeftLeg"]
-position = Vector2(-22.0936, 3.06754)
+position = Vector2(11.6644, 23.0143)
+rotation = -0.16206
+scale = Vector2(1, 1)
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(67, 103, 8, 7)
 
 [node name="LeftLowerLegSprite" type="Sprite2D" parent="LeftLeg"]
-position = Vector2(-12.3964, 2.40063)
-rotation = 1.5708
+position = Vector2(8.98504, 15.2878)
+rotation = -0.233931
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(65, 86, 8, 11)
 
 [node name="LeftUpperLegSprite" type="Sprite2D" parent="LeftLeg"]
-position = Vector2(-2.3964, 1.9006)
-rotation = 1.5708
+position = Vector2(5.64452, 5.87442)
+rotation = -0.321627
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(64, 66, 9, 17)
 
 [node name="HeadSprite" type="Sprite2D" parent="."]
-position = Vector2(23, -1.00003)
-rotation = 1.5708
+position = Vector2(1.09579, -25.0015)
+rotation = 0.0436369
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(54, 19, 16, 20)
@@ -582,28 +586,32 @@ region_rect = Rect2(54, 19, 16, 20)
 [node name="RightLeg" type="Node2D" parent="."]
 
 [node name="RightFootBone" type="Sprite2D" parent="RightLeg"]
-position = Vector2(-22.8856, -3.50287)
+position = Vector2(-14.106, 21.9899)
+rotation = 0.480699
+scale = Vector2(1, 1)
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(51, 103, 8, 7)
 
 [node name="RightLowerLegSprite" type="Sprite2D" parent="RightLeg"]
-position = Vector2(-11.2134, -3.77161)
-rotation = 1.5708
+position = Vector2(-10.7058, 13.523)
+rotation = 0.419523
+scale = Vector2(1, 1)
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(49, 84, 9, 13)
 
 [node name="RightUpperLegSprite" type="Sprite2D" parent="RightLeg"]
-position = Vector2(-0.0544128, -1.73563)
-rotation = 1.5708
+position = Vector2(-5.13415, 4.2869)
+rotation = 0.274939
+scale = Vector2(1, 1)
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(51, 64, 10, 16)
 
 [node name="TorsoSprite" type="Sprite2D" parent="."]
-position = Vector2(10.5, 0)
-rotation = 1.57079
+position = Vector2(0.915138, -8.46005)
+rotation = 0.0872602
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(55, 42, 16, 21)
@@ -611,22 +619,22 @@ region_rect = Rect2(55, 42, 16, 21)
 [node name="RightArm" type="Node2D" parent="."]
 
 [node name="RightHandSprite" type="Sprite2D" parent="RightArm"]
-position = Vector2(41.5945, -10.0026)
-rotation = -1.5708
+position = Vector2(4.35735, -1.62024)
+rotation = -1.02492
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(42, 76, 6, 8)
 
 [node name="RightLowerArmSprite" type="Sprite2D" parent="RightArm"]
-position = Vector2(32.5945, -9.00259)
-rotation = -1.5708
+position = Vector2(-3.15704, -6.39294)
+rotation = -0.855846
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(41, 58, 8, 14)
 
 [node name="RightUpperArmSprite" type="Sprite2D" parent="RightArm"]
-position = Vector2(22.5946, -11.0025)
-rotation = -1.5708
+position = Vector2(-7.00719, -14.1423)
+rotation = -0.480309
 texture = ExtResource("1_j83ql")
 region_enabled = true
 region_rect = Rect2(42, 42, 10, 12)
@@ -693,6 +701,7 @@ remote_path = NodePath("../../../../RightArm/RightLowerArmSprite")
 
 [node name="RightHandBone" type="Bone2D" parent="TorsoBone/RightUpperArmBone/RightLowerArmBone"]
 position = Vector2(12, 2.67029e-05)
+scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, 12, -4.57764e-05)
 
 [node name="RightHandRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperArmBone/RightLowerArmBone/RightHandBone"]
@@ -728,6 +737,7 @@ remote_path = NodePath("../../../../../LeftLeg/LeftFootBone")
 
 [node name="RightUpperLegBone" type="Bone2D" parent="TorsoBone"]
 position = Vector2(4.94559, -0.735621)
+scale = Vector2(1, 1)
 rest = Transform2D(0.999223, 0.0393946, -0.0393946, 0.999223, 1.99998, -3.00001)
 
 [node name="RightUpperLegRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperLegBone"]

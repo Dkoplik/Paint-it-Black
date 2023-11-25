@@ -3,5 +3,23 @@
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 960.0
+offset_bottom = 540.0
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 100.0
+offset_right = 700.0
+offset_bottom = 180.0
+theme_override_font_sizes/font_size = 48
+text = "Play"
+icon_alignment = 1
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 300.0
+offset_top = 350.0
+offset_right = 700.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 48
+text = "Exit"

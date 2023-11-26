@@ -20,7 +20,7 @@ var _is_started_sliding: bool
 func _ready() -> void:
 	assert(movement_data != null)
 	assert(character_body != null)
-	## проверка на то, что мы используем ресурсы игрока, а не что-то иное.
+	# Проверка на то, что мы используем ресурсы игрока, а не что-то иное.
 	assert(movement_data is PlayerMovementData)
 
 

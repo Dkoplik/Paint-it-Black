@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://cn2u8ntjh4m3r"]
 
-[ext_resource type="Script" path="res://base_main_menue.gd" id="1_eo6xm"]
+[ext_resource type="Script" path="res://main_menue.gd" id="1_x3asy"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 960.0
 offset_bottom = 540.0
-script = ExtResource("1_eo6xm")
+script = ExtResource("1_x3asy")
 start_scene = "res://test_anim.tscn"
 
 [node name="PlayButton" type="Button" parent="."]

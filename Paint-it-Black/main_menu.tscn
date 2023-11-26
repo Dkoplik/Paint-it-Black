@@ -12,20 +12,20 @@ start_scene = "res://test_anim.tscn"
 
 [node name="PlayButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 300.0
-offset_top = 100.0
-offset_right = 700.0
-offset_bottom = 180.0
+offset_left = 280.0
+offset_top = 170.0
+offset_right = 680.0
+offset_bottom = 250.0
 theme_override_font_sizes/font_size = 48
 text = "Play"
 icon_alignment = 1
 
 [node name="ExitButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 300.0
-offset_top = 350.0
-offset_right = 700.0
-offset_bottom = 430.0
+offset_left = 280.0
+offset_top = 290.0
+offset_right = 680.0
+offset_bottom = 370.0
 theme_override_font_sizes/font_size = 48
 text = "Exit"
 

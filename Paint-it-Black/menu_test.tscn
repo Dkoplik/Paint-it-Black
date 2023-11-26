@@ -41,3 +41,9 @@ texture = ExtResource("1_5og6i")
 
 [node name="PauseMenu" parent="." instance=ExtResource("4_ik7b4")]
 process_mode = 2
+
+[connection signal="pressed" from="PauseMenu/ContinueButton" to="pause_manager" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="PauseMenu/ExitToMainMenuButton" to="pause_manager" method="_on_exit_to_main_menu_button_pressed"]
+[connection signal="pressed" from="PauseMenu/ExitGameButton" to="pause_manager" method="_on_exit_game_button_pressed"]
+
+[editable path="PauseMenu"]

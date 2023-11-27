@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://k34ercw2vbnj"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 960.0
+offset_bottom = 540.0
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 120.0
+offset_right = 680.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 30
+text = "Продолжить игру"
+
+[node name="ExitToMainMenuButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 230.0
+offset_right = 680.0
+offset_bottom = 310.0
+theme_override_font_sizes/font_size = 30
+text = "Выйти в главное меню"
+
+[node name="ExitGameButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 339.0
+offset_right = 680.0
+offset_bottom = 419.0
+theme_override_font_sizes/font_size = 30
+text = "Выйти из игры"

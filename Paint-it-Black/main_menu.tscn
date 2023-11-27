@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn2u8ntjh4m3r"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_mf5i0"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 960.0
+offset_bottom = 540.0
+script = ExtResource("1_mf5i0")
+start_scene = "res://test_anim.tscn"
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 170.0
+offset_right = 680.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 48
+text = "Играть"
+icon_alignment = 1
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 290.0
+offset_right = 680.0
+offset_bottom = 370.0
+theme_override_font_sizes/font_size = 48
+text = "Выйти из игры"
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

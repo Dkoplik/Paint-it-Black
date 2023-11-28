@@ -12,11 +12,8 @@ signal killed
 ## [param previous_hp] на [param new_hp]
 signal hp_changed(previous_hp: int, new_hp: int)
 
-## Максимально возможное количество жизней
-@export_range(0, 100) var max_hp: int 
-
-## Стартовое значение очков здоровья при запуске узла.
-@export_range(0, 100) var initial_hp: int
+## Данные о жизнях персонажа.
+@export var hp_data: HPData
 
 ## Текущее количество очков здоровья. При старте значение приравнивается
 ## значению [member initial_hp].
@@ -25,9 +22,8 @@ var current_hp: int:
 
 
 func _ready():
-	current_hp = initial_hp
-	if initial_hp > max_hp:
-		push_warning("initial_hp превосходит max_hp")
+	assert(hp_data != null, "Отсутствует HPData")
+	current_hp = hp_data.initial_hp
 
 
 ## Setter для приватного поля [member current_hp], устанавливает его
@@ -36,8 +32,8 @@ func _ready():
 func set_current_hp(value: int) -> void:
 	if value < 0:
 		value = 0
-	elif value > max_hp:
-		value = max_hp
+	elif value > hp_data.max_hp:
+		value = hp_data.max_hp
 	hp_changed.emit(current_hp, value)
 	current_hp = value
 	if current_hp == 0:
@@ -55,15 +51,15 @@ func get_current_hp() -> int:
 func restore_hp(value: int) -> int:
 	assert(value > 0)
 	current_hp += value
-	if current_hp > max_hp:
-		current_hp = max_hp
+	if current_hp > hp_data.max_hp:
+		current_hp = hp_data.max_hp
 	return current_hp
 
 
 ## Полностью восстанавливает количество текущих жизней [member current_hp], то
 ## есть приравнивает их к значению [member max_hp].
 func full_restore_hp() -> void:
-	current_hp = max_hp
+	current_hp = hp_data.max_hp
 
 
 ## Убавляет количество текущих жизней [member current_hp] на значение

@@ -30,10 +30,8 @@ var _current_delta:float
 
 
 func _ready() -> void:
-	# ToDo: проверка наличия movement_data и chracter_body. То есть, они должны
-	# быть не null, иначе компонент не будет работать. По этому проверку
-	# выполнять в assert, чтобы программа прерывалась.
-	pass
+	assert(movement_data != null, "Отсутствует movement_data")
+	assert(character_body != null, "Отсутствует character_body")
 
 
 func _physics_process(delta) -> void:

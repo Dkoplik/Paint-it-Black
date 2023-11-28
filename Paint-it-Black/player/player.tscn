@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=12 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="PackedScene" uid="uid://vqasngn8txv2" path="res://player/player_skeleton.tscn" id="1_4b025"]
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
@@ -6,6 +6,13 @@
 [ext_resource type="Script" path="res://player/scripts/player_hurt_box.gd" id="3_ovg4b"]
 [ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/resources/player_movement_data.tres" id="3_pti2n"]
 [ext_resource type="Script" path="res://hp.gd" id="4_c5cf2"]
+[ext_resource type="Script" path="res://player/scripts/player_attack.gd" id="7_bi60k"]
+[ext_resource type="Script" path="res://hp_data.gd" id="7_kl7fq"]
+
+[sub_resource type="Resource" id="Resource_ngr6a"]
+script = ExtResource("7_kl7fq")
+max_hp = 10
+initial_hp = 10
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ilph4"]
 radius = 9.0
@@ -31,6 +38,7 @@ script = ExtResource("3_ovg4b")
 
 [node name="HP" type="Node" parent="HurtBox"]
 script = ExtResource("4_c5cf2")
+hp_data = SubResource("Resource_ngr6a")
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(-1, -5)
@@ -40,3 +48,6 @@ debug_color = Color(0.0504, 0.63, 0.20496, 0.392157)
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]
 position = Vector2(-3.5, -5.5)
 shape = SubResource("RectangleShape2D_20xhv")
+
+[node name="PlayerAttack" type="Node" parent="."]
+script = ExtResource("7_bi60k")

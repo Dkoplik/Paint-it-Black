@@ -10,7 +10,7 @@ class_name HitBox
 
 ## Испускается, когда была нанесена атака объекту [HurtBoxInterface], передаёт
 ## ссылку на этот объект в параметре [param hurt_box].
-signal hit(area: Area2D)
+signal hit(area: HurtBoxInterface)
 
 ## Параметры атаки, которые будут переданы в [HurtBoxInterface] для последующей
 ## обработки.

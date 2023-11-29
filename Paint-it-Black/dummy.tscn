@@ -38,11 +38,11 @@ shape = SubResource("CapsuleShape2D_nj58p")
 debug_color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
 
 [node name="ColorRect" type="ColorRect" parent="PlayerHurtBox/HurtBoxShape"]
-offset_left = -19.0
+offset_left = -12.0
 offset_top = -30.0
-offset_right = 21.0
+offset_right = 28.0
 offset_bottom = 7.5
-scale = Vector2(0.894111, 1.59519)
+scale = Vector2(0.604861, 1.60393)
 color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
 
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]

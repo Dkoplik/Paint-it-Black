@@ -130,10 +130,11 @@ shape = SubResource("CapsuleShape2D_ilph4")
 debug_color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
 
 [node name="ColorRect" type="ColorRect" parent="HurtBox/HurtBoxShape"]
-offset_left = -15.0
-offset_top = -32.0
-offset_right = 10.0
-offset_bottom = 31.0
+offset_left = -9.0
+offset_top = -31.0
+offset_right = 16.0
+offset_bottom = 32.0
+scale = Vector2(0.727055, 0.986933)
 color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
 
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]

@@ -32,7 +32,7 @@ text = "Выйти из игры"
 [node name="TempPopUp" type="AcceptDialog" parent="."]
 title = "ReadMe"
 initial_position = 1
-size = Vector2i(600, 265)
+size = Vector2i(600, 291)
 visible = true
 ok_button_text = "Продолжить"
 
@@ -43,16 +43,16 @@ anchor_right = 0.5
 offset_left = -292.0
 offset_top = 8.0
 offset_right = 292.0
-offset_bottom = 216.0
+offset_bottom = 242.0
 grow_horizontal = 2
 text = "На данный момент какие-либо анимации отсутсвуют, поэтому, для большей наглядности, мы добавили отображение хитбоксов и хёртбоксов.
+
 Управление:
-- перемещение: A/D
-- прыжок: пробел
-- атака: ЛКМ
-- меню паузы: esc
++ перемещение: A/D
++ прыжок: пробел
++ атака: ЛКМ
++ меню паузы: esc
 "
-horizontal_alignment = 1
 autowrap_mode = 3
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

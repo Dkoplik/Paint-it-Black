@@ -122,7 +122,6 @@ script = ExtResource("3_ovg4b")
 
 [node name="HP" type="Node" parent="HurtBox"]
 script = ExtResource("4_c5cf2")
-hp_data = SubResource("Resource_ngr6a")
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(-1, -5)

@@ -8,7 +8,7 @@ anchors_preset = 0
 offset_right = 960.0
 offset_bottom = 540.0
 script = ExtResource("1_mf5i0")
-start_scene = "res://test_anim.tscn"
+start_scene = "res://test_level.tscn"
 
 [node name="PlayButton" type="Button" parent="."]
 layout_mode = 0

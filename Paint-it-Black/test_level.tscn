@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://clxaq510xpi2d"]
+[gd_scene load_steps=4 format=3 uid="uid://clxaq510xpi2d"]
 
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_hw8bi"]
 [ext_resource type="TileSet" uid="uid://begtbirhbccrw" path="res://test_tile_set.tres" id="2_k0l1u"]
+[ext_resource type="PackedScene" uid="uid://dsr830dcmrgvc" path="res://dummy.tscn" id="3_pkjhg"]
 
 [node name="TestLevel" type="Node"]
 
@@ -12,3 +13,6 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608,
 
 [node name="Player" parent="." instance=ExtResource("2_hw8bi")]
 position = Vector2(144, 387)
+
+[node name="Dummy" parent="." instance=ExtResource("3_pkjhg")]
+position = Vector2(773, 368)

@@ -1,26 +1,27 @@
-extends Node
+extends Control
 
-@onready var pause_menu = $"../PauseMenu"
+func _ready():
+	hide()
 
-var game_paused: bool = false
 
-func _process(delta):
-	if Input.is_action_just_pressed("esc"):
-		game_paused = !game_paused
-		
-	if game_paused == true:
-		get_tree().paused = true
-		pause_menu.show()
+func _input(event):
+	if event.is_action_pressed("esc"):	
+		switch_pause()
+
+
+func switch_pause() -> void:
+	get_tree().paused = !get_tree().paused
+	if get_tree().paused:
+		show()
 	else:
-		get_tree().paused = false
-		pause_menu.hide()
-		
+		hide()
 
 
 func _on_continue_button_pressed():
-	game_paused = !game_paused
+	switch_pause()
 
 func _on_exit_to_main_menu_button_pressed():
+	switch_pause()
 	get_tree().change_scene_to_file("res://main_menu.tscn")
 
 

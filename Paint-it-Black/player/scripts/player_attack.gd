@@ -1,5 +1,5 @@
 @tool
-extends Node
+extends Node2D
 class_name PlayerAttack
 ## Компонента атаки игрока.
 ##
@@ -57,9 +57,14 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 ## Осуществление атаки в заданном направлении, если это возможно.
 func attack(direction: Vector2) -> void:
+	# Импульс в заданном направлении
 	direction = direction.normalized()
 	movement_component.add_velocity(direction * impulse)
 	
+	# Вращение хитбокса в заданном направлении
+	_hit_box.look_at(direction + _hit_box.global_position)
+	# Изменение хитбокса под атаку
+	_animation_player.play("hit_box_attack")
 
 
 ## Проверка наличия [HitBox] в качестве дочернего узла.

@@ -22,6 +22,9 @@ signal hit(hurt_box: HurtBoxInterface)
 ## Проверяет наличие данных об атаке
 func _ready():
 	assert(attack_data != null, "Отсутствует AttackData")
+	# ToDo переделать этот костыль
+	$CollisionShape2D.disabled = true
+	$CollisionShape2D.visible = false
 
 
 ## Связывает сигнал [signal area_entered] из родительского класса [Area2D] с

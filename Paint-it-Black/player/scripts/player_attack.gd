@@ -28,6 +28,11 @@ signal is_attacking
 var _hit_box: HitBox
 ## [AnimationPlayer] для изменения [HitBox] во время атаки.
 var _animation_player: AnimationPlayer
+## Можно ли атаковать в данный момент? Необходим для cooldown'а атаки.
+var _is_attack_ready: bool = true
+## Скорость проигрывания анимации атаки, чтобы его длительность была
+## [member duration].
+var _custom_speed: float
 
 
 ## Проверка конфигурации узла на старте.
@@ -38,6 +43,9 @@ func _ready():
 	# Проверка наличия компонент
 	_check_hit_box()
 	_check_animation_player()
+	
+	if not Engine.is_editor_hint():
+		_custom_speed = _animation_player.get_animation("hit_box_attack").length / duration
 
 
 ## Обработка ошибок конфигурации
@@ -56,15 +64,23 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 ## Осуществление атаки в заданном направлении, если это возможно.
+# ToDo пока костыльная реализация.
 func attack(direction: Vector2) -> void:
-	# Импульс в заданном направлении
-	direction = direction.normalized()
-	movement_component.add_velocity(direction * impulse)
-	
-	# Вращение хитбокса в заданном направлении
-	_hit_box.look_at(direction + _hit_box.global_position)
-	# Изменение хитбокса под атаку
-	_animation_player.play("hit_box_attack")
+	if _is_attack_ready:
+		_is_attack_ready = false
+		is_attacking.emit()
+		
+		# Импульс в заданном направлении
+		direction = direction.normalized()
+		movement_component.add_velocity(direction * impulse)
+		
+		# Вращение хитбокса в заданном направлении
+		_hit_box.look_at(direction + _hit_box.global_position)
+		# Изменение хитбокса под атаку
+		_animation_player.play("hit_box_attack", -1, _custom_speed)
+		
+		await get_tree().create_timer(cooldown + duration).timeout
+		_is_attack_ready = true
 
 
 ## Проверка наличия [HitBox] в качестве дочернего узла.

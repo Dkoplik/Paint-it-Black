@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://dsr830dcmrgvc"]
+
+[ext_resource type="Texture2D" uid="uid://1x0ix66s7x50" path="res://EnemySR.png" id="1_57h2s"]
+[ext_resource type="Script" path="res://dummy.gd" id="1_f8ldm"]
+[ext_resource type="Script" path="res://player/scripts/player_hurt_box.gd" id="2_tc3wo"]
+[ext_resource type="Script" path="res://hp.gd" id="3_f3bfq"]
+[ext_resource type="Script" path="res://hp_data.gd" id="5_hrm07"]
+
+[sub_resource type="Resource" id="Resource_unlb3"]
+script = ExtResource("5_hrm07")
+max_hp = 10
+initial_hp = 10
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nj58p"]
+radius = 12.0
+height = 60.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtbvl"]
+size = Vector2(36, 60)
+
+[node name="Dummy" type="CharacterBody2D"]
+script = ExtResource("1_f8ldm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_57h2s")
+flip_h = true
+
+[node name="PlayerHurtBox" type="Area2D" parent="." groups=["enemy"]]
+script = ExtResource("2_tc3wo")
+
+[node name="HP" type="Node" parent="PlayerHurtBox"]
+script = ExtResource("3_f3bfq")
+hp_data = SubResource("Resource_unlb3")
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="PlayerHurtBox"]
+position = Vector2(1, 2)
+shape = SubResource("CapsuleShape2D_nj58p")
+debug_color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
+
+[node name="ColorRect" type="ColorRect" parent="PlayerHurtBox/HurtBoxShape"]
+offset_left = -12.0
+offset_top = -30.0
+offset_right = 28.0
+offset_bottom = 7.5
+scale = Vector2(0.604861, 1.60393)
+color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
+
+[node name="PhysicsShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_vtbvl")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[connection signal="killed" from="PlayerHurtBox/HP" to="." method="_on_hp_killed"]

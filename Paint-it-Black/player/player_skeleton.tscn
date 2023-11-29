@@ -1,0 +1,257 @@
+[gd_scene load_steps=3 format=3 uid="uid://vqasngn8txv2"]
+
+[ext_resource type="Texture2D" uid="uid://emsw5ldv6r5u" path="res://player/Player_Sheet.png" id="1_ulm0a"]
+
+[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_4o8sb"]
+enabled = true
+
+[node name="PlayerSkeleton" type="Skeleton2D"]
+modification_stack = SubResource("SkeletonModificationStack2D_4o8sb")
+
+[node name="LeftArm" type="Node2D" parent="."]
+
+[node name="LeftLowerArmSprite" type="Sprite2D" parent="LeftArm"]
+position = Vector2(6.50001, -8.5)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(87, 51, 13, 9)
+
+[node name="LeftUpperArmSprite" type="Sprite2D" parent="LeftArm"]
+position = Vector2(-1.50002, -12.5)
+rotation = 1.00136e-05
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(75, 43, 9, 17)
+
+[node name="LeftHandSprite" type="Sprite2D" parent="LeftArm"]
+position = Vector2(13, -11)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(104, 46, 7, 6)
+
+[node name="Blade" type="Node2D" parent="."]
+position = Vector2(-6, -4)
+
+[node name="Blade" type="Sprite2D" parent="Blade"]
+position = Vector2(0.5, 0.5)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(77, 65, 49, 17)
+
+[node name="LeftLeg" type="Node2D" parent="."]
+
+[node name="LeftFootBone" type="Sprite2D" parent="LeftLeg"]
+position = Vector2(4.99994, 22.5)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(67, 103, 8, 7)
+
+[node name="LeftLowerLegSprite" type="Sprite2D" parent="LeftLeg"]
+position = Vector2(3.99998, 14.5)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(65, 86, 8, 11)
+
+[node name="LeftUpperLegSprite" type="Sprite2D" parent="LeftLeg"]
+position = Vector2(3.49996, 4.50001)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(64, 66, 9, 17)
+
+[node name="HeadSprite" type="Sprite2D" parent="."]
+position = Vector2(-0.999831, -27)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(54, 19, 16, 20)
+
+[node name="RightLeg" type="Node2D" parent="."]
+
+[node name="RightFootBone" type="Sprite2D" parent="RightLeg"]
+position = Vector2(-6.00005, 22.4999)
+scale = Vector2(0.999999, 0.999999)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(51, 103, 8, 7)
+
+[node name="RightLowerLegSprite" type="Sprite2D" parent="RightLeg"]
+position = Vector2(-6.50001, 13.5)
+scale = Vector2(0.999999, 0.999999)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(49, 84, 9, 13)
+
+[node name="RightUpperLegSprite" type="Sprite2D" parent="RightLeg"]
+position = Vector2(-4.00003, 2.99999)
+scale = Vector2(0.999999, 0.999999)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(51, 64, 10, 16)
+
+[node name="TorsoSprite" type="Sprite2D" parent="."]
+position = Vector2(6.5881e-05, -10.5)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(55, 42, 16, 21)
+
+[node name="RightArm" type="Node2D" parent="."]
+
+[node name="RightHandSprite" type="Sprite2D" parent="RightArm"]
+position = Vector2(-11.0001, 3.0001)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(42, 76, 6, 8)
+
+[node name="RightLowerArmSprite" type="Sprite2D" parent="RightArm"]
+position = Vector2(-12.0001, -5.9999)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(41, 58, 8, 14)
+
+[node name="RightUpperArmSprite" type="Sprite2D" parent="RightArm"]
+position = Vector2(-10.0001, -14.9999)
+texture = ExtResource("1_ulm0a")
+region_enabled = true
+region_rect = Rect2(42, 42, 10, 12)
+
+[node name="TorsoBone" type="Bone2D" parent="."]
+rotation = -1.57079
+rest = Transform2D(6.27438e-06, -1, 1, 6.27438e-06, 0, 0)
+
+[node name="TorsoRemote" type="RemoteTransform2D" parent="TorsoBone"]
+position = Vector2(10.5, 0)
+rotation = 1.57079
+remote_path = NodePath("../../TorsoSprite")
+
+[node name="HeadBone" type="Bone2D" parent="TorsoBone"]
+position = Vector2(21, -1)
+rest = Transform2D(1, 0, 0, 1, 21, -1)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="TorsoBone/HeadBone"]
+position = Vector2(6, 0)
+rotation = 1.5708
+remote_path = NodePath("../../../HeadSprite")
+
+[node name="LeftUpperArmBone" type="Bone2D" parent="TorsoBone"]
+position = Vector2(17, -2.00011)
+rotation = 3.14159
+rest = Transform2D(-1, 2.53518e-06, -2.53518e-06, -1, 17, -2.00011)
+
+[node name="LeftUpperArmSpriteRemote" type="RemoteTransform2D" parent="TorsoBone/LeftUpperArmBone"]
+position = Vector2(4.5, -0.5)
+rotation = -1.57079
+remote_path = NodePath("../../../LeftArm/LeftUpperArmSprite")
+
+[node name="LeftLowerArmBone" type="Bone2D" parent="TorsoBone/LeftUpperArmBone"]
+position = Vector2(9.99999, -3.00005)
+rotation = -1.5708
+rest = Transform2D(-3.61999e-06, -1, 1, -3.61999e-06, 9.99999, -3.00005)
+
+[node name="LeftLowerArmSpriteRemote" type="RemoteTransform2D" parent="TorsoBone/LeftUpperArmBone/LeftLowerArmBone"]
+position = Vector2(5.5, -1.5)
+remote_path = NodePath("../../../../LeftArm/LeftLowerArmSprite")
+
+[node name="LeftHandBone" type="Bone2D" parent="TorsoBone/LeftUpperArmBone/LeftLowerArmBone"]
+position = Vector2(8.99999, -4)
+rest = Transform2D(1, 0, 0, 1, 8.99999, -4)
+auto_calculate_length_and_angle = false
+length = 6.0
+bone_angle = 0.0
+
+[node name="LeftHandRemote" type="RemoteTransform2D" parent="TorsoBone/LeftUpperArmBone/LeftLowerArmBone/LeftHandBone"]
+position = Vector2(3, 0)
+remote_path = NodePath("../../../../../LeftArm/LeftHandSprite")
+
+[node name="RightUpperArmBone" type="Bone2D" parent="TorsoBone"]
+position = Vector2(17.9999, -10.0001)
+rotation = 3.14159
+rest = Transform2D(-1, 2.53518e-06, -2.53518e-06, -1, 17.9999, -10.0001)
+
+[node name="RightUpperArmRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperArmBone"]
+position = Vector2(3.00006, 0.00012207)
+rotation = -1.5708
+remote_path = NodePath("../../../RightArm/RightUpperArmSprite")
+
+[node name="RightLowerArmBone" type="Bone2D" parent="TorsoBone/RightUpperArmBone"]
+position = Vector2(7.00007, 2.0001)
+rest = Transform2D(1, 0, 0, 1, 7.00007, 2.0001)
+
+[node name="RightLowerArmRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperArmBone/RightLowerArmBone"]
+position = Vector2(5, -2.28882e-05)
+rotation = -1.5708
+remote_path = NodePath("../../../../RightArm/RightLowerArmSprite")
+
+[node name="RightHandBone" type="Bone2D" parent="TorsoBone/RightUpperArmBone/RightLowerArmBone"]
+position = Vector2(12, -4.57764e-05)
+rest = Transform2D(1, 0, 0, 1, 12, -4.57764e-05)
+auto_calculate_length_and_angle = false
+length = 5.0
+bone_angle = 0.0
+
+[node name="RightHandRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperArmBone/RightLowerArmBone/RightHandBone"]
+position = Vector2(2, -1.00002)
+rotation = -1.5708
+remote_path = NodePath("../../../../../RightArm/RightHandSprite")
+
+[node name="LeftUpperLegBone" type="Bone2D" parent="TorsoBone"]
+position = Vector2(2.00001, 1.99999)
+rest = Transform2D(1, 0, 0, 1, 2.00001, 1.99999)
+
+[node name="LeftUpperLegRemote" type="RemoteTransform2D" parent="TorsoBone/LeftUpperLegBone"]
+position = Vector2(-6.5, 1.5)
+rotation = 1.5708
+remote_path = NodePath("../../../LeftLeg/LeftUpperLegSprite")
+
+[node name="LeftLowerLegBone" type="Bone2D" parent="TorsoBone/LeftUpperLegBone"]
+position = Vector2(-13, 2.00008)
+rest = Transform2D(1, 0, 0, 1, -13, 2.00008)
+
+[node name="LeftLowerLegRemote" type="RemoteTransform2D" parent="TorsoBone/LeftUpperLegBone/LeftLowerLegBone"]
+position = Vector2(-3.5, 0)
+rotation = 1.5708
+remote_path = NodePath("../../../../LeftLeg/LeftLowerLegSprite")
+
+[node name="LeftFootBone" type="Bone2D" parent="TorsoBone/LeftUpperLegBone/LeftLowerLegBone"]
+position = Vector2(-9, -1)
+rotation = 1.57079
+rest = Transform2D(6.27438e-06, 1, -1, 6.27438e-06, -9, -1)
+auto_calculate_length_and_angle = false
+length = 5.0
+bone_angle = 0.0
+
+[node name="LeftFootRemote" type="RemoteTransform2D" parent="TorsoBone/LeftUpperLegBone/LeftLowerLegBone/LeftFootBone"]
+position = Vector2(2, 2.5)
+remote_path = NodePath("../../../../../LeftLeg/LeftFootBone")
+
+[node name="RightUpperLegBone" type="Bone2D" parent="TorsoBone"]
+position = Vector2(1.99998, -3.00001)
+scale = Vector2(0.999999, 0.999999)
+rest = Transform2D(0.999999, 0, 0, 0.999999, 1.99998, -3.00001)
+
+[node name="RightUpperLegRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperLegBone"]
+position = Vector2(-5, -1)
+rotation = 1.5708
+remote_path = NodePath("../../../RightLeg/RightUpperLegSprite")
+
+[node name="RightLowerLegBone" type="Bone2D" parent="TorsoBone/RightUpperLegBone"]
+position = Vector2(-13, -2.99992)
+rest = Transform2D(1, 0, 0, 1, -13, -2.99992)
+
+[node name="RightLowerLegRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperLegBone/RightLowerLegBone"]
+position = Vector2(-2.5, -0.5)
+rotation = 1.5708
+remote_path = NodePath("../../../../RightLeg/RightLowerLegSprite")
+
+[node name="RightFootBone" type="Bone2D" parent="TorsoBone/RightUpperLegBone/RightLowerLegBone"]
+position = Vector2(-9, -2)
+rotation = 1.57079
+rest = Transform2D(6.27438e-06, 1, -1, 6.27438e-06, -9, -2)
+auto_calculate_length_and_angle = false
+length = 5.0
+bone_angle = 0.0
+
+[node name="RightFootRemote" type="RemoteTransform2D" parent="TorsoBone/RightUpperLegBone/RightLowerLegBone/RightFootBone"]
+position = Vector2(2, 2.5)
+remote_path = NodePath("../../../../../RightLeg/RightFootBone")

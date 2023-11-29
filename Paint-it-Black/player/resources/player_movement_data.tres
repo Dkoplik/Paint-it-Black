@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlayerMovementData" load_steps=2 format=3 uid="uid://cjeut3m67l1iw"]
+
+[ext_resource type="Script" path="res://player/resources/player_movement_data.gd" id="1_p5kl5"]
+
+[resource]
+script = ExtResource("1_p5kl5")
+jump_speed = 200.0
+jump_angle = 20.0
+sliding_acceleration = 100.0
+max_sliding_speed = 1.0
+movement_acceleration = 600.0
+max_movement_speed = 200.0
+gravity = 250.0
+max_fall_speed = 250.0

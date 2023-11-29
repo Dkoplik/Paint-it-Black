@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_p5kl5")
 jump_speed = 200.0
-jump_angle = 20.0
+jump_angle = 45.0
 sliding_acceleration = 100.0
-max_sliding_speed = 1.0
+max_sliding_speed = 50.0
 movement_acceleration = 600.0
 max_movement_speed = 200.0
 gravity = 250.0

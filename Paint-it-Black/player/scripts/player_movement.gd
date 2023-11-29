@@ -44,7 +44,7 @@ func jump() -> void:
 	if character_body.is_on_floor(): # простой прыжок
 		_is_started_jump = true
 		character_body.velocity.y -= movement_data.jump_speed
-	if character_body.is_on_wall(): # прыжок от стены
+	elif character_body.is_on_wall(): # прыжок от стены
 		_is_started_jump = true
 		var wall_position = character_body.get_wall_normal()
 		var jump_direction =\
@@ -66,7 +66,8 @@ func jump() -> void:
 func _gravity_and_slide(delta: float) -> void:
 	if not character_body.is_on_floor():
 		if character_body.is_on_wall():
-			character_body.velocity.y += movement_data.sliding_acceleration * delta
+			character_body.velocity.y = _sliding_speed(delta)
+			#print(movement_data.sliding_acceleration * delta)
 		else:
 			character_body.velocity.y = _fall_speed(delta)
 
@@ -86,4 +87,12 @@ func _check_jumping():
 		started_jump.emit()
 		_is_started_jump = false
 	
-
+func _sliding_speed(delta):
+	var speed = character_body.velocity.y
+	speed += movement_data.sliding_acceleration * delta
+	if speed < movement_data.max_sliding_speed:
+		return speed
+	else:
+		return movement_data.max_sliding_speed
+			
+ 

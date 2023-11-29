@@ -43,6 +43,7 @@ offset_top = -30.0
 offset_right = 28.0
 offset_bottom = 7.5
 scale = Vector2(0.604861, 1.60393)
+mouse_filter = 2
 color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
 
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]

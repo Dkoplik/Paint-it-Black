@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://hit_box.gd" id="10_urtlw"]
 [ext_resource type="Animation" uid="uid://c5dk1gis52siw" path="res://player/animations/hit_box_attack.anim" id="11_pticl"]
 
-[sub_resource type="Resource" id="Resource_ngr6a"]
+[sub_resource type="Resource" id="Resource_ybei8"]
 script = ExtResource("7_kl7fq")
 max_hp = 10
 initial_hp = 10
@@ -122,15 +122,17 @@ script = ExtResource("3_ovg4b")
 
 [node name="HP" type="Node" parent="HurtBox"]
 script = ExtResource("4_c5cf2")
+hp_data = SubResource("Resource_ybei8")
 
 [node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(-1, -5)
 shape = SubResource("CapsuleShape2D_ilph4")
-debug_color = Color(0.0504, 0.63, 0.20496, 0.392157)
+debug_color = Color(0.0509804, 0.631373, 0.203922, 0.392157)
 
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]
 position = Vector2(-3.5, -5.5)
 shape = SubResource("RectangleShape2D_20xhv")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="PlayerAttack" type="Node2D" parent="." node_paths=PackedStringArray("movement_component")]
 script = ExtResource("7_bi60k")

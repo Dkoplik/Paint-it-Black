@@ -15,7 +15,7 @@ extends CharacterBody2D
 ## Компонента движения
 var movement_component: PlayerMovement
 ## Компонента атаки
-var attack_component # ToDo добавить тип, когда появиться
+var attack_component: PlayerAttack
 ## HitBox
 var hit_box # ToDo добавить тип, когда будет
 ## HurtBox
@@ -32,7 +32,7 @@ func _ready():
 	# Проверка наличия данных
 	#_check_hp_data() пока отсутствует
 	_check_movement_data()
-	#_check_attack_data() пока отсутствует
+	_check_attack_data()
 
 
 ## Обработка управления
@@ -46,11 +46,16 @@ func _physics_process(delta: float) -> void:
 		movement_component.move(direction)
 
 
-## Обработка прыжка
+## Обработка прыжка и атаки
 func _unhandled_input(event):
 	if not Engine.is_editor_hint():
+		# Прыжок
 		if event.is_action_pressed("jump"):
 			movement_component.jump()
+		# Атака
+		if event.is_action_pressed("attack"):
+			attack_component.attack(get_viewport().get_mouse_position()
+			- position)
 
 
 ## Обработка ошибок конфигурации
@@ -118,7 +123,24 @@ func _check_movement_component(warnings: PackedStringArray = []) -> void:
 
 ## Находит компоненту атаки среди дочерних узлов
 func _check_attack_component(warnings: PackedStringArray = []) -> void:
-	pass #ToDo
+	var attack_components: Array =\
+		get_children().filter(func(node): return node is PlayerAttack)
+	
+	if attack_components.size() > 1:
+		if Engine.is_editor_hint():
+			warnings.push_back("Обнаружено несколько компонент PlayerMovement")
+		else:
+			assert(false, "Обнаружено несколько компонент PlayerMovement")
+		attack_component = null
+	elif attack_components.size() == 0:
+		if Engine.is_editor_hint():
+			warnings.push_back("Не найдена компонента PlayerMovement")
+		else:
+			assert(false, "Не найдена компонента PlayerMovement")
+		attack_component = null
+	else:
+		attack_component = attack_components[0] as PlayerAttack
+		attack_component.attack_data = attack_data
 
 
 ## Находит компоненту hitbox среди дочерних узлов

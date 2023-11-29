@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=18 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="PackedScene" uid="uid://vqasngn8txv2" path="res://player/player_skeleton.tscn" id="1_4b025"]
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://hp_data.gd" id="7_kl7fq"]
 [ext_resource type="Resource" uid="uid://d3nq8t1u7i5np" path="res://player/resources/player_attack_data.tres" id="9_pjllk"]
 [ext_resource type="Script" path="res://hit_box.gd" id="10_urtlw"]
+[ext_resource type="Animation" uid="uid://c5dk1gis52siw" path="res://player/animations/hit_box_attack.anim" id="11_pticl"]
 
 [sub_resource type="Resource" id="Resource_ngr6a"]
 script = ExtResource("7_kl7fq")
@@ -22,6 +23,86 @@ height = 62.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_20xhv"]
 size = Vector2(25, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rm63"]
+size = Vector2(60, 16)
+
+[sub_resource type="Animation" id="Animation_4soth"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:shape:size:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(60, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:shape:size:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(16, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(30, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape2D:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CollisionShape2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ka6q"]
+_data = {
+"RESET": SubResource("Animation_4soth"),
+"hit_box_attack": ExtResource("11_pticl")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 4
@@ -52,7 +133,7 @@ debug_color = Color(0.0504, 0.63, 0.20496, 0.392157)
 position = Vector2(-3.5, -5.5)
 shape = SubResource("RectangleShape2D_20xhv")
 
-[node name="PlayerAttack" type="Node" parent="." node_paths=PackedStringArray("movement_component")]
+[node name="PlayerAttack" type="Node2D" parent="." node_paths=PackedStringArray("movement_component")]
 script = ExtResource("7_bi60k")
 attack_data = ExtResource("9_pjllk")
 duration = 1.0
@@ -61,7 +142,17 @@ impulse = 200.0
 movement_component = NodePath("../MovementComponent")
 
 [node name="HitBox" type="Area2D" parent="PlayerAttack"]
+position = Vector2(0, -9)
 script = ExtResource("10_urtlw")
 attack_data = ExtResource("9_pjllk")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerAttack/HitBox"]
+position = Vector2(30, 0)
+shape = SubResource("RectangleShape2D_0rm63")
+debug_color = Color(1, 0, 0.219608, 0.419608)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerAttack"]
+root_node = NodePath("../HitBox")
+libraries = {
+"": SubResource("AnimationLibrary_4ka6q")
+}

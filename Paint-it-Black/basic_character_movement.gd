@@ -57,7 +57,7 @@ func move(direction: Vector2) -> void:
 
 
 ## вычисляет, и ограничивает скорость
-## direction - вектор движения персонажа
+## direction - вектор движения персонажа (-1/1)
 func _speed(direction: Vector2) -> float:
 	var velocity = character_body.velocity.x # текущая скорость персонажа по х
 	velocity += movement_data.movement_acceleration * direction.x * _current_delta

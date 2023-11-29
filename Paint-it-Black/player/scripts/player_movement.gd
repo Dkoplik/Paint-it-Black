@@ -44,7 +44,7 @@ func jump() -> void:
 	if character_body.is_on_floor(): # простой прыжок
 		_is_started_jump = true
 		character_body.velocity.y -= movement_data.jump_speed
-	if character_body.is_on_wall(): # прыжок от стены
+	elif character_body.is_on_wall(): # прыжок от стены
 		_is_started_jump = true
 		var wall_position = character_body.get_wall_normal()
 		var jump_direction =\

@@ -104,7 +104,7 @@ _data = {
 "hit_box_attack": ExtResource("11_pticl")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 4
 script = ExtResource("1_kt7rl")
 movement_data = ExtResource("3_pti2n")
@@ -136,8 +136,8 @@ shape = SubResource("RectangleShape2D_20xhv")
 [node name="PlayerAttack" type="Node2D" parent="." node_paths=PackedStringArray("movement_component")]
 script = ExtResource("7_bi60k")
 attack_data = ExtResource("9_pjllk")
-duration = 1.0
-cooldown = 1.0
+duration = 0.15
+cooldown = 0.1
 impulse = 200.0
 movement_component = NodePath("../MovementComponent")
 
@@ -145,6 +145,7 @@ movement_component = NodePath("../MovementComponent")
 position = Vector2(0, -9)
 script = ExtResource("10_urtlw")
 attack_data = ExtResource("9_pjllk")
+hittable_groups = Array[StringName]([&"enemy"])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerAttack/HitBox"]
 position = Vector2(30, 0)

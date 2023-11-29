@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://k34ercw2vbnj"]
+[gd_scene load_steps=2 format=3 uid="uid://k34ercw2vbnj"]
+
+[ext_resource type="Script" path="res://pause_manager.gd" id="1_m2ijo"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -6,6 +8,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 960.0
 offset_bottom = 540.0
+script = ExtResource("1_m2ijo")
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 0
@@ -33,3 +36,7 @@ offset_right = 680.0
 offset_bottom = 419.0
 theme_override_font_sizes/font_size = 30
 text = "Выйти из игры"
+
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="ExitToMainMenuButton" to="." method="_on_exit_to_main_menu_button_pressed"]
+[connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://clxaq510xpi2d"]
+[gd_scene load_steps=5 format=3 uid="uid://clxaq510xpi2d"]
 
+[ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="1_uwsbl"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_hw8bi"]
 [ext_resource type="TileSet" uid="uid://begtbirhbccrw" path="res://test_tile_set.tres" id="2_k0l1u"]
 [ext_resource type="PackedScene" uid="uid://dsr830dcmrgvc" path="res://dummy.tscn" id="3_pkjhg"]
@@ -16,3 +17,6 @@ position = Vector2(144, 387)
 
 [node name="Dummy" parent="." instance=ExtResource("3_pkjhg")]
 position = Vector2(773, 368)
+
+[node name="PauseMenu" parent="." instance=ExtResource("1_uwsbl")]
+visible = false

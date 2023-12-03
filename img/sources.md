@@ -20,3 +20,4 @@
 - `style_example_3.png` – скриншот из видео [Memories (1995) || Cannon Fodder - Blasting The Cannon Scene](https://youtu.be/V-OQFslDKiI)
 - `styl_example_4.png` – скришнот из видео [Arcane | Vi and Jayce Fight Scene](https://youtu.be/3JUO-idpH3s)
 - `katana_zero_run_1.png`, `katana_zero_run_2.png` и `katana_zero_run_3.png` – скрины из игры [Katana ZERO](https://store.steampowered.com/app/460950/Katana_ZERO/)
+- `door_example.png` – ручной шлюз из игры [Oxygen not Included](https://store.steampowered.com/app/457140/Oxygen_Not_Included/)

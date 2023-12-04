@@ -9,3 +9,5 @@ class_name AttackData
 @export var damage: int
 ## Начальная скорость отбрасывания и её направление.
 @export var knockback_velocity: Vector2
+## Направление атаки.
+var direction: Vector2 = Vector2.ZERO

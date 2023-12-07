@@ -1,11 +1,12 @@
 @tool
+extends Node
 class_name Utilities
 ## Этот класс содержит полезные функции для глобального использования.
 
 
 ## Создаёт таймер на [param seconds] секунд.
-static func wait_for(seconds: float):
-	pass # ToDo: создание таймера на seconds секунд и возврат через yield
+func wait_for(seconds: float):
+	await get_tree().create_timer(seconds).timeout
 
 
 ## Проверяет наличие ресурса в поданной переменной. Если ресурс

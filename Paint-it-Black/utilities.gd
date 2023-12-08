@@ -1,11 +1,10 @@
 @tool
-class_name Utilities
-## Этот класс содержит полезные функции для глобального использования.
+extends Node
 
 
 ## Создаёт таймер на [param seconds] секунд.
-static func wait_for(seconds: float):
-	pass # ToDo: создание таймера на seconds секунд и возврат через yield
+func wait_for(seconds: float):
+	await get_tree().create_timer(seconds).timeout
 
 
 ## Проверяет наличие ресурса в поданной переменной. Если ресурс
@@ -13,7 +12,11 @@ static func wait_for(seconds: float):
 ## предупреждение, в игре кидает ошибку через [method push_error]. Иначе
 ## просто возвращает true.
 static func check_resource(resource: Resource, warnings: PackedStringArray = []) -> bool:
-	# ToDo: сделать проверку наличия ресурса. Если ресурс отсутствует и скрипт
-	# работает в редакторе, то добавить строку с предупреждением в warnings,
-	# если скрипт работает в игре, то кинуть ошибку через push_error().
-	return false
+	if resource == null:
+		if Engine.is_editor_hint():
+			warnings.append('No resource available')
+			return false
+		else:
+			push_error('No resource available')
+			return false
+	return true

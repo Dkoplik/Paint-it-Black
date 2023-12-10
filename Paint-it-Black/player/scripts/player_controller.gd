@@ -6,11 +6,7 @@ extends CharacterBody2D
 ## Данные движения
 @export var movement_data: PlayerMovementData
 ## Данные об атаке
-@export var attack_data: AttackData
-## Длительность атаки
-@export_range(0, 1, 0.01, "or_greater") var attack_duration: float
-## Время между атаками
-@export_range(0, 5, 0.01, "or_greater") var attack_cooldown: float
+@export var attack_data: PlayerAttackData
 
 ## Компонента движения
 var movement_component: PlayerMovement
@@ -194,6 +190,6 @@ func _check_movement_data(warnings: PackedStringArray = []) -> void:
 func _check_attack_data(warnings: PackedStringArray = []) -> void:
 	if attack_data ==  null:
 		if Engine.is_editor_hint():
-			warnings.push_back("Не обнаружена AttackData")
+			warnings.push_back("Не обнаружена PlayerAttackData")
 		else:
-			assert(false, "Не обнаружена AttackData")
+			assert(false, "Не обнаружена PlayerAttackData")

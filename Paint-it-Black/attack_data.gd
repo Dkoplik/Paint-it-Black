@@ -1,13 +1,6 @@
 extends Resource
 class_name AttackData
-## Этот класс отвечает за параметры атаки.
-##
-## В этом ресурсе содержатся все параметры атаки, которые [BasicHitBox]
-## отправляет в [HurtBoxInterface] для обработки.
+## Этот класс отвечает за базовые параметры атаки.
 
-## Количество наносимого урона/
-@export var damage: int
-## Начальная скорость отбрасывания и её направление.
-@export var knockback_velocity: Vector2
-## Направление атаки.
-var direction: Vector2 = Vector2.ZERO
+## Количество наносимого урона.
+@export_range(0, 20, 1, "or_greater") var damage: int

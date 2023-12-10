@@ -23,8 +23,8 @@ signal hit(hurt_box: HurtBoxInterface)
 func _ready():
 	assert(attack_data != null, "Отсутствует AttackData")
 	# ToDo переделать этот костыль
-	$CollisionShape2D.disabled = true
-	$CollisionShape2D.visible = false
+	$HitBoxShape.disabled = true
+	$HitBoxShape.visible = false
 
 
 ## Связывает сигнал [signal area_entered] из родительского класса [Area2D] с
@@ -39,5 +39,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is HurtBoxInterface:
 		# Эту группу можно атаковать?
 		if area.get_groups().any(func(group): return group in hittable_groups):
+			var attack = IncomingAttack.new()
+			attack.damage = attack_data.damage
 			hit.emit(area)
-			area._hurt(attack_data)
+			area._hurt(attack)

@@ -175,3 +175,5 @@ root_node = NodePath("../HitBox")
 libraries = {
 "": SubResource("AnimationLibrary_4ka6q")
 }
+
+[connection signal="hit_solid_surface" from="PlayerAttack/HitBox" to="PlayerAttack" method="_on_hit_box_hit_solid_surface"]

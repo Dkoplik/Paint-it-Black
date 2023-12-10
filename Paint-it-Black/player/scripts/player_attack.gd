@@ -81,6 +81,22 @@ func attack(direction: Vector2) -> void:
 		_is_attack_ready = true
 
 
+## Отменяет атаку при пересечении с твёрдой поверхностью.
+func _on_hit_box_hit_solid_surface(solid_surface: Node2D) -> void:
+	if !Engine.is_editor_hint():
+		call_deferred("_advance_animation")
+
+
+## Приватный метод, преждевремменно завершает анимацию. При этом анимация
+## "отзеркаливается" к завершению, а не просто прерывается.
+func _advance_animation():
+	if _animation_player.is_playing():
+		var advance_seconds: float
+		advance_seconds = _animation_player.get_animation("hit_box_attack").length
+		advance_seconds -= 2 * _animation_player.current_animation_position
+		_animation_player.advance(advance_seconds)
+
+
 ## Проверка наличия [HitBox] в качестве дочернего узла.
 func _check_hit_box(warnings: PackedStringArray = []) -> void:
 	var hit_box_components: Array =\
@@ -134,7 +150,7 @@ func _check_player_movement(warnings: PackedStringArray = []) -> void:
 			assert(false, "Отсутствует ссылка на PlayerMovement")
 
 
-## Проверка наличия данных об атаке
+## Проверка наличия данных об атаке.
 func _check_attack_data(warnings: PackedStringArray = []) -> void:
 	if attack_data ==  null:
 		if Engine.is_editor_hint():

@@ -39,5 +39,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is HurtBoxInterface:
 		# Эту группу можно атаковать?
 		if area.get_groups().any(func(group): return group in hittable_groups):
+			var attack = IncomingAttack.new()
+			attack.damage = attack_data.damage
 			hit.emit(area)
-			area._hurt(attack_data)
+			area._hurt(attack)

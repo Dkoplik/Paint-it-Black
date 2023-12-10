@@ -124,15 +124,15 @@ func _check_attack_component(warnings: PackedStringArray = []) -> void:
 	
 	if attack_components.size() > 1:
 		if Engine.is_editor_hint():
-			warnings.push_back("Обнаружено несколько компонент PlayerMovement")
+			warnings.push_back("Обнаружено несколько компонент PlayerAttack")
 		else:
-			assert(false, "Обнаружено несколько компонент PlayerMovement")
+			assert(false, "Обнаружено несколько компонент PlayerAttack")
 		attack_component = null
 	elif attack_components.size() == 0:
 		if Engine.is_editor_hint():
-			warnings.push_back("Не найдена компонента PlayerMovement")
+			warnings.push_back("Не найдена компонента PlayerAttack")
 		else:
-			assert(false, "Не найдена компонента PlayerMovement")
+			assert(false, "Не найдена компонента PlayerAttack")
 		attack_component = null
 	else:
 		attack_component = attack_components[0] as PlayerAttack

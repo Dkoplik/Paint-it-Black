@@ -1,16 +1,21 @@
-[gd_scene load_steps=18 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=20 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="PackedScene" uid="uid://vqasngn8txv2" path="res://player/player_skeleton.tscn" id="1_4b025"]
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
+[ext_resource type="Script" path="res://attack_data.gd" id="3_ntcyg"]
 [ext_resource type="Script" path="res://player/scripts/player_hurt_box.gd" id="3_ovg4b"]
 [ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/resources/player_movement_data.tres" id="3_pti2n"]
 [ext_resource type="Script" path="res://hp.gd" id="4_c5cf2"]
 [ext_resource type="Script" path="res://player/scripts/player_attack.gd" id="7_bi60k"]
 [ext_resource type="Script" path="res://hp_data.gd" id="7_kl7fq"]
-[ext_resource type="Resource" uid="uid://d3nq8t1u7i5np" path="res://player/resources/player_attack_data.tres" id="9_pjllk"]
+[ext_resource type="Resource" uid="uid://dchkf655ulbpo" path="res://player/resources/player_attack_data.tres" id="10_j7iwd"]
 [ext_resource type="Script" path="res://hit_box.gd" id="10_urtlw"]
 [ext_resource type="Animation" uid="uid://c5dk1gis52siw" path="res://player/animations/hit_box_attack.anim" id="11_pticl"]
+
+[sub_resource type="Resource" id="Resource_oexmv"]
+script = ExtResource("3_ntcyg")
+damage = 10
 
 [sub_resource type="Resource" id="Resource_ybei8"]
 script = ExtResource("7_kl7fq")
@@ -108,7 +113,7 @@ _data = {
 collision_mask = 4
 script = ExtResource("1_kt7rl")
 movement_data = ExtResource("3_pti2n")
-attack_data = ExtResource("9_pjllk")
+attack_data = SubResource("Resource_oexmv")
 
 [node name="Skeleton" parent="." instance=ExtResource("1_4b025")]
 
@@ -145,16 +150,12 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="PlayerAttack" type="Node2D" parent="." node_paths=PackedStringArray("movement_component")]
 script = ExtResource("7_bi60k")
-attack_data = ExtResource("9_pjllk")
-duration = 0.15
-cooldown = 0.1
-impulse = 200.0
+attack_data = ExtResource("10_j7iwd")
 movement_component = NodePath("../MovementComponent")
 
 [node name="HitBox" type="Area2D" parent="PlayerAttack"]
 position = Vector2(0, -9)
 script = ExtResource("10_urtlw")
-attack_data = ExtResource("9_pjllk")
 hittable_groups = Array[StringName]([&"enemy"])
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="PlayerAttack/HitBox"]

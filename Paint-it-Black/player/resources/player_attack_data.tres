@@ -7,5 +7,5 @@ script = ExtResource("1_2btn8")
 duration = 0.15
 cooldown = 0.15
 grounded_impulse = 200.0
-in_air_impulse = 50.0
+in_air_impulse = 75.0
 damage = 10

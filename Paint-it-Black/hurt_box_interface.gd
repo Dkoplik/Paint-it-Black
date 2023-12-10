@@ -7,7 +7,7 @@ class_name HurtBoxInterface
 
 ## Испускается, когда была получена атака. [param attack] передаёт параметры
 ## входящей атаки.
-signal hurt(attack: AttackData)
+signal hurt(attack: IncomingAttack)
 
 ## Приватное поле. Содержит ссылку на компоненту [HP], необходимую для работы
 ## [HurtBoxInterface]. При отсутсвии [HP] выполнение скрипта прерывается.
@@ -25,7 +25,7 @@ func _ready() -> void:
 ## Производит обработку входящей атаки и испускает сигнал [signal hurt]. Обычно
 ## вызывается компонентой [BasicHitBox] и её наследниками при пересечении с 
 ## данным [HurtBoxInterface].
-func _hurt(attack: AttackData) -> void:
+func _hurt(attack: IncomingAttack) -> void:
 	# Тут ничего писать не нужно, функция будет переопределна в дочерних
 	# классах.
 	pass

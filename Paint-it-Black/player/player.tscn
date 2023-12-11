@@ -118,6 +118,7 @@ movement_data = ExtResource("3_pti2n")
 character_body = NodePath("..")
 
 [node name="HurtBox" type="Area2D" parent="."]
+collision_mask = 0
 script = ExtResource("3_ovg4b")
 
 [node name="HP" type="Node" parent="HurtBox"]
@@ -150,6 +151,7 @@ movement_component = NodePath("../MovementComponent")
 
 [node name="HitBox" type="Area2D" parent="PlayerAttack"]
 position = Vector2(0, -9)
+collision_mask = 6
 script = ExtResource("10_urtlw")
 attack_data = ExtResource("10_j7iwd")
 hittable_groups = Array[StringName]([&"enemy"])
@@ -173,3 +175,5 @@ root_node = NodePath("../HitBox")
 libraries = {
 "": SubResource("AnimationLibrary_4ka6q")
 }
+
+[connection signal="hit_solid_surface" from="PlayerAttack/HitBox" to="PlayerAttack" method="_on_hit_box_hit_solid_surface"]

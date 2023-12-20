@@ -13,31 +13,27 @@ signal parried
 ## Проверяет наличие корневого узла.
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		pass
-		# ToDo: проверить наличие корневого узла. Если он отсутствует, то
-		# прервать программу через assert.
+		assert(root_node != null)
 
 
 ## Получает данные об атаке и разворачивает снаряд в направлении атаки.
 func _hurt(attack_data: AttackData) -> void:
 	if !Engine.is_editor_hint():
-		# ToDo: из attack_data берёт параметр direction,
-		# и в это направление разворачивает root_node.
-		pass
+		root_node.look_at(root_node.position + attack_data.direction)
 
 
 ## Setter для поля [member root_node]. Не позволяет изменить корневой узел во
 ## время игры.
 func set_root(value: Node2D) -> void:
 	if !Engine.is_editor_hint():
-		# ToDo: если root_node ещё Null, то присвоить новое значение, иначе не
-		# менять значение переменной и бросить ошибку через push_error() о
-		# попытке изменить корневой узел.
-		pass
+		if root_node == null:
+			root_node = value
+		else:
+			push_error("Попытка изменить корневой узел")
 	else:
 		root_node = value
 
 
 ## Getter для поля [member root_node].
 func get_root() -> Node2D:
-	return null # ToDo просто вернуть root_node
+	return root_node

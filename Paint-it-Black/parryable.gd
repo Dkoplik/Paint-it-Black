@@ -1,13 +1,14 @@
 @tool
-extends Node
 class_name Parryable
+extends Node
 
 ## Испускается, когда снаряд был парирован.
 signal parried
 
 ## Корневой узел снаряда.
 @export var root_node: Node2D:
-	set = set_root, get = get_root
+	set = set_root,
+	get = get_root
 
 
 ## Проверяет наличие корневого узла.

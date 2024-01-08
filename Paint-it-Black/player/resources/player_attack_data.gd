@@ -1,8 +1,7 @@
 @tool
-extends AttackData
 class_name PlayerAttackData
+extends AttackData
 ## Этот ресурс отвечает за параметры атаки игрока.
-
 
 ## Длительность атаки. Задаёт длительность анимации для [HitBox].
 @export_range(0, 2, 0.001, "or_greater") var duration: float

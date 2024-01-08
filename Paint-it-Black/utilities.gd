@@ -1,7 +1,4 @@
 @tool
-extends Node
-
-
 ## Создаёт таймер на [param seconds] секунд.
 func wait_for(seconds: float):
 	await get_tree().create_timer(seconds).timeout

@@ -9,7 +9,7 @@ class_name PlayerHurtBox
 ## Производит обработку входящей атаки и испускает сигнал [signal hurt]. Обычно
 ## вызывается компонентой [BasicHitBox] и её наследниками при пересечении с 
 ## данным [PlayerHurtBox].
-func _hurt(attack: AttackData) -> void:
+func _hurt(attack: IncomingAttack) -> void:
 	hurt.emit(attack)
 	# Пока просто обработка урона
 	_hp.deal_damage(attack.damage)

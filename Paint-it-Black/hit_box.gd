@@ -11,6 +11,8 @@ class_name HitBox
 ## Испускается, когда была нанесена атака объекту [HurtBoxInterface], передаёт
 ## ссылку на этот объект в параметре [param hurt_box].
 signal hit(hurt_box: HurtBoxInterface)
+## Испускается, когда было обнаружено пересечение с твёрдой поверхностью.
+signal hit_solid_surface(solid_surface: Node2D)
 
 ## Параметры атаки, которые будут переданы в [HurtBoxInterface] для последующей
 ## обработки.
@@ -23,14 +25,15 @@ signal hit(hurt_box: HurtBoxInterface)
 func _ready():
 	assert(attack_data != null, "Отсутствует AttackData")
 	# ToDo переделать этот костыль
-	$CollisionShape2D.disabled = true
-	$CollisionShape2D.visible = false
+	$HitBoxShape.disabled = true
+	$HitBoxShape.visible = false
 
 
-## Связывает сигнал [signal area_entered] из родительского класса [Area2D] с
-## приватным методом [method _on_area_entered].
+## Связывает нужные сигналы с соответствующими функциями, дабы расширить
+## функционал базового [Aread2D].
 func _init() -> void:
 	connect("area_entered", _on_area_entered)
+	connect("body_entered", _on_body_entered)
 
 
 ## Обрабатывает пересечение с [Area2D]: если [Area2D] является
@@ -39,5 +42,14 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is HurtBoxInterface:
 		# Эту группу можно атаковать?
 		if area.get_groups().any(func(group): return group in hittable_groups):
+			var attack = IncomingAttack.new()
+			attack.damage = attack_data.damage
 			hit.emit(area)
-			area._hurt(attack_data)
+			area._hurt(attack)
+
+
+## Обнаруживает пересечение с твёрдой поверхностью испускает сигнал
+## [signal hit_static_body].
+func _on_body_entered(body: Node2D) -> void:
+	if body is TileMap:
+		hit_solid_surface.emit(body)

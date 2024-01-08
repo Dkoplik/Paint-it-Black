@@ -2,7 +2,7 @@
 extends CharacterBody2D
 
 ## Данные о жизнях
-@export var hp_data: Resource # ToDo: пока нет ресурса под жизни
+@export var hp_data: Resource  # ToDo: пока нет ресурса под жизни
 ## Данные движения
 @export var movement_data: PlayerMovementData
 ## Данные об атаке
@@ -13,7 +13,7 @@ var movement_component: PlayerMovement
 ## Компонента атаки
 var attack_component: PlayerAttack
 ## HitBox
-var hit_box # ToDo добавить тип, когда будет
+var hit_box  # ToDo добавить тип, когда будет
 ## HurtBox
 var hurt_box: PlayerHurtBox
 
@@ -24,7 +24,7 @@ func _ready():
 	_check_attack_component()
 	_check_hit_box_component()
 	_check_hurt_box_component()
-	
+
 	# Проверка наличия данных
 	#_check_hp_data() пока отсутствует
 	_check_movement_data()
@@ -32,7 +32,7 @@ func _ready():
 
 
 ## Обработка управления
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if not Engine.is_editor_hint():
 		var direction = Vector2.ZERO
 		if Input.is_action_pressed("move_left"):
@@ -50,26 +50,25 @@ func _unhandled_input(event):
 			movement_component.jump()
 		# Атака
 		if event.is_action_pressed("attack"):
-			attack_component.attack(get_viewport().get_mouse_position()
-			- position)
+			attack_component.attack(get_viewport().get_mouse_position() - position)
 
 
 ## Обработка ошибок конфигурации
 func _get_configuration_warnings() -> PackedStringArray:
 	# Ошибки конфигурации
 	var warnings: PackedStringArray = []
-	
+
 	# Проверка наличия компонент
 	_check_movement_component(warnings)
 	_check_attack_component(warnings)
 	_check_hit_box_component(warnings)
 	_check_hurt_box_component(warnings)
-	
+
 	# Проверка наличия данных
 	_check_hp_data(warnings)
 	_check_movement_data(warnings)
 	_check_attack_data(warnings)
-	
+
 	return warnings
 
 
@@ -80,12 +79,12 @@ func get_movement_component() -> PlayerMovement:
 
 ## Возвращает компоненту атаки игрока
 func get_attack_component():
-	pass # ToDo, добавить компоненту атаки, когда будет готова
+	pass  # ToDo, добавить компоненту атаки, когда будет готова
 
 
 ## Возвращает hitbox игрока
 func get_hit_box_component():
-	pass # ToDo когда появиться хитбокс
+	pass  # ToDo когда появиться хитбокс
 
 
 ## Возвращает hurtbox игрока
@@ -97,9 +96,10 @@ func get_hurt_box_component() -> PlayerHurtBox:
 ## Проверяет наличие единственной компоненты движения и передаёт все необходимые
 ## данные от этого узла компоненте.
 func _check_movement_component(warnings: PackedStringArray = []) -> void:
-	var movement_components: Array =\
-		get_children().filter(func(node): return node is PlayerMovement)
-	
+	var movement_components: Array = get_children().filter(
+		func(node): return node is PlayerMovement
+	)
+
 	if movement_components.size() > 1:
 		if Engine.is_editor_hint():
 			warnings.push_back("Обнаружено несколько компонент PlayerMovement")
@@ -119,9 +119,8 @@ func _check_movement_component(warnings: PackedStringArray = []) -> void:
 
 ## Находит компоненту атаки среди дочерних узлов
 func _check_attack_component(warnings: PackedStringArray = []) -> void:
-	var attack_components: Array =\
-		get_children().filter(func(node): return node is PlayerAttack)
-	
+	var attack_components: Array = get_children().filter(func(node): return node is PlayerAttack)
+
 	if attack_components.size() > 1:
 		if Engine.is_editor_hint():
 			warnings.push_back("Обнаружено несколько компонент PlayerAttack")
@@ -140,16 +139,16 @@ func _check_attack_component(warnings: PackedStringArray = []) -> void:
 
 
 ## Находит компоненту hitbox среди дочерних узлов
+# gdlint:ignore = unused-argument
 func _check_hit_box_component(warnings: PackedStringArray = []) -> void:
-	pass #ToDo
+	pass  #ToDo
 
 
 ## Проверяет наличие единственной компоненты hurtbox и передаёт все необходимые
 ## данные от этого узла компоненте.
 func _check_hurt_box_component(warnings: PackedStringArray = []) -> void:
-	var hurt_box_components: Array =\
-		get_children().filter(func(node): return node is PlayerHurtBox)
-	
+	var hurt_box_components: Array = get_children().filter(func(node): return node is PlayerHurtBox)
+
 	if hurt_box_components.size() > 1:
 		if Engine.is_editor_hint():
 			warnings.push_back("Обнаружено несколько компонент PlayerHurtBox")
@@ -164,13 +163,13 @@ func _check_hurt_box_component(warnings: PackedStringArray = []) -> void:
 		hurt_box = null
 	else:
 		hurt_box = hurt_box_components[0]
-	
+
 	# ToDo, компоненте HP передать ресурс HP
 
 
 ## Проверка наличия данных о hp
 func _check_hp_data(warnings: PackedStringArray = []) -> void:
-	if hp_data ==  null:
+	if hp_data == null:
 		if Engine.is_editor_hint():
 			warnings.push_back("Не обнаружена HPData")
 		else:
@@ -179,7 +178,7 @@ func _check_hp_data(warnings: PackedStringArray = []) -> void:
 
 ## Проверка наличия данных о движении
 func _check_movement_data(warnings: PackedStringArray = []) -> void:
-	if movement_data ==  null:
+	if movement_data == null:
 		if Engine.is_editor_hint():
 			warnings.push_back("Не обнаружена PlayerMovementData")
 		else:
@@ -188,7 +187,7 @@ func _check_movement_data(warnings: PackedStringArray = []) -> void:
 
 ## Проверка наличия данных об атаке
 func _check_attack_data(warnings: PackedStringArray = []) -> void:
-	if attack_data ==  null:
+	if attack_data == null:
 		if Engine.is_editor_hint():
 			warnings.push_back("Не обнаружена PlayerAttackData")
 		else:

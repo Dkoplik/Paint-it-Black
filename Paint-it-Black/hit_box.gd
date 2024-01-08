@@ -1,5 +1,5 @@
-extends Area2D
 class_name HitBox
+extends Area2D
 ## Основной hit-box в игре.
 ##
 ## hit-box, обнаруживающий пересечение с [HurtBoxInterface] и его наследниками,
@@ -45,7 +45,7 @@ func _on_area_entered(area: Area2D) -> void:
 			var attack = IncomingAttack.new()
 			attack.damage = attack_data.damage
 			hit.emit(area)
-			area._hurt(attack)
+			area.hurt(attack)
 
 
 ## Обнаруживает пересечение с твёрдой поверхностью испускает сигнал

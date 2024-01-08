@@ -1,5 +1,5 @@
-extends Area2D
 class_name HurtBoxInterface
+extends Area2D
 ## Условный интерфейс для всех hurt-box'ов в игре.
 ##
 ## Этот класс содержит сигналы, поля и метод, необходимые любому hurt-box в
@@ -7,7 +7,7 @@ class_name HurtBoxInterface
 
 ## Испускается, когда была получена атака. [param attack] передаёт параметры
 ## входящей атаки.
-signal hurt(attack: IncomingAttack)
+signal was_hurt(attack: IncomingAttack)
 
 ## Приватное поле. Содержит ссылку на компоненту [HP], необходимую для работы
 ## [HurtBoxInterface]. При отсутсвии [HP] выполнение скрипта прерывается.
@@ -22,10 +22,11 @@ func _ready() -> void:
 	assert(_hp != null, "Не найден компонент HP")
 
 
-## Производит обработку входящей атаки и испускает сигнал [signal hurt]. Обычно
-## вызывается компонентой [BasicHitBox] и её наследниками при пересечении с 
-## данным [HurtBoxInterface].
-func _hurt(attack: IncomingAttack) -> void:
+## Производит обработку входящей атаки и испускает сигнал [signal was_hurt].
+## Обычно вызывается компонентой [BasicHitBox] и её наследниками при пересечении
+## с данным [HurtBoxInterface].
+# gdlint:ignore = unused-argument
+func hurt(attack: IncomingAttack) -> void:
 	# Тут ничего писать не нужно, функция будет переопределна в дочерних
 	# классах.
 	pass

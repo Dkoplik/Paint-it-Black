@@ -1,8 +1,8 @@
-extends Node
 class_name BasicCharacterMovement
+extends Node
 ## Этот класс отвечает за минимальный набор движения персонажа.
 ##
-## Эта компонента содержит реализацию обычного движения (ходьба или бег) и 
+## Эта компонента содержит реализацию обычного движения (ходьба или бег) и
 ## падения персонажа. В качестве параметров используются данные из
 ## [BasicMovementData].
 
@@ -13,20 +13,20 @@ signal started_walking
 ## Испускается, когда персонаж начал падать.
 signal started_falling
 
+## Ресурс [BasicMovementData], необходимый для работы данной компоненты.
+@export var movement_data: BasicMovementData
+## Ссылка на [CharacterBody2D], который данная компонента будет двигать.
+@export var character_body: CharacterBody2D
+
+## Переменная, которую будем использовать вместо дельты, за пределами
+## функции _physics_process
+var _current_delta: float
 ## Флаг персонажа стоящего на месте.
 var _is_idle: bool
 ## Флаг идущего персонажа.
 var _is_walking: bool
 ## Флаг падающего персонажа.
 var _is_falling: bool
-
-## Ресурс [BasicMovementData], необходимый для работы данной компоненты.
-@export var movement_data: BasicMovementData
-## Ссылка на [CharacterBody2D], который данная компонента будет двигать.
-@export var character_body: CharacterBody2D
-## Переменная, которую будем использовать вместо дельты, за пределами
-## функции _physics_process
-var _current_delta:float
 
 
 func _ready() -> void:
@@ -52,39 +52,36 @@ func _physics_process(delta) -> void:
 func move(direction: Vector2) -> void:
 	if direction.x:
 		character_body.velocity.x = _speed(direction)
-	else: 
+	else:
 		character_body.velocity.x = _stop()
 
 
 ## вычисляет, и ограничивает скорость
 ## direction - вектор движения персонажа (-1/1)
 func _speed(direction: Vector2) -> float:
-	var velocity = character_body.velocity.x # текущая скорость персонажа по х
+	var velocity = character_body.velocity.x  # текущая скорость персонажа по х
 	velocity += movement_data.movement_acceleration * direction.x * _current_delta
-	if(abs(velocity) > movement_data.max_movement_speed):
+	if abs(velocity) > movement_data.max_movement_speed:
 		return movement_data.max_movement_speed * direction.x
-	else: 
-		return velocity
+	return velocity
 
 
 ## Отвечает за плавную остановку.
 func _stop() -> float:
 	var velocity: float = character_body.velocity.x
-	if(velocity < 0):
-		if(velocity + movement_data.movement_acceleration >= 0):
+	if velocity < 0:
+		if velocity + movement_data.movement_acceleration >= 0:
 			return 0
-		else: 
-			return velocity + movement_data.movement_acceleration * _current_delta
-	if(velocity > 0):
-		if(velocity - movement_data.movement_acceleration <= 0):	
+		return velocity + movement_data.movement_acceleration * _current_delta
+	if velocity > 0:
+		if velocity - movement_data.movement_acceleration <= 0:
 			return 0
-		else:
-			return velocity - movement_data.movement_acceleration * _current_delta
+		return velocity - movement_data.movement_acceleration * _current_delta
 	return 0
 
 
 ## Создаёт гравитацию.
-## Добавляет к текущей скорости [member CharacterBody2D.velocity.y] 
+## Добавляет к текущей скорости [member CharacterBody2D.velocity.y]
 ## вычисленный параметр из функции _fall_speed().
 func _gravity_and_slide(delta: float) -> void:
 	if not character_body.is_on_floor():
@@ -97,8 +94,7 @@ func _fall_speed(delta: float) -> float:
 	speed += (movement_data.gravity * delta)
 	if speed < movement_data.max_fall_speed:
 		return speed
-	else: 
-		return movement_data.max_fall_speed
+	return movement_data.max_fall_speed
 
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный

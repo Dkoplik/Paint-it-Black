@@ -1,5 +1,5 @@
-extends BasicMovementData
 class_name PlayerMovementData
+extends BasicMovementData
 ## Набор параметров для класса [PlayerMovement].
 ##
 ## Этот ресурс содержит параметры для прыжка и скольжения, которые нужны для

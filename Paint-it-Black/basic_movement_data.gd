@@ -1,5 +1,5 @@
-extends Resource
 class_name BasicMovementData
+extends Resource
 ## Набор параметров для класса [BasicCharacterMovement].
 ##
 ## Этот ресурс содержит основные параметры для движения и падения, которые
@@ -15,7 +15,7 @@ class_name BasicMovementData
 ## Параметры падения
 @export_group("Falling")
 ## Действующая гравитация
-@export_range(0, 100, 0.1, "or_greater") var gravity: float =\
-ProjectSettings.get_setting("physics/2d/default_gravity")
+@export_range(0, 100, 0.1, "or_greater")
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 ## Максимальная развиваемая скорость падения
 @export_range(0, 100, 0.1, "or_greater") var max_fall_speed: float

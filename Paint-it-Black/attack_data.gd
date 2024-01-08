@@ -1,5 +1,5 @@
-extends Resource
 class_name AttackData
+extends Resource
 ## Этот класс отвечает за базовые параметры атаки.
 
 ## Количество наносимого урона.

@@ -1,6 +1,6 @@
 @tool
-extends Resource
 class_name HPData
+extends Resource
 ## Этот ресурс хранит параметры, связанные с жизнями персонажа.
 ##
 ## Этот ресурс отвечает за максимальное количество жизней и на их изначальное
@@ -9,10 +9,12 @@ class_name HPData
 
 ## Максимальное количество жизней персонажа
 @export var max_hp: int:
-	set = set_max_hp, get = get_max_hp
+	set = set_max_hp,
+	get = get_max_hp
 ## Изначальное количество жизней персонажа
 @export var initial_hp: int:
-	set = set_initial_hp, get = get_initial_hp
+	set = set_initial_hp,
+	get = get_initial_hp
 
 
 ## Setter для поля [member max_hp]. Не позволяет значению поля выйти за границы

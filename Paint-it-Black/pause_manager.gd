@@ -1,11 +1,12 @@
 extends Control
 
+
 func _ready():
 	hide()
 
 
 func _input(event):
-	if event.is_action_pressed("esc"):	
+	if event.is_action_pressed("esc"):
 		switch_pause()
 
 
@@ -19,6 +20,7 @@ func switch_pause() -> void:
 
 func _on_continue_button_pressed():
 	switch_pause()
+
 
 func _on_exit_to_main_menu_button_pressed():
 	switch_pause()

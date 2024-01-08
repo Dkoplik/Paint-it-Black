@@ -1,5 +1,5 @@
-extends HurtBox
 class_name EntityHurtBox
+extends HurtBox
 ## Класс для обработки атаки [Attack] живыми существами.
 ##
 ## Этот класс предоставляет сигналы и функционал для обработки атаки [Attack]
@@ -30,9 +30,9 @@ func _process_attack(attack: Attack) -> void:
 ## инициализировать переменную. При попытке изменить существующее значение
 ## или если [param value] не является [HP], то поднимает предупреждение.
 func set_hp_component(value):
-	if (_hp_component != null):
+	if _hp_component != null:
 		push_warning("Попытка изменить приватное поле")
-	elif (value is HP):
+	elif value is HP:
 		_hp_component = value as HP
 	else:
 		push_warning("Попытка присвоить узел, отличный от HP")

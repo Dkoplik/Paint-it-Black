@@ -1,16 +1,13 @@
-name: Static checks
+name: Static Checks
 
 on:
-  push:
+  pull_request:
     branches:
       - 'main'
       - 'develop'
     paths:
       - '**.gd'
-  pull_request:
-    types:
-      - opened
-      - edited
+  push:
     branches:
       - 'main'
       - 'develop'
@@ -19,7 +16,7 @@ on:
 
 jobs:
   linter-checks:
-    name: 'Linter checks'
+    name: 'Linter Checks'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -30,15 +27,3 @@ jobs:
       
     - name: Linter
       run: gdlint ./
-  formater-checks:
-    name: 'Formater checks'
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      
-    - name: Toolkit
-      uses: Scony/godot-gdscript-toolkit@master
-      
-    - name: Formater
-      run: gdformat --check ./

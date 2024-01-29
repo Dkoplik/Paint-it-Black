@@ -15,8 +15,8 @@ static func check_resource(resource: Resource, warnings: PackedStringArray = [])
 	if resource == null:
 		if Engine.is_editor_hint():
 			warnings.append("No resource available")
-			return false
-		push_error("No resource available")
+		else:
+			push_error("No resource available")
 		return false
 	return true
 

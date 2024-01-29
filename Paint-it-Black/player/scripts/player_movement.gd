@@ -59,6 +59,11 @@ func jump() -> void:
 			character_body.velocity += jump_direction
 
 
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "PlayerMovement"
+
+
 ## Отвечает за создание гравитации и скольжение по стенам.
 ## Создаёт гравитацию.
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity.y]

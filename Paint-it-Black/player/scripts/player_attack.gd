@@ -82,6 +82,17 @@ func attack(direction: Vector2) -> void:
 		_is_attack_ready = true
 
 
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "PlayerAttack"
+
+
+## Возвращает true, если указанная строка [param name] является названием
+## текущего класса или одного из его предков в строковом виде, иначе false
+func is_class_name(name: String) -> bool:
+	return name == get_class_name() or self.is_class(name)
+
+
 ## Отменяет атаку при пересечении с твёрдой поверхностью.
 func _on_hit_box_hit_solid_surface(_solid_surface: Node2D) -> void:
 	if !Engine.is_editor_hint():

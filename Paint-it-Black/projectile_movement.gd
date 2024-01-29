@@ -66,3 +66,14 @@ func set_root(value: Node2D) -> void:
 ## Getter для поля [member root_node].
 func get_root() -> Node2D:
 	return null  # ToDo просто вернуть root_node
+
+
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "ProjectileMovement"
+
+
+## Возвращает true, если указанная строка [param name] является названием
+## текущего класса или одного из его предков в строковом виде, иначе false
+func is_class_name(name: String) -> bool:
+	return name == get_class_name() or self.is_class(name)

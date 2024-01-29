@@ -13,3 +13,8 @@ func hurt(attack: IncomingAttack) -> void:
 	was_hurt.emit(attack)
 	# Пока просто обработка урона
 	_hp.deal_damage(attack.damage)
+
+
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "PlayerHurtBox"

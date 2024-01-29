@@ -41,3 +41,14 @@ func set_initial_hp(value: int) -> void:
 ## Getter для поля [member initial_hp].
 func get_initial_hp() -> int:
 	return initial_hp
+
+
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "HPData"
+
+
+## Возвращает true, если указанная строка [param name] является названием
+## текущего класса или одного из его предков в строковом виде, иначе false
+func is_class_name(name: String) -> bool:
+	return name == get_class_name() or self.is_class(name)

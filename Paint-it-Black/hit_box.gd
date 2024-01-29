@@ -36,6 +36,17 @@ func _init() -> void:
 	connect("body_entered", _on_body_entered)
 
 
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "HitBox"
+
+
+## Возвращает true, если указанная строка [param name] является названием
+## текущего класса или одного из его предков в строковом виде, иначе false
+func is_class_name(name: String) -> bool:
+	return name == get_class_name() or self.is_class(name)
+
+
 ## Обрабатывает пересечение с [Area2D]: если [Area2D] является
 ## [HurtBoxInterface], то передаёт ему данные об атаке [member attack_data].
 func _on_area_entered(area: Area2D) -> void:

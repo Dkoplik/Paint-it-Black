@@ -11,3 +11,8 @@ extends AttackData
 @export_range(0, 200, 0.01, "or_greater") var grounded_impulse: float
 ## Величина импульса / толчка во время атаки в воздухе.
 @export_range(0, 200, 0.01, "or_greater") var in_air_impulse: float
+
+
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "PlayerAttackData"

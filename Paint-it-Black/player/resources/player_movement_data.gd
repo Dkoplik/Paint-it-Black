@@ -18,3 +18,8 @@ extends BasicMovementData
 @export_range(0, 100, 0.1, "or_greater") var sliding_acceleration: float
 ## Максимальная развиваемая скорость скольжения
 @export_range(0, 100, 0.1, "or_greater") var max_sliding_speed: float
+
+
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "PlayerMovementData"

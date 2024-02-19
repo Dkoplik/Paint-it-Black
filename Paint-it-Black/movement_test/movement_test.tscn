@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://clwewuhaacl83"]
+
+[ext_resource type="PackedScene" uid="uid://t54xordgh100" path="res://movement_test/flor.tscn" id="1_lc2rk"]
+[ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_aohav"]
+[ext_resource type="PackedScene" uid="uid://moc8f53qeona" path="res://movement_test/wallt.tscn" id="2_i7y3q"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="flor" parent="." instance=ExtResource("1_lc2rk")]
+
+[node name="Wall" parent="." instance=ExtResource("2_i7y3q")]
+
+[node name="Player" parent="." instance=ExtResource("2_aohav")]
+position = Vector2(392, 98)
+collision_mask = 1

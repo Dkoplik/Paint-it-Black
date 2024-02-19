@@ -46,6 +46,6 @@ func get_class_name() -> String:
 
 
 ## Возвращает true, если указанная строка [param name] является названием
-## текущего класса или одного из его предков в строковом виде, иначе false
+## текущего класса или одного из его предков в строковом виде, иначе false.
 func is_class_name(name: String) -> bool:
 	return name == get_class_name() or self.is_class(name)

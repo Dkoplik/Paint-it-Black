@@ -70,11 +70,11 @@ func _speed(direction: Vector2) -> float:
 func _stop() -> float:
 	var velocity: float = character_body.velocity.x
 	if velocity < 0:
-		if velocity + movement_data.movement_acceleration >= 0:
+		if velocity + movement_data.movement_acceleration * _current_delta >= 0:
 			return 0
 		return velocity + movement_data.movement_acceleration * _current_delta
 	if velocity > 0:
-		if velocity - movement_data.movement_acceleration <= 0:
+		if velocity - movement_data.movement_acceleration * _current_delta <= 0:
 			return 0
 		return velocity - movement_data.movement_acceleration * _current_delta
 	return 0

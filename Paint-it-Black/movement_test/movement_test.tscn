@@ -13,3 +13,6 @@
 [node name="Player" parent="." instance=ExtResource("2_aohav")]
 position = Vector2(392, 98)
 collision_mask = 1
+
+[node name="Wall2" parent="." instance=ExtResource("2_i7y3q")]
+position = Vector2(588, -158)

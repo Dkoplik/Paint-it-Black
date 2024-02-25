@@ -24,7 +24,7 @@ func _ready() -> void:
 	assert(movement_data is PlayerMovementData)
 
 
-func _process(delta):
+func _physics_process(delta):
 	_current_delta = delta
 	_gravity_and_slide(delta)
 	character_body.move_and_slide()

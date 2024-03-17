@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq8pia3orjmgh"]
+
+[ext_resource type="Script" path="res://projectile_movement.gd" id="1_b412x"]
+[ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://icon.svg" id="1_vokmm"]
+
+[node name="Test" type="Sprite2D"]
+position = Vector2(98, 448)
+rotation = -0.514872
+scale = Vector2(0.171006, 0.217115)
+texture = ExtResource("1_vokmm")
+
+[node name="ProjectileMovement" type="Node" parent="." node_paths=PackedStringArray("root_node")]
+script = ExtResource("1_b412x")
+speed = 87.2
+root_node = NodePath("..")

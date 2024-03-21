@@ -11,22 +11,30 @@ func wait_for(seconds: float):
 ## [member resource]отсутствует, то возвращает false, в редакторе добавляет
 ## предупреждение, в игре кидает ошибку через [method push_error]. Иначе
 ## просто возвращает true.
-static func check_resource(resource: Resource, warnings: PackedStringArray = []) -> bool:
+static func check_resource(resource: Resource, resource_name := "", warnings: PackedStringArray = []) -> bool:
 	if resource == null:
 		if Engine.is_editor_hint():
-			warnings.append("No resource available")
+			warnings.append("Не обнаружен ресурс %s" % resource_name)
 		else:
-			push_error("No resource available")
+			push_error("Не обнаружен ресурс %s" % resource_name)
 		return false
 	return true
 
 
-## Возвращает true, если у переданного узла [param node] название его класса
-## или любого из его предков совпадает с указанной строкой [param name].
-static func is_string_class(node: Node, name: String) -> bool:
-	if node.has_method("is_class_name"):
-		return node.is_class_name(name)
-	return node.is_class(name)
+## Универсальная функция для нахождения имени класса [param object], будь то
+## нативный класс или кастомный.
+static func get_class_name(object: Object) -> String:
+	if (object.has_method("get_class_name")):
+		return object.get_class_name()
+	return object.get_class()
+
+
+## Универсальная функция для сравнения строки [param string_name] с названием
+## класса объекта [param object]
+static func is_class_name(object: Object, string_name: String) -> bool:
+	if object.has_method("is_class_name"):
+		return object.is_class_name(string_name)
+	return object.is_class(string_name)
 
 
 ## Проверяет, имеется ли у узла [param parent_node] единственный дочерний узел
@@ -38,19 +46,32 @@ static func check_single_component(
 ) -> Node:
 	var children: Array
 	for node in parent_node.get_children():
-		if is_string_class(node, component_name):
+		if is_class_name(node, component_name):
 			children.push_back(node)
 
 	if children.size() > 1:
 		if Engine.is_editor_hint():
-			warnings.push_back("Обнаружено несколько компонент {component_name}")
+			warnings.push_back("Обнаружено несколько компонент %s" % component_name)
 		else:
-			push_error("Обнаружено несколько компонент {component_name}")
+			push_error("Обнаружено несколько компонент %s" % component_name)
 		return null
 	if children.size() == 0:
 		if Engine.is_editor_hint():
-			warnings.push_back("Не найдена компонента {component_name}")
+			warnings.push_back("Не найдена компонента %s" % component_name)
 		else:
-			push_error("Не найдена компонента {component_name}")
+			push_error("Не найдена компонента %s" % component_name)
 		return null
 	return children[0]
+
+
+## Проверяет, содержится ли в [param object] ссылка на объект. Если object =
+## null, то в редакторе добавляет предупреждение, а в билде кидает ошибку
+## череp [method push_error].
+static func check_reference(object: Object, object_name := "объект", warnings: PackedStringArray = []) -> bool:
+	if object == null:
+		if Engine.is_editor_hint():
+			warnings.append("Ссылка на %s оказалась пустой" % object_name)
+		else:
+			push_error("Ссылка на %s оказалась пустой" % object_name)
+		return false
+	return true

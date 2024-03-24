@@ -1,65 +1,57 @@
 class_name HitBox
-extends Area2D
-## Основной hit-box в игре.
+extends CustomArea2D
+## Основной hit-box в игре, обнаруживает пересечения с [BasicHurtBox] и его
+## наследниками, после чего производит на них атаку.
 ##
-## hit-box, обнаруживающий пересечение с [HurtBoxInterface] и его наследниками,
-## передавая им параметры атаки [member attack_data]. Этот hit-box реагирует
-## на абсолютно все [HurtBoxInterface], если нужно задать другое поведение, то
-## следует унаследовать эту компоненту и переопределить метод
-## [method _on_area_entered].
+## Вроде как расширение этого класса не потребуется, поскольку он завязан
+## чисто на передаче атаки [BasicIncomingAttack], так что любая более
+## сложная атака тоже может быть передана, главное - указать правильные
+## параметры.
 
-## Испускается, когда была нанесена атака объекту [HurtBoxInterface], передаёт
+## Испускается, когда была нанесена атака объекту [BasicHurtBox], передаёт
 ## ссылку на этот объект в параметре [param hurt_box].
-signal hit(hurt_box: HurtBoxInterface)
-## Испускается, когда было обнаружено пересечение с твёрдой поверхностью.
+signal hit(hurt_box: BasicHurtBox)
+## Испускается, когда было обнаружено пересечение с твёрдой поверхностью,
+## передаёт ссылку на этот объект в параметре [param solid_surface].
 signal hit_solid_surface(solid_surface: Node2D)
 
-## Параметры атаки, которые будут переданы в [HurtBoxInterface] для последующей
-## обработки.
-@export var attack_data: AttackData
-## Массив названий групп, которые данный [HitBox] может атаковать.
+## Названия групп, которые данный hitbox может атаковать.
 @export var hittable_groups: Array[StringName]
 
-
-## Проверяет наличие данных об атаке
-func _ready():
-	assert(attack_data != null, "Отсутствует AttackData")
-	# ToDo переделать этот костыль
-	$HitBoxShape.disabled = true
-	$HitBoxShape.visible = false
+## Параметры атаки, которые будут переданы в [BasicHurtBox] для последующей
+## обработки.
+var _attack_data: BasicIncomingAttack
+## Есть ли ссылка на [member attack_data].
+var _has_attack_data := false
 
 
-## Связывает нужные сигналы с соответствующими функциями, дабы расширить
-## функционал базового [Aread2D].
 func _init() -> void:
+	_class_name = &"BasicHitBox"
+	# Соединяет сигналы с самим же объектом, дабы автоматизировать расширенный
+	# функционал Area2D.
 	connect("area_entered", _on_area_entered)
 	connect("body_entered", _on_body_entered)
 
 
-## Возвращает название класса в строковом виде.
-func get_class_name() -> String:
-	return "HitBox"
-
-
-## Возвращает true, если указанная строка [param name] является названием
-## текущего класса или одного из его предков в строковом виде, иначе false
-func is_class_name(name: String) -> bool:
-	return name == get_class_name() or self.is_class(name)
+func _ready():
+	if _attack_data != null:
+		_has_attack_data = true
 
 
 ## Обрабатывает пересечение с [Area2D]: если [Area2D] является
-## [HurtBoxInterface], то передаёт ему данные об атаке [member attack_data].
+## [BasicHitBox], то передаёт ему данные об атаке [member attack_data].
 func _on_area_entered(area: Area2D) -> void:
-	if area is HurtBoxInterface:
+	if area is BasicHurtBox:
 		# Эту группу можно атаковать?
 		if area.get_groups().any(func(group): return group in hittable_groups):
-			var attack = IncomingAttack.new()
-			attack.damage = attack_data.damage
 			hit.emit(area)
-			area.hurt(attack)
+			if !_has_attack_data:
+				push_error("Невозможно осуществить _on_area_entered() без BasicIncomingAttack")
+				return
+			area.receive_attack(_attack_data)
 
 
-## Обнаруживает пересечение с твёрдой поверхностью испускает сигнал
+## Обнаруживает пересечение с твёрдой поверхностью, испускает сигнал
 ## [signal hit_static_body].
 func _on_body_entered(body: Node2D) -> void:
 	if body is TileMap:

@@ -7,9 +7,9 @@ extends CustomNode
 ## В качестве параметров используются данные из [BasicMovementData].
 
 ## Ресурс [BasicMovementData], необходим для работы данной компоненты.
-@export var movement_data: BasicMovementData
+@export var movement_data: BasicMovementData: set = set_movement_data
 ## Ссылка на [CharacterBody2D], который данная компонента будет двигать.
-@export var character_body: CharacterBody2D
+@export var character_body: CharacterBody2D: set = set_character_body
 
 ## Флаг наличия ресурса в переменной [member movement_data].
 var _has_movement_data := false
@@ -37,6 +37,7 @@ func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
 		return
 	if not _has_character_body:
+		# Спам в консоль, неплохо бы создать какой-то отдельный класс-логгер
 		push_error("Невозможно осуществить move_and_slide() без character_body")
 		return
 
@@ -44,9 +45,15 @@ func _physics_process(delta) -> void:
 	character_body.move_and_slide()
 
 
-## Setter для поля [member movement_data].
+## Setter для поля [member movement_data]. Обновляет ошибки конфигурации.
 func set_movement_data(value: BasicMovementData) -> void:
 	movement_data = value
+	update_configuration_warnings()
+
+
+## Setter для поля [member character_body]. Обновляет ошибки конфигурации.
+func set_character_body(value: CharacterBody2D) -> void:
+	character_body = value
 	update_configuration_warnings()
 
 

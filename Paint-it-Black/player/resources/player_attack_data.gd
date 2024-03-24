@@ -1,8 +1,10 @@
 @tool
 class_name PlayerAttackData
-extends AttackData
+extends CustomResource
 ## Этот ресурс отвечает за параметры атаки игрока.
 
+## Количество наносимого урона.
+@export_range(0, 20, 1, "or_greater") var damage: int
 ## Длительность атаки. Задаёт длительность анимации для [HitBox].
 @export_range(0, 2, 0.001, "or_greater") var duration: float
 ## Время между атаками.
@@ -13,6 +15,5 @@ extends AttackData
 @export_range(0, 200, 0.01, "or_greater") var in_air_impulse: float
 
 
-## Возвращает название класса в строковом виде.
-func get_class_name() -> String:
-	return "PlayerAttackData"
+func _init() -> void:
+	_class_name = &"PlayerAttackData"

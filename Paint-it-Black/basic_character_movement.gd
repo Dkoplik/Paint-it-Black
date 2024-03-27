@@ -28,8 +28,10 @@ func _ready() -> void:
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
-	_has_movement_data = Utilities.check_resource(movement_data, "BasicMovementData", warnings)
-	_has_character_body = Utilities.check_reference(character_body, "CharacterBody2D", warnings)
+
+	_has_movement_data = Utilities.check_resource(movement_data, &"BasicMovementData", warnings)
+	_has_character_body = Utilities.check_reference(character_body, &"CharacterBody2D", warnings)
+
 	return warnings
 
 
@@ -37,7 +39,7 @@ func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
 		return
 	if not _has_character_body:
-		# Спам в консоль, неплохо бы создать какой-то отдельный класс-логгер
+		# Спам в консоль, пока хз как лучше сделать
 		push_error("Невозможно осуществить move_and_slide() без character_body")
 		return
 

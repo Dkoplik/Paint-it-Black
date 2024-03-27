@@ -14,6 +14,7 @@ signal hurt(attack: BasicIncomingAttack)
 
 ## Ссылка на узел-компоненту [HP], автоматически ищется среди дочерних узлов.
 var _hp: HP = null
+## Есть ли ссылка на компоненту [HP].
 var _has_hp := false
 
 
@@ -27,9 +28,10 @@ func _ready() -> void:
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
-	_hp = Utilities.check_single_component(self, "HP", warnings)
-	if _hp != null:
-		_has_hp = true
+
+	_hp = Utilities.check_single_component(self, &"HP", warnings)
+	if _hp != null: _has_hp = true
+
 	return warnings
 
 
@@ -40,7 +42,8 @@ func receive_attack(attack: BasicIncomingAttack) -> void:
 		return
 
 	hurt.emit(attack)
-	if _has_hp:
-		_hp.deal_damage(attack.damage)
-	else:
+	if not _has_hp:
 		push_error("Невозможно осуществить receive_attack() без компоненты hp")
+		return
+
+	_hp.deal_damage(attack.damage)

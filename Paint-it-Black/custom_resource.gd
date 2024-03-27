@@ -10,7 +10,8 @@ extends Resource
 ## Строковое представление название класса. Используется для методов,
 ## связанных с использованием названия кастомного класса, например
 ## [method get_class_name].
-var _class_name : StringName = &"CustomResource": get = get_class_name
+var _class_name: StringName = &"CustomResource":
+	get = get_class_name
 # Единственное, я не нашёл способа проверить валидность переменной
 # _class_name во время запуска. То есть, во время наследования можно забыть
 # про необходимость задать новое значение для _class_name и никакой ошибки не

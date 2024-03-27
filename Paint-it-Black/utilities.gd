@@ -26,9 +26,13 @@ static func check_resource(
 		return false
 	if not is_class_name(resource, class_name_str):
 		if Engine.is_editor_hint():
-			warnings.append("Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str])
+			warnings.append(
+				"Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str]
+			)
 		else:
-			push_error("Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str])
+			push_error(
+				"Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str]
+			)
 		return false
 	return true
 
@@ -50,9 +54,13 @@ static func check_reference(
 		return false
 	if not is_class_name(object, class_name_str):
 		if Engine.is_editor_hint():
-			warnings.append("Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str])
+			warnings.append(
+				"Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str]
+			)
 		else:
-			push_error("Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str])
+			push_error(
+				"Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str]
+			)
 		return false
 	return true
 

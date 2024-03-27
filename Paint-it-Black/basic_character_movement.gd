@@ -7,9 +7,11 @@ extends CustomNode
 ## В качестве параметров используются данные из [BasicMovementData].
 
 ## Ресурс [BasicMovementData], необходим для работы данной компоненты.
-@export var movement_data: BasicMovementData: set = set_movement_data
+@export var movement_data: BasicMovementData:
+	set = set_movement_data
 ## Ссылка на [CharacterBody2D], который данная компонента будет двигать.
-@export var character_body: CharacterBody2D: set = set_character_body
+@export var character_body: CharacterBody2D:
+	set = set_character_body
 
 ## Флаг наличия ресурса в переменной [member movement_data].
 var _has_movement_data := false

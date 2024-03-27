@@ -32,7 +32,8 @@ func _init() -> void:
 func _ready() -> void:
 	update_configuration_warnings()
 
-	if Engine.is_editor_hint(): return
+	if Engine.is_editor_hint():
+		return
 
 	_custom_speed = (
 		_animation_player.get_animation("hit_box_attack").length / attack_data.duration
@@ -46,10 +47,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 	Utilities.check_reference(movement_component, &"PlayerMovement", warnings)
 
 	_hit_box = Utilities.check_single_component(self, &"HitBox", warnings)
-	if _hit_box != null: _has_hit_hox = true
+	if _hit_box != null:
+		_has_hit_hox = true
 
 	_animation_player = Utilities.check_single_component(self, &"AnimationPlayer", warnings)
-	if _animation_player != null: _has_animation_player = true
+	if _animation_player != null:
+		_has_animation_player = true
 
 	return warnings
 
@@ -82,7 +85,8 @@ func set_movement_component(value: PlayerMovement) -> void:
 ## Общий метод для осуществления атаки в направлении [param direction] с
 ## заданным импульсом [param impulse].
 func _attack(direction: Vector2, impulse: float) -> void:
-	if not _is_attack_ready: return
+	if not _is_attack_ready:
+		return
 
 	_is_attack_ready = false
 

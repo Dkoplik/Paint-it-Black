@@ -6,7 +6,9 @@ extends CustomResource
 ## конкретные типы атак должны наследоваться от этого класса.
 
 ## Количество наносимого урона.
-var damage: int: get = get_damage, set = set_damage
+var damage: int:
+	get = get_damage,
+	set = set_damage
 
 
 func _init() -> void:

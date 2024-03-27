@@ -30,7 +30,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 
 	_hp = Utilities.check_single_component(self, &"HP", warnings)
-	if _hp != null: _has_hp = true
+	if _hp != null:
+		_has_hp = true
 
 	return warnings
 

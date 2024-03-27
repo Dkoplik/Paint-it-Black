@@ -38,7 +38,9 @@ func _ready():
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
-	_has_hp_data = Utilities.check_reference(hp_data, "HPData", warnings)
+
+	_has_hp_data = Utilities.check_resource(hp_data, &"HPData", warnings)
+
 	return warnings
 
 

@@ -20,7 +20,7 @@ extends Node
 ## Проверяет наличие корневого узла.
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		pass
+		assert(root_node, "Корневой узел отсутствует.")
 		# ToDo: проверить наличие корневого узла. Если он отсутствует, то
 		# прервать программу через assert.
 
@@ -36,7 +36,8 @@ func _move(_delta: float) -> void:
 	if !Engine.is_editor_hint():
 		# ToDo: получить направление, куда повёрнут корневой узел, и в этом
 		# Направлении сместить корневой узел на значение speed * delta.
-		pass
+		var direction = Vector2(cos(root_node.rotation), sin(root_node.rotation))
+		root_node.position += direction * speed * delta
 
 
 ## Setter для поля [member speed]. Не позволяет установить отрицательную
@@ -48,7 +49,7 @@ func set_speed(value: float) -> void:
 
 ## Getter для поля [member speed].
 func get_speed() -> float:
-	return 0  # ToDo: просто возвращает скорость.
+	return speed # ToDo: просто возвращает скорость.
 
 
 ## Setter для поля [member root_node]. Не позволяет изменить корневой узел во
@@ -58,22 +59,14 @@ func set_root(value: Node2D) -> void:
 		# ToDo: если root_node ещё Null, то присвоить новое значение, иначе не
 		# менять значение переменной и бросить ошибку через push_error() о
 		# попытке изменить корневой узел.
-		pass
+		if root_node == null:
+			root_node = value
+		else:
+			push_error("Попытка изменить корневой узел.")
 	else:
 		root_node = value
 
 
 ## Getter для поля [member root_node].
 func get_root() -> Node2D:
-	return null  # ToDo просто вернуть root_node
-
-
-## Возвращает название класса в строковом виде.
-func get_class_name() -> String:
-	return "ProjectileMovement"
-
-
-## Возвращает true, если указанная строка [param name] является названием
-## текущего класса или одного из его предков в строковом виде, иначе false
-func is_class_name(name: String) -> bool:
-	return name == get_class_name() or self.is_class(name)
+	return root_node # ToDo просто вернуть root_node

@@ -1,5 +1,5 @@
-extends BasicMovementData
 class_name PlayerMovementData
+extends BasicMovementData
 ## Набор параметров для класса [PlayerMovement].
 ##
 ## Этот ресурс содержит параметры для прыжка и скольжения, которые нужны для
@@ -18,3 +18,8 @@ class_name PlayerMovementData
 @export_range(0, 100, 0.1, "or_greater") var sliding_acceleration: float
 ## Максимальная развиваемая скорость скольжения
 @export_range(0, 100, 0.1, "or_greater") var max_sliding_speed: float
+
+
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "PlayerMovementData"

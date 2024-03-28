@@ -1,5 +1,5 @@
-extends Node
 class_name HP
+extends Node
 ## Узел, отвечающий за обработку очков здоровья.
 ##
 ## Данный узел отвечает за очки здоровья персонажей, то есть хранит их
@@ -18,7 +18,8 @@ signal hp_changed(previous_hp: int, new_hp: int)
 ## Текущее количество очков здоровья. При старте значение приравнивается
 ## значению [member initial_hp].
 var current_hp: int:
-	get = get_current_hp, set = set_current_hp
+	get = get_current_hp,
+	set = set_current_hp
 
 
 func _ready():
@@ -75,5 +76,16 @@ func deal_damage(value: int) -> int:
 
 ## Полностью убавляет количество текущих жизней [member current_hp], то
 ## есть приравнивает их к значению 0.
-func kill() ->  void:
+func kill() -> void:
 	current_hp = 0
+
+
+## Возвращает название класса в строковом виде.
+func get_class_name() -> String:
+	return "HP"
+
+
+## Возвращает true, если указанная строка [param name] является названием
+## текущего класса или одного из его предков в строковом виде, иначе false
+func is_class_name(name: String) -> bool:
+	return name == get_class_name() or self.is_class(name)

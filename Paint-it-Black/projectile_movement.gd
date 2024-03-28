@@ -1,6 +1,6 @@
 @tool
-extends Node
 class_name ProjectileMovement
+extends Node
 ## Этот класс отвечает за движение снарядов.
 ##
 ## [ProjectileMovement] содержит логику движения снарядов, при этом не является
@@ -9,10 +9,12 @@ class_name ProjectileMovement
 
 ## Постоянная скорость снаряда, с которой он движется.
 @export_range(0, 300, 0.1, "or_greater") var speed: float:
-	set = set_speed, get = get_speed
+	set = set_speed,
+	get = get_speed
 ## Корневой узел снаряда. Именно этот узел будет двигать данная компонента.
 @export var root_node: Node2D:
-	set = set_root, get = get_root
+	set = set_root,
+	get = get_root
 
 
 ## Проверяет наличие корневого узла.
@@ -30,7 +32,7 @@ func _process(delta) -> void:
 
 ## Выполняет движение [member root_node] по его направлению вперёд со скоростью
 ## [member speed].
-func _move(delta: float) -> void:
+func _move(_delta: float) -> void:
 	if !Engine.is_editor_hint():
 		# ToDo: получить направление, куда повёрнут корневой узел, и в этом
 		# Направлении сместить корневой узел на значение speed * delta.
@@ -41,7 +43,7 @@ func _move(delta: float) -> void:
 ## Setter для поля [member speed]. Не позволяет установить отрицательную
 ## скорость движения.
 func set_speed(value: float) -> void:
-	if (value >= 0):
+	if value >= 0:
 		speed = value
 
 

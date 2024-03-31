@@ -1,12 +1,22 @@
 @tool
 class_name PlayerAttack
-extends CustomNode
+extends CustomNode2D
 ## Этот класс отвечает за осуществление атаки игрока.
+##
+## Наследует [CustomNode2D] вместо [CustomNode] из-за ожидаемого наличия
+## [HitBox] в качестве дочернего узла. У простого [CustomNode] отсутствуют
+## координаты, из-за чего дочерние узлы не смогут их наследовать, что приведёт
+## к отделению [HitBox] по координатам от основного содержимого персонажа.
 
 ## Параметры атаки игрока.
 @export var attack_data: PlayerAttackData
 ## Компонента движения
 @export var movement_component: PlayerMovement
+
+# Есть ли ссылка на [PlayerAttackData].
+var _has_attack_data := false
+# Есть ли ссылка на [PlayerMovement].
+var _has_movement_component := false
 
 ## [HitBox] данной атаки.
 var _hit_box: HitBox
@@ -30,9 +40,13 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	update_configuration_warnings()
+	super()
 
 	if Engine.is_editor_hint():
+		return
+
+	if not _has_animation_player:
+		push_error("Невозможно изменять hitbox атаки без _animation_player")
 		return
 
 	_custom_speed = (
@@ -40,11 +54,9 @@ func _ready() -> void:
 	)
 
 
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: PackedStringArray = []
-
-	Utilities.check_resource(attack_data, &"PlayerAttackData", warnings)
-	Utilities.check_reference(movement_component, &"PlayerMovement", warnings)
+func check_configuration(warnings: PackedStringArray = []) -> bool:
+	_has_attack_data = Utilities.check_resource(attack_data, &"PlayerAttackData", warnings)
+	_has_movement_component = Utilities.check_reference(movement_component, &"PlayerMovement", warnings)
 
 	_hit_box = Utilities.check_single_component(self, &"HitBox", warnings)
 	if _hit_box != null:
@@ -53,8 +65,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	_animation_player = Utilities.check_single_component(self, &"AnimationPlayer", warnings)
 	if _animation_player != null:
 		_has_animation_player = true
-
-	return warnings
+	
+	return _has_attack_data and _has_movement_component and _has_hit_hox and _has_animation_player
 
 
 ## Осуществляет атаку в направлении [param direction] с сильным импульсом.
@@ -85,6 +97,18 @@ func set_movement_component(value: PlayerMovement) -> void:
 ## Общий метод для осуществления атаки в направлении [param direction] с
 ## заданным импульсом [param impulse].
 func _attack(direction: Vector2, impulse: float) -> void:
+	if not _has_hit_hox:
+		push_warning("Невозможно осуществить атаку без _hit_box")
+		return
+	if not _has_animation_player:
+		push_warning("Невозможно осуществить атаку без _animation_player")
+		return
+	if not _has_attack_data:
+		push_warning("Невозможно осуществить атаку без attack_data")
+		return
+	if not _has_movement_component:
+		push_warning("Невозможно осуществить атаку без movement_component")
+		return
 	if not _is_attack_ready:
 		return
 
@@ -112,6 +136,9 @@ func _on_hit_box_hit_solid_surface(_solid_surface: Node2D) -> void:
 ## Приватный метод, преждевремменно завершает анимацию. При этом анимация
 ## "отзеркаливается" к завершению, а не просто прерывается.
 func _advance_animation():
+	if not _has_animation_player:
+		print("Невозможно прервать атаку без _animation_player")
+
 	if _animation_player.is_playing():
 		var advance_seconds: float
 		advance_seconds = _animation_player.get_animation("hit_box_attack").length

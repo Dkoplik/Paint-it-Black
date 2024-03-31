@@ -27,7 +27,7 @@ var _has_attack_data := false
 
 
 func _init() -> void:
-	_class_name = &"BasicHitBox"
+	_class_name = &"HitBox"
 	# Соединяет сигналы с самим же объектом, дабы автоматизировать расширенный
 	# функционал Area2D.
 	connect("area_entered", _on_area_entered)

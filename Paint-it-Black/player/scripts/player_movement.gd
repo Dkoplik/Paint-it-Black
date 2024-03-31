@@ -18,29 +18,35 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 	return _has_movement_data && _has_character_body
 
 
-## Осуществляет прыжок игрока от пола или от стены, в зависимости от состояния
-## игрока [member character_body].
+## Осуществляет обычный прыжок или прыжок от стены, если [member character_body]
+## находится на стене.
 func jump() -> void:
-	# ToDo неплохо бы простой прыжок и прыжок от стены разбить на 2 отдельные
-	# приватные функции
-	if character_body.is_on_floor():  # простой прыжок
-		character_body.velocity.y -= movement_data.jump_speed
-	elif character_body.is_on_wall():  # прыжок от стены
-		var wall_position = character_body.get_wall_normal()
-		var jump_direction = Vector2(
-			cos(deg_to_rad(90 - movement_data.jump_angle)) * movement_data.jump_speed,
-			sin(deg_to_rad(-90 + movement_data.jump_angle)) * movement_data.jump_speed
-		)  #направление прыжка
-		if wall_position.x > 0:  # стена слева
-			character_body.velocity += jump_direction
-		else:
-			jump_direction.x *= -1
-			character_body.velocity += jump_direction
+	if character_body.is_on_wall():
+		_wall_jump()
+	else:
+		_standard_jump()
+
+
+## Осуществляет обычный прыжок.
+func _standard_jump() -> void:
+	add_velocity(Vector2(0, -movement_data.jump_speed))
+
+
+## Осуществляет прыжок от стены.
+func _wall_jump() -> void:
+	var wall_normal: Vector2 = character_body.get_wall_normal()
+	var jump_velocity := Vector2(
+		cos(deg_to_rad(90 - movement_data.jump_angle)) * movement_data.jump_speed,
+		sin(deg_to_rad(-90 + movement_data.jump_angle)) * movement_data.jump_speed
+	)
+	jump_velocity.x *= wall_normal.x
+	add_velocity(jump_velocity)
 
 
 ## Применяет к персонажу [member character_body] гравитацию с ускорением в
 ## зависимости от 2-х ситуаций: скольжение по стене или свободное падение.
 func _apply_gravity(delta_time: float) -> void:
+	# ToDo неплохо бы все обращения к скорости игрока заменить на add_velocity
 	if not character_body.is_on_floor():
 		if character_body.is_on_wall():
 			character_body.velocity.y = _calculate_sliding_speed(delta_time)

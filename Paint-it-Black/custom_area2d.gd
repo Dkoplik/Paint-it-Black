@@ -28,3 +28,9 @@ func get_class_name() -> StringName:
 ## текущего класса или одного из его предков в строковом виде, иначе false.
 func is_class_name(string_name: StringName) -> bool:
 	return (string_name == _class_name) or self.is_class(string_name)
+
+
+## Проверка конфигурации узла, выполняется как в редакторе, так и в игре.
+func check_configuration(warnings: PackedStringArray = []) -> bool:
+	push_warning("check_configuration не переопределён")
+	return false

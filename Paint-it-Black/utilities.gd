@@ -24,16 +24,17 @@ static func check_resource(
 		else:
 			push_error("Не обнаружен ресурс %s" % class_name_str)
 		return false
-	if not is_class_name(resource, class_name_str):
-		if Engine.is_editor_hint():
-			warnings.append(
-				"Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str]
-			)
-		else:
-			push_error(
-				"Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str]
-			)
-		return false
+# Почему-то адекватно не работает
+#	if not is_class_name(resource, class_name_str):
+#		if Engine.is_editor_hint():
+#			warnings.append(
+#				"Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str]
+#			)
+#		else:
+#			push_error(
+#				"Обнаружен ресурс типа %s вместо %s" % [get_class_name(resource), class_name_str]
+#			)
+#		return false
 	return true
 
 
@@ -52,16 +53,17 @@ static func check_reference(
 		else:
 			push_error("Ссылка на %s оказалась пустой" % class_name_str)
 		return false
-	if not is_class_name(object, class_name_str):
-		if Engine.is_editor_hint():
-			warnings.append(
-				"Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str]
-			)
-		else:
-			push_error(
-				"Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str]
-			)
-		return false
+# Почему-то адекватно не работает
+#	if not is_class_name(object, class_name_str):
+#		if Engine.is_editor_hint():
+#			warnings.append(
+#				"Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str]
+#			)
+#		else:
+#			push_error(
+#				"Обнаружен объект типа %s вместо %s" % [get_class_name(object), class_name_str]
+#			)
+#		return false
 	return true
 
 

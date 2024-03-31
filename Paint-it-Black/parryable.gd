@@ -18,15 +18,9 @@ func _init() -> void:
 	_class_name = &"Parryable"
 
 
-## Проверяет наличие корневого узла.
-func _ready() -> void:
-	update_configuration_warnings()
-
-
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: PackedStringArray = []
+func check_configuration(warnings: PackedStringArray = []) -> bool:
 	_has_root_node = Utilities.check_reference(root_node, "Node2D", warnings)
-	return warnings
+	return _has_root_node
 
 
 ## Получает данные об атаке и разворачивает снаряд в направлении атаки.

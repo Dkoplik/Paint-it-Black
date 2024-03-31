@@ -24,19 +24,6 @@ func _init() -> void:
 	_class_name = &"BasicCharacterMovement"
 
 
-func _ready() -> void:
-	update_configuration_warnings()
-
-
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: PackedStringArray = []
-
-	_has_movement_data = Utilities.check_resource(movement_data, &"BasicMovementData", warnings)
-	_has_character_body = Utilities.check_reference(character_body, &"CharacterBody2D", warnings)
-
-	return warnings
-
-
 func _physics_process(delta) -> void:
 	if Engine.is_editor_hint():
 		return
@@ -47,6 +34,12 @@ func _physics_process(delta) -> void:
 
 	_apply_gravity(delta)
 	character_body.move_and_slide()
+
+
+func check_configuration(warnings: PackedStringArray = []) -> bool:
+	_has_movement_data = Utilities.check_resource(movement_data, &"BasicMovementData", warnings)
+	_has_character_body = Utilities.check_reference(character_body, &"CharacterBody2D", warnings)
+	return _has_movement_data && _has_character_body
 
 
 ## Setter для поля [member movement_data]. Обновляет ошибки конфигурации.

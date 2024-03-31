@@ -1,3 +1,4 @@
+@tool
 class_name PlayerMovement
 extends BasicCharacterMovement
 ## Этот класс отвечает за движение игрока.
@@ -11,13 +12,10 @@ func _init() -> void:
 	_class_name = &"PlayerMovement"
 
 
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: PackedStringArray = []
-
+func check_configuration(warnings: PackedStringArray = []) -> bool:
 	_has_movement_data = Utilities.check_resource(movement_data, &"PlayerMovementData", warnings)
 	_has_character_body = Utilities.check_reference(character_body, &"CharacterBody2D", warnings)
-
-	return warnings
+	return _has_movement_data && _has_character_body
 
 
 ## Осуществляет прыжок игрока от пола или от стены, в зависимости от состояния

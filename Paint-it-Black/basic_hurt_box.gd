@@ -22,18 +22,11 @@ func _init():
 	_class_name = &"BasicHurtBox"
 
 
-func _ready() -> void:
-	update_configuration_warnings()
-
-
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: PackedStringArray = []
-
+func check_configuration(warnings: PackedStringArray = []) -> bool:
 	_hp = Utilities.check_single_component(self, &"HP", warnings)
 	if _hp != null:
 		_has_hp = true
-
-	return warnings
+	return _has_hp
 
 
 ## Принимает входящую атаку, испускает сигнал [signal hurt] и осуществляет

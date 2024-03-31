@@ -25,6 +25,6 @@ func get_damage() -> int:
 ## [method @GlobalScope.push_error].
 func set_damage(value: int) -> void:
 	if value < 0:
-		push_error("Попытка присвоить отрицательный урон в %s" % _class_name)
+		push_error("Попытка присвоить отрицательный урон")
 		return
 	damage = value

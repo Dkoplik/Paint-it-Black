@@ -31,17 +31,14 @@ func _init() -> void:
 
 
 func _ready():
-	update_configuration_warnings()
+	super()
 	if _has_hp_data:
 		_current_hp = hp_data.initial_hp
 
 
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: PackedStringArray = []
-
+func check_configuration(warnings: PackedStringArray = []) -> bool:
 	_has_hp_data = Utilities.check_resource(hp_data, &"HPData", warnings)
-
-	return warnings
+	return _has_hp_data
 
 
 ## Setter для [member hp_data]. Обновляет ошибки конфигурации.

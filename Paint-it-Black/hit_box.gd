@@ -1,3 +1,4 @@
+@tool
 class_name HitBox
 extends CustomArea2D
 ## Основной hit-box в игре, обнаруживает пересечения с [BasicHurtBox] и его
@@ -20,7 +21,7 @@ signal hit_solid_surface(solid_surface: Node2D)
 
 ## Параметры атаки, которые будут переданы в [BasicHurtBox] для последующей
 ## обработки.
-var _attack_data: BasicIncomingAttack
+var attack_data: BasicIncomingAttack
 ## Есть ли ссылка на [member attack_data].
 var _has_attack_data := false
 
@@ -33,9 +34,10 @@ func _init() -> void:
 	connect("body_entered", _on_body_entered)
 
 
-func _ready():
-	if _attack_data != null:
+func check_configuration(warnings: PackedStringArray = []) -> bool:
+	if attack_data != null:
 		_has_attack_data = true
+	return _has_attack_data
 
 
 ## Обрабатывает пересечение с [Area2D]: если [Area2D] является
@@ -48,7 +50,7 @@ func _on_area_entered(area: Area2D) -> void:
 			if !_has_attack_data:
 				push_error("Невозможно осуществить _on_area_entered() без BasicIncomingAttack")
 				return
-			area.receive_attack(_attack_data)
+			area.receive_attack(attack_data)
 
 
 ## Обнаруживает пересечение с твёрдой поверхностью, испускает сигнал

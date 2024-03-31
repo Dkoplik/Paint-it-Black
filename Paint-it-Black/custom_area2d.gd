@@ -19,6 +19,18 @@ var _class_name: StringName = &"CustomArea2D":
 # родительского.
 
 
+func _ready():
+	# Автоматический запуск проверки конфигурации в игре	
+	check_configuration()
+
+
+func _get_configuration_warnings():
+	# Автоматический запуск проверки конфигурации в редакторе
+	var warnings: PackedStringArray = []
+	check_configuration(warnings)
+	return warnings
+
+
 ## Возвращает название класса в виде уникальной строки [StringName].
 func get_class_name() -> StringName:
 	return _class_name

@@ -6,6 +6,11 @@ extends CustomNode
 ## Эта компонента содержит реализацию движения влево/вправо и падения персонажа.
 ## В качестве параметров используются данные из [BasicMovementData].
 
+## Персонаж смотрит направо
+signal character_look_right
+## Персонаж смотрит налево
+signal character_look_left
+
 ## Ресурс [BasicMovementData], необходим для работы данной компоненты.
 @export var movement_data: BasicMovementData:
 	set = set_movement_data
@@ -66,6 +71,11 @@ func move_in_direction(direction: Vector2) -> void:
 	if not _has_movement_data:
 		push_error("Невозможно осуществить move_in_direction() без movement_data")
 		return
+
+	if direction.x > 0:
+		character_look_right.emit()
+	if direction.x < 0:
+		character_look_left.emit()
 
 	character_body.velocity.x = _calculate_speed_in_direction(direction)
 

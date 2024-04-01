@@ -23,23 +23,6 @@ var _has_attack_component := false
 var _has_state_chart := false
 
 
-## Обработка управления игрока
-func _unhandled_input(event):
-	if Engine.is_editor_hint():
-		return
-
-	if not _has_movement_component:
-		push_error("Невозможно обработать движение без _movement_component")
-		return
-
-	# ToDo надо обрабатывать в сигнале state_unhandled_input из той ветки, в пределах
-	# которой всегда можно совершить атаку. На данный момент в StateChart я не добавил
-	# состояние атаки, поэтому не уверен, как лучше сделать.
-	# Атака
-	if event.is_action_pressed("attack"):
-		attack_component.attack(get_viewport().get_mouse_position() - movement_component.character_body.position)
-
-
 func check_configuration(warnings: PackedStringArray = []) -> bool:
 	_has_movement_component = Utilities.check_reference(movement_component, "PlayerMovement", warnings)
 	_has_attack_component = Utilities.check_reference(attack_component, "PlayerAttack", warnings)
@@ -78,7 +61,7 @@ func _on_jump_fall_states_state_physics_processing(delta):
 	if not _has_movement_component:
 		push_error("Невозможно обработать текущее состояние игрока без _movement_component")
 		return
-	
+
 	if movement_component.character_body.is_on_floor():
 		state_chart.send_event("land")
 	elif movement_component.character_body.is_on_wall():
@@ -97,9 +80,43 @@ func _on_can_jump_state_unhandled_input(event):
 		if not _has_movement_component:
 			push_error("Невозможно совершить прыжок без _movement_component")
 			return
-		
+
 		movement_component.jump()
 		# Необходима небольшая пауза, иначе игрок не успеет оторваться от земли,
 		# из-за чего из состояния "jump" сразу же перейдёт в "grounded".
 		await Utilities.wait_for(0.05)
 		state_chart.send_event("jump")
+
+
+## Обработка сильной атаки
+func _on_can_strong_attack_state_unhandled_input(event):
+	if Engine.is_editor_hint():
+		return
+
+	if event.is_action_pressed("attack"):
+		if not _has_movement_component:
+			push_error("Невозможно совершить атаку без _movement_component")
+			return
+		var attack_direction: Vector2 = get_viewport().get_mouse_position() - movement_component.character_body.position
+		attack_component.strong_impulse_attack(attack_direction)
+
+
+## Обработка слабой атаки
+func _on_can_weak_attack_state_unhandled_input(event):
+	if Engine.is_editor_hint():
+		return
+
+	if event.is_action_pressed("attack"):
+		if not _has_movement_component:
+			push_error("Невозможно совершить атаку без _movement_component")
+			return
+		var attack_direction: Vector2 = get_viewport().get_mouse_position() - movement_component.character_body.position
+		attack_component.weak_impulse_attack(attack_direction)
+
+
+func _on_player_attack_attack():
+	state_chart.send_event("attack")
+
+
+func _on_player_attack_attack_ended():
+	state_chart.send_event("attack_end")

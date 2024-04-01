@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=20 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
@@ -13,12 +13,137 @@
 [ext_resource type="Script" path="res://hit_box.gd" id="10_urtlw"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="11_2qsfj"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="11_6k34h"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/history_state.gd" id="14_q66h4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_20xhv"]
 size = Vector2(20, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtmv3"]
-size = Vector2(47, 20)
+size = Vector2(26, 20)
+
+[sub_resource type="Animation" id="Animation_ilts5"]
+resource_name = "hitbox_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(13, -0.25, 0, 0.25, 0, 28, -0.25, 0, 0.25, 0, 13, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shape:size:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(26, -0.25, 0, 0.25, 0, 56, -0.25, 0, 0.25, 0, 26, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shape:size:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+
+[sub_resource type="Animation" id="Animation_wpmyo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(13, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shape:size:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(26, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shape:size:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fmbkw"]
+_data = {
+"RESET": SubResource("Animation_wpmyo"),
+"hitbox_animation": SubResource("Animation_ilts5")
+}
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 top_level = true
@@ -26,7 +151,7 @@ collision_mask = 4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
-animation = &"idle"
+animation = &"attack_left"
 
 [node name="CharacterBodyShape" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
@@ -53,14 +178,23 @@ character_body = NodePath("..")
 script = ExtResource("7_bi60k")
 attack_data = ExtResource("10_j7iwd")
 movement_component = NodePath("../PlayerMovement")
+animation_name = &"hitbox_animation"
 
 [node name="HitBox" type="Area2D" parent="PlayerAttack"]
+position = Vector2(0, -10)
 script = ExtResource("10_urtlw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerAttack/HitBox"]
-position = Vector2(20.5, -11)
+[node name="HitBoxShape" type="CollisionShape2D" parent="PlayerAttack/HitBox"]
+position = Vector2(13, 0)
 shape = SubResource("RectangleShape2D_qtmv3")
+disabled = true
 debug_color = Color(0.988235, 0, 0, 0.419608)
+
+[node name="HitBoxShapeAnimation" type="AnimationPlayer" parent="PlayerAttack"]
+root_node = NodePath("../HitBox/HitBoxShape")
+libraries = {
+"": SubResource("AnimationLibrary_fmbkw")
+}
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("9_2qwus")
@@ -142,88 +276,151 @@ script = ExtResource("11_6k34h")
 to = NodePath("../../Grounded")
 event = &"land"
 
+[node name="AttackStates" type="Node" parent="StateChart/ParallelState/LogicStates"]
+script = ExtResource("10_pcuc3")
+initial_state = NodePath("CanAttack")
+
+[node name="Attacking" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates"]
+editor_description = "Игрок находится в состоянии атаки. Пока текущая атака не закончилась, новую начать нельзя."
+script = ExtResource("11_2qsfj")
+
+[node name="OnAttackEnd" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/Attacking"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../CanAttack/CanWeakAttack")
+event = &"attack_end"
+
+[node name="CanAttack" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates"]
+script = ExtResource("10_pcuc3")
+initial_state = NodePath("CanWeakAttack")
+
+[node name="OnAttack" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/CanAttack"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../Attacking")
+event = &"attack"
+
+[node name="CanStrongAttack" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/CanAttack"]
+script = ExtResource("11_2qsfj")
+
+[node name="CanWeakAttack" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/CanAttack"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnLand" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanWeakAttack"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../CanStrongAttack")
+event = &"land"
+
+[node name="OnWallCollision" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanWeakAttack"]
+editor_description = "Игрок начал скользить по стене."
+script = ExtResource("11_6k34h")
+to = NodePath("../../CanStrongAttack")
+event = &"wall_collision"
+
 [node name="AnimationStates" type="Node" parent="StateChart/ParallelState"]
 editor_description = "Эта ветка состояний отвечает только за анимации и не связана с логикой механик игрока.
 
 Суть в том, что анимации не всегда совпадают с логическими состояниями, например, с точки зрения логики нахождение в воздухе является единым состоянием, а для анимаций различается сам прыжок и падение."
 script = ExtResource("10_pcuc3")
+initial_state = NodePath("NonCombatAnimations")
+
+[node name="NonCombatAnimations" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+editor_description = "Эта ветка отвечает за анимации, которые не связаны с боем: ходьба, прыжок, падение и подобное."
+script = ExtResource("10_pcuc3")
 initial_state = NodePath("MovingAnimations")
 
-[node name="MovingAnimations" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+[node name="GoToLastAnimation" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations"]
+script = ExtResource("14_q66h4")
+default_state = NodePath("../MovingAnimations/IdleAnimation")
+
+[node name="OnAttack" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../Attack")
+event = &"attack"
+
+[node name="MovingAnimations" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations"]
 editor_description = "Анимации, связанные с движением игрока по горизонтали."
 script = ExtResource("10_pcuc3")
 initial_state = NodePath("IdleAnimation")
 
-[node name="OnJump" type="Node" parent="StateChart/ParallelState/AnimationStates/MovingAnimations"]
+[node name="OnJump" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations"]
 script = ExtResource("11_6k34h")
 to = NodePath("../../AirborneAnimations/Jump")
 event = &"jump"
 
-[node name="OnFall" type="Node" parent="StateChart/ParallelState/AnimationStates/MovingAnimations"]
+[node name="OnFall" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations"]
 script = ExtResource("11_6k34h")
 to = NodePath("../../AirborneAnimations/Falling")
 event = &"fall"
 
-[node name="IdleAnimation" type="Node" parent="StateChart/ParallelState/AnimationStates/MovingAnimations"]
+[node name="IdleAnimation" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations"]
 script = ExtResource("11_2qsfj")
 
-[node name="OnStartMoving" type="Node" parent="StateChart/ParallelState/AnimationStates/MovingAnimations/IdleAnimation"]
+[node name="OnStartMoving" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/IdleAnimation"]
 script = ExtResource("11_6k34h")
-to = NodePath("../../MovingAnimation")
+to = NodePath("../../RunAnimation")
 event = &"start_moving"
 
-[node name="MovingAnimation" type="Node" parent="StateChart/ParallelState/AnimationStates/MovingAnimations"]
+[node name="RunAnimation" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations"]
 script = ExtResource("11_2qsfj")
 
-[node name="OnStopMoving" type="Node" parent="StateChart/ParallelState/AnimationStates/MovingAnimations/MovingAnimation"]
+[node name="OnStopMoving" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/RunAnimation"]
 script = ExtResource("11_6k34h")
 to = NodePath("../../IdleAnimation")
 event = &"stop_moving"
 
-[node name="AirborneAnimations" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+[node name="AirborneAnimations" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations"]
 editor_description = "Эта ветка отвечает за анимации при движении игрока по вертикали (прыжок, падение, скольжение по стенам)."
 script = ExtResource("10_pcuc3")
 initial_state = NodePath("Falling")
 
-[node name="OnLand" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations"]
+[node name="OnLand" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations"]
 script = ExtResource("11_6k34h")
 to = NodePath("../../MovingAnimations/IdleAnimation")
 event = &"land"
 
-[node name="Jump" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations"]
-script = ExtResource("11_2qsfj")
-
-[node name="OnFall" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations/Jump"]
+[node name="OnFall" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations"]
 script = ExtResource("11_6k34h")
-to = NodePath("../../Falling")
+to = NodePath("../Falling")
 event = &"fall"
 
-[node name="OnWallCollision" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations/Jump"]
+[node name="OnWallCollision" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations"]
 script = ExtResource("11_6k34h")
-to = NodePath("../../OnWall")
+to = NodePath("../OnWall")
 event = &"wall_collision"
 
-[node name="Falling" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations"]
+[node name="Jump" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations"]
 script = ExtResource("11_2qsfj")
 
-[node name="OnWallCollision" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations/Falling"]
-script = ExtResource("11_6k34h")
-to = NodePath("../../OnWall")
-event = &"wall_collision"
-
-[node name="OnWall" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations"]
+[node name="Falling" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations"]
 script = ExtResource("11_2qsfj")
 
-[node name="OnJump" type="Node" parent="StateChart/ParallelState/AnimationStates/AirborneAnimations/OnWall"]
+[node name="OnWall" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnJump" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnWall"]
 script = ExtResource("11_6k34h")
 to = NodePath("../../Jump")
 event = &"jump"
 
+[node name="Attack" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnAttackEnd" type="Node" parent="StateChart/ParallelState/AnimationStates/Attack"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../NonCombatAnimations/GoToLastAnimation")
+event = &"attack_end"
+
+[connection signal="character_look_left" from="PlayerMovement" to="PlayerAnimationController" method="player_look_left"]
+[connection signal="character_look_right" from="PlayerMovement" to="PlayerAnimationController" method="player_look_right"]
+[connection signal="attack" from="PlayerAttack" to="PlayerController" method="_on_player_attack_attack"]
+[connection signal="attack_ended" from="PlayerAttack" to="PlayerController" method="_on_player_attack_attack_ended"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/MovingStates" to="PlayerController" method="_on_moving_states_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/Jump&FallStates" to="PlayerController" method="_on_jump_fall_states_state_physics_processing"]
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/Jump&FallStates/CanJump" to="PlayerController" method="_on_can_jump_state_unhandled_input"]
-[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/MovingAnimations/IdleAnimation" to="PlayerAnimationController" method="_on_idle_animation_state_entered"]
-[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/MovingAnimations/MovingAnimation" to="PlayerAnimationController" method="_on_moving_animation_state_entered"]
-[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/AirborneAnimations/Jump" to="PlayerAnimationController" method="_on_jump_state_entered"]
-[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/AirborneAnimations/Falling" to="PlayerAnimationController" method="_on_falling_state_entered"]
-[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/AirborneAnimations/OnWall" to="PlayerAnimationController" method="_on_on_wall_state_entered"]
+[connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanStrongAttack" to="PlayerController" method="_on_can_strong_attack_state_unhandled_input"]
+[connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanWeakAttack" to="PlayerController" method="_on_can_weak_attack_state_unhandled_input"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/IdleAnimation" to="PlayerAnimationController" method="_on_idle_animation_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/RunAnimation" to="PlayerAnimationController" method="_on_run_animation_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/Jump" to="PlayerAnimationController" method="_on_jump_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/Falling" to="PlayerAnimationController" method="_on_falling_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnWall" to="PlayerAnimationController" method="_on_on_wall_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/Attack" to="PlayerAnimationController" method="_on_attack_state_entered"]

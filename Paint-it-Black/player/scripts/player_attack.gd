@@ -8,10 +8,17 @@ extends CustomNode2D
 ## координаты, из-за чего дочерние узлы не смогут их наследовать, что приведёт
 ## к отделению [HitBox] по координатам от основного содержимого персонажа.
 
+## Была начата атака.
+signal attack
+## Атака закончилась.
+signal attack_ended
+
 ## Параметры атаки игрока.
 @export var attack_data: PlayerAttackData
 ## Компонента движения
 @export var movement_component: PlayerMovement
+## Название анимации хитбокса
+@export var animation_name: StringName
 
 # Есть ли ссылка на [PlayerAttackData].
 var _has_attack_data := false
@@ -50,7 +57,7 @@ func _ready() -> void:
 		return
 
 	_custom_speed = (
-		_animation_player.get_animation("hit_box_attack").length / attack_data.duration
+		_animation_player.get_animation(animation_name).length / attack_data.duration
 	)
 
 
@@ -65,7 +72,7 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 	_animation_player = Utilities.check_single_component(self, &"AnimationPlayer", warnings)
 	if _animation_player != null:
 		_has_animation_player = true
-	
+
 	return _has_attack_data and _has_movement_component and _has_hit_hox and _has_animation_player
 
 
@@ -113,6 +120,7 @@ func _attack(direction: Vector2, impulse: float) -> void:
 		return
 
 	_is_attack_ready = false
+	attack.emit()
 
 	# Импульс в заданном направлении
 	direction = direction.normalized()
@@ -121,10 +129,11 @@ func _attack(direction: Vector2, impulse: float) -> void:
 	# Вращение хитбокса в заданном направлении
 	_hit_box.look_at(direction + _hit_box.global_position)
 	# Анимация хитбокса во время атаки
-	_animation_player.play("hit_box_attack", -1, _custom_speed)
+	_animation_player.play(animation_name, -1, _custom_speed)
 
 	await get_tree().create_timer(attack_data.cooldown + attack_data.duration).timeout
 	_is_attack_ready = true
+	attack_ended.emit()
 
 
 ## Отменяет атаку при пересечении с твёрдой поверхностью.
@@ -141,6 +150,6 @@ func _advance_animation():
 
 	if _animation_player.is_playing():
 		var advance_seconds: float
-		advance_seconds = _animation_player.get_animation("hit_box_attack").length
+		advance_seconds = _animation_player.get_animation(animation_name).length
 		advance_seconds -= 2 * _animation_player.current_animation_position
 		_animation_player.advance(advance_seconds)

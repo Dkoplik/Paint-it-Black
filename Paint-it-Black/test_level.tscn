@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="1_uwsbl"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_hw8bi"]
 [ext_resource type="TileSet" uid="uid://begtbirhbccrw" path="res://test_tile_set.tres" id="2_k0l1u"]
-[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="4_1lccy"]
+[ext_resource type="PackedScene" uid="uid://s7hke7hh2dnc" path="res://enemies/basic_rifle_man/basic_rifle_man.tscn" id="5_1tjml"]
 
 [node name="TestLevel" type="Node"]
 
@@ -18,10 +18,5 @@ visible = false
 [node name="Player" parent="." instance=ExtResource("2_hw8bi")]
 position = Vector2(243, 295)
 
-[node name="StateChartDebugger" parent="." instance=ExtResource("4_1lccy")]
-offset_left = 513.0
-offset_top = 21.0
-offset_right = 513.0
-offset_bottom = 21.0
-scale = Vector2(0.451658, 0.451658)
-initial_node_to_watch = NodePath("../Player")
+[node name="BasicRifleMan" parent="." instance=ExtResource("5_1tjml")]
+position = Vector2(711, 366)

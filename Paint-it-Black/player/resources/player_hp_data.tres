@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HPData" load_steps=2 format=3 uid="uid://1t3p7jbrvaq"]
+
+[ext_resource type="Script" path="res://hp_data.gd" id="1_6mjqy"]
+
+[resource]
+script = ExtResource("1_6mjqy")
+max_hp = 3
+initial_hp = 3

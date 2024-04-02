@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="AttackData" load_steps=2 format=3 uid="uid://d3nq8t1u7i5np"]
+[gd_resource type="Resource" script_class="PlayerAttackData" load_steps=2 format=3 uid="uid://dchkf655ulbpo"]
 
-[ext_resource type="Script" path="res://attack_data.gd" id="1_3vjm6"]
+[ext_resource type="Script" path="res://player/resources/player_attack_data.gd" id="1_2btn8"]
 
 [resource]
-script = ExtResource("1_3vjm6")
-damage = 10
-knockback_velocity = Vector2(0, 0)
+script = ExtResource("1_2btn8")
+duration = 0.15
+cooldown = 0.1
+strong_impulse = 200.0
+weak_impulse = 50.0

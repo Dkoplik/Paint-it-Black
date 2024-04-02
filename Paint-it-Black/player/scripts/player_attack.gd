@@ -1,145 +1,155 @@
 @tool
-extends Node2D
 class_name PlayerAttack
-## Компонента атаки игрока.
+extends CustomNode2D
+## Этот класс отвечает за осуществление атаки игрока.
 ##
-## Этот узел отвечает за атаку игрока, предоставляя публичный метод
-## [method attack]. Для этого узла обязательны в качестве дочерних узлы
-## [HitBox] и [AnimationPlayer].
+## Наследует [CustomNode2D] вместо [CustomNode] из-за ожидаемого наличия
+## [HitBox] в качестве дочернего узла. У простого [CustomNode] отсутствуют
+## координаты, из-за чего дочерние узлы не смогут их наследовать, что приведёт
+## к отделению [HitBox] по координатам от основного содержимого персонажа.
 
+## Была начата атака.
+signal attack
+## Можно совершить новую атаку.
+signal attack_ready
 
-## Испускается, когда начинается атака.
-signal is_attacking
-
-
-## Данные об атаке, которые будут передаваться в [HurtBoxInterface].
-@export var attack_data: AttackData
-## Длительность атаки.
-@export_range(0, 5) var duration: float
-## Время между атаками.
-@export_range(0, 5) var cooldown: float
-## Величина импульса / толчка во время атаки.
-@export_range(0, 200, 0.1, "or_greater") var impulse: float
+## Параметры атаки игрока.
+@export var attack_data: PlayerAttackData
 ## Компонента движения
 @export var movement_component: PlayerMovement
+## Название анимации хитбокса
+@export var hit_box_animation_name: StringName
 
+# Есть ли ссылка на [PlayerAttackData].
+var _has_attack_data := false
+# Есть ли ссылка на [PlayerMovement].
+var _has_movement_component := false
 
 ## [HitBox] данной атаки.
 var _hit_box: HitBox
-## [AnimationPlayer] для изменения [HitBox] во время атаки.
+# Есть ли ссылка на [HitBox].
+var _has_hit_hox := false
+
+## Необходим для изменения формы [member _hit_box] во время атаки.
 var _animation_player: AnimationPlayer
+# Есть ли ссылка на [AnimationPlayer].
+var _has_animation_player := false
+
 ## Можно ли атаковать в данный момент? Необходим для cooldown'а атаки.
-var _is_attack_ready: bool = true
-## Скорость проигрывания анимации атаки, чтобы его длительность была
-## [member duration].
+var _is_attack_ready := true
+## Скорость проигрывания анимации атаки, чтобы его длительность составляла
+## [member PlayerAttackData.duration].
 var _custom_speed: float
 
 
-## Проверка конфигурации узла на старте.
-func _ready():
-	# Проверка наличия данных
-	_check_attack_data()
-	
-	# Проверка наличия компонент
-	_check_hit_box()
-	_check_animation_player()
-	
-	if not Engine.is_editor_hint():
-		_custom_speed = _animation_player.get_animation("hit_box_attack").length / duration
+func _init() -> void:
+	_class_name = &"PlayerAttack"
 
 
-## Обработка ошибок конфигурации
-func _get_configuration_warnings() -> PackedStringArray:
-	# Ошибки конфигурации
-	var warnings: PackedStringArray = []
-	
-	# Проверка наличия данных
-	_check_attack_data(warnings)
-	
-	# Проверка наличия компонент
-	_check_hit_box(warnings)
-	_check_animation_player(warnings)
-	
-	return warnings
+func _ready() -> void:
+	super()
+
+	if Engine.is_editor_hint():
+		return
+
+	if not _has_animation_player:
+		push_error("Невозможно изменять hitbox атаки без _animation_player")
+		return
+
+	_custom_speed = (_animation_player.get_animation(hit_box_animation_name).length / attack_data.duration)
 
 
-## Осуществление атаки в заданном направлении, если это возможно.
-# ToDo пока костыльная реализация.
-func attack(direction: Vector2) -> void:
-	if _is_attack_ready:
-		_is_attack_ready = false
-		is_attacking.emit()
-		
-		# Импульс в заданном направлении
-		direction = direction.normalized()
-		movement_component.add_velocity(direction * impulse)
-		
-		# Вращение хитбокса в заданном направлении
-		_hit_box.look_at(direction + _hit_box.global_position)
-		# Изменение хитбокса под атаку
-		_animation_player.play("hit_box_attack", -1, _custom_speed)
-		
-		await get_tree().create_timer(cooldown + duration).timeout
-		_is_attack_ready = true
+func check_configuration(warnings: PackedStringArray = []) -> bool:
+	_has_attack_data = Utilities.check_resource(attack_data, &"PlayerAttackData", warnings)
+	_has_movement_component = Utilities.check_reference(
+		movement_component, &"PlayerMovement", warnings
+	)
+
+	_hit_box = Utilities.check_single_component(self, &"HitBox", warnings)
+	if _hit_box != null:
+		_has_hit_hox = true
+
+	_animation_player = Utilities.check_single_component(self, &"AnimationPlayer", warnings)
+	if _animation_player != null:
+		_has_animation_player = true
+
+	return _has_attack_data and _has_movement_component and _has_hit_hox and _has_animation_player
 
 
-## Проверка наличия [HitBox] в качестве дочернего узла.
-func _check_hit_box(warnings: PackedStringArray = []) -> void:
-	var hit_box_components: Array =\
-		get_children().filter(func(node): return node is HitBox)
-	
-	if hit_box_components.size() > 1:
-		if Engine.is_editor_hint():
-			warnings.push_back("Обнаружено несколько компонент HitBox")
-		else:
-			assert(false, "Обнаружено несколько компонент HitBox")
-		_hit_box = null
-	elif hit_box_components.size() == 0:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не найдена компонента HitBox")
-		else:
-			assert(false, "Не найдена компонента HitBox")
-		_hit_box = null
-	else:
-		_hit_box = hit_box_components[0]
-	
-	_hit_box.attack_data = attack_data
+## Осуществляет атаку в направлении [param direction] с сильным импульсом.
+## Подобный импульс позволяет спокойно преодолевать гравитацию.
+func strong_impulse_attack(direction: Vector2) -> void:
+	_attack(direction, attack_data.strong_impulse)
 
 
-## Проверка наличия [AnimationPlayer] в качестве дочернего узла.
-func _check_animation_player(warnings: PackedStringArray = []) -> void:
-	var animation_players: Array =\
-		get_children().filter(func(node): return node is AnimationPlayer)
-	
-	if animation_players.size() > 1:
-		if Engine.is_editor_hint():
-			warnings.push_back("Обнаружено несколько компонент AnimationPlayer")
-		else:
-			assert(false, "Обнаружено несколько компонент AnimationPlayer")
-		_animation_player = null
-	elif animation_players.size() == 0:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не найдена компонента AnimationPlayer")
-		else:
-			assert(false, "Не найдена компонента AnimationPlayer")
-		_animation_player = null
-	else:
-		_animation_player = animation_players[0]
+## Осуществляет атаку в направлении [param direction] со слабым импульсом.
+## Такой импульс не позволяет набирать высоту против гравитации и, как максимум,
+## способен поддерживать персонажа примерно на одной высоте.
+func weak_impulse_attack(direction: Vector2) -> void:
+	_attack(direction, attack_data.weak_impulse)
 
 
-## Проверка наличия [PlayerMovement].
-func _check_player_movement(warnings: PackedStringArray = []) -> void:
-	if movement_component == null:
-		if Engine.is_editor_hint():
-			warnings.push_back("Отсутствует ссылка на PlayerMovement")
-		else:
-			assert(false, "Отсутствует ссылка на PlayerMovement")
+## Setter для поля [member attack_data]. Обновляет ошибки конфигурации.
+func set_attack_data(value: PlayerAttackData) -> void:
+	attack_data = value
+	update_configuration_warnings()
 
 
-## Проверка наличия данных об атаке
-func _check_attack_data(warnings: PackedStringArray = []) -> void:
-	if attack_data ==  null:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не обнаружена AttackData")
-		else:
-			assert(false, "Не обнаружена AttackData")
+## Setter для поля [member movement_component]. Обновляет ошибки конфигурации.
+func set_movement_component(value: PlayerMovement) -> void:
+	movement_component = value
+	update_configuration_warnings()
+
+
+## Общий метод для осуществления атаки в направлении [param direction] с
+## заданным импульсом [param impulse].
+func _attack(direction: Vector2, impulse: float) -> void:
+	if not _has_hit_hox:
+		push_warning("Невозможно осуществить атаку без _hit_box")
+		return
+	if not _has_animation_player:
+		push_warning("Невозможно осуществить атаку без _animation_player")
+		return
+	if not _has_attack_data:
+		push_warning("Невозможно осуществить атаку без attack_data")
+		return
+	if not _has_movement_component:
+		push_warning("Невозможно осуществить атаку без movement_component")
+		return
+	if not _is_attack_ready:
+		return
+
+	_is_attack_ready = false
+	attack.emit()
+
+	# Импульс в заданном направлении
+	direction = direction.normalized()
+	movement_component.add_velocity(direction * impulse)
+
+	# Вращение хитбокса в заданном направлении
+	_hit_box.look_at(direction + _hit_box.global_position)
+	# Анимация хитбокса во время атаки
+	_animation_player.play(hit_box_animation_name, -1, _custom_speed)
+
+	await get_tree().create_timer(attack_data.cooldown + attack_data.duration).timeout
+	_is_attack_ready = true
+	attack_ready.emit()
+
+
+## Отменяет атаку при пересечении с твёрдой поверхностью.
+func _on_hit_box_hit_solid_surface(_solid_surface: Node2D) -> void:
+	if !Engine.is_editor_hint():
+		call_deferred("_advance_animation")
+
+
+## Приватный метод, преждевремменно завершает анимацию. При этом анимация
+## "отзеркаливается" к завершению, а не просто прерывается.
+func _advance_animation():
+	if not _has_animation_player:
+		print("Невозможно прервать атаку без _animation_player")
+
+	if _animation_player.is_playing():
+		var advance_seconds: float
+		advance_seconds = _animation_player.get_animation(hit_box_animation_name).length
+		advance_seconds -= 2 * _animation_player.current_animation_position
+		_animation_player.advance(advance_seconds)

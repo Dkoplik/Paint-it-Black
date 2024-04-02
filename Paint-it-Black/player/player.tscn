@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=33 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
@@ -7,14 +7,17 @@
 [ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/resources/player_movement_data.tres" id="3_pti2n"]
 [ext_resource type="Script" path="res://player/scripts/player_attack.gd" id="7_bi60k"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="9_2qwus"]
+[ext_resource type="Script" path="res://basic_hurt_box.gd" id="9_obpaw"]
 [ext_resource type="AudioStream" uid="uid://cwsdi5ldyv0lw" path="res://sounds/FootstepsConcrete1.wav" id="9_oy0ya"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_uli4m"]
 [ext_resource type="Resource" uid="uid://dchkf655ulbpo" path="res://player/resources/player_attack_data.tres" id="10_j7iwd"]
+[ext_resource type="Script" path="res://hp.gd" id="10_kupgm"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="10_pcuc3"]
 [ext_resource type="AudioStream" uid="uid://bu3onseqxqxr4" path="res://sounds/FootstepsConcrete2.wav" id="10_q0hud"]
 [ext_resource type="Script" path="res://hit_box.gd" id="10_urtlw"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="11_2qsfj"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="11_6k34h"]
+[ext_resource type="Resource" uid="uid://1t3p7jbrvaq" path="res://player/resources/player_hp_data.tres" id="11_g58xn"]
 [ext_resource type="AudioStream" uid="uid://v22gujduwi5g" path="res://sounds/FootstepsConcrete3.wav" id="11_gekf0"]
 [ext_resource type="AudioStream" uid="uid://b6esg2k4522sy" path="res://sounds/FootstepsConcrete4.wav" id="12_wnwo5"]
 [ext_resource type="AudioStream" uid="uid://dct4fg1tvg7qi" path="res://sounds/Stone Jump.wav" id="13_iyue5"]
@@ -167,6 +170,9 @@ _data = {
 "hitbox_animation": SubResource("Animation_ilts5")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2tum"]
+size = Vector2(20, 64)
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jc71w"]
 streams_count = 4
 stream_0/stream = ExtResource("9_oy0ya")
@@ -228,6 +234,17 @@ root_node = NodePath("../HitBox/HitBoxShape")
 libraries = {
 "": SubResource("AnimationLibrary_fmbkw")
 }
+
+[node name="BasicHurtBox" type="Area2D" parent="."]
+script = ExtResource("9_obpaw")
+
+[node name="HP" type="Node" parent="BasicHurtBox"]
+script = ExtResource("10_kupgm")
+hp_data = ExtResource("11_g58xn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHurtBox"]
+shape = SubResource("RectangleShape2D_v2tum")
+debug_color = Color(0.0156863, 1, 0, 0.419608)
 
 [node name="PlayerSounds" type="Node2D" parent="."]
 

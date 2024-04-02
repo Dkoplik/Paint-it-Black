@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=29 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
@@ -7,78 +7,27 @@
 [ext_resource type="Script" path="res://player/animations/player_animation_controller.gd" id="3_rkoyo"]
 [ext_resource type="Script" path="res://player/scripts/player_attack.gd" id="7_bi60k"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="9_2qwus"]
+[ext_resource type="AudioStream" uid="uid://cwsdi5ldyv0lw" path="res://sounds/FootstepsConcrete1.wav" id="9_oy0ya"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_uli4m"]
 [ext_resource type="Resource" uid="uid://dchkf655ulbpo" path="res://player/resources/player_attack_data.tres" id="10_j7iwd"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="10_pcuc3"]
+[ext_resource type="AudioStream" uid="uid://bu3onseqxqxr4" path="res://sounds/FootstepsConcrete2.wav" id="10_q0hud"]
 [ext_resource type="Script" path="res://hit_box.gd" id="10_urtlw"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="11_2qsfj"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="11_6k34h"]
+[ext_resource type="AudioStream" uid="uid://v22gujduwi5g" path="res://sounds/FootstepsConcrete3.wav" id="11_gekf0"]
+[ext_resource type="AudioStream" uid="uid://b6esg2k4522sy" path="res://sounds/FootstepsConcrete4.wav" id="12_wnwo5"]
+[ext_resource type="AudioStream" uid="uid://dct4fg1tvg7qi" path="res://sounds/Stone Jump.wav" id="13_iyue5"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/history_state.gd" id="14_q66h4"]
+[ext_resource type="AudioStream" uid="uid://cxktq6j2fvd4" path="res://sounds/Stone Land.wav" id="14_xuuq1"]
+[ext_resource type="AudioStream" uid="uid://bbsjq5robft73" path="res://sounds/Sword Attack.wav" id="15_qse1v"]
+[ext_resource type="AudioStream" uid="uid://hv2thntfkg2r" path="res://sounds/Player hurt.wav" id="16_6w1kj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_20xhv"]
 size = Vector2(20, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtmv3"]
 size = Vector2(26, 20)
-
-[sub_resource type="Animation" id="Animation_ilts5"]
-resource_name = "hitbox_animation"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:x")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(13, -0.25, 0, 0.25, 0, 28, -0.25, 0, 0.25, 0, 13, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 0.9)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position:y")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 0.9)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:shape:size:x")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(26, -0.25, 0, 0.25, 0, 56, -0.25, 0, 0.25, 0, 26, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 0.9)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:shape:size:y")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5, 0.9)
-}
 
 [sub_resource type="Animation" id="Animation_wpmyo"]
 length = 0.001
@@ -139,11 +88,95 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0)
 }
 
+[sub_resource type="Animation" id="Animation_ilts5"]
+resource_name = "hitbox_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(13, -0.25, 0, 0.25, 0, 28, -0.25, 0, 0.25, 0, 13, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shape:size:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(26, -0.25, 0, 0.25, 0, 56, -0.25, 0, 0.25, 0, 26, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:shape:size:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 0.9)
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../../StateChart")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["attack_end"],
+"method": &"send_event"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fmbkw"]
 _data = {
 "RESET": SubResource("Animation_wpmyo"),
 "hitbox_animation": SubResource("Animation_ilts5")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jc71w"]
+streams_count = 4
+stream_0/stream = ExtResource("9_oy0ya")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("10_q0hud")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("11_gekf0")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("12_wnwo5")
+stream_3/weight = 1.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 top_level = true
@@ -151,7 +184,7 @@ collision_mask = 4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
-animation = &"attack_left"
+animation = &"run_left"
 
 [node name="CharacterBodyShape" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
@@ -195,6 +228,23 @@ root_node = NodePath("../HitBox/HitBoxShape")
 libraries = {
 "": SubResource("AnimationLibrary_fmbkw")
 }
+
+[node name="PlayerSounds" type="Node2D" parent="."]
+
+[node name="FootSteps" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = SubResource("AudioStreamRandomizer_jc71w")
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("13_iyue5")
+
+[node name="Land" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("14_xuuq1")
+
+[node name="Attack" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("15_qse1v")
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("16_6w1kj")
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("9_2qwus")
@@ -280,13 +330,21 @@ event = &"land"
 script = ExtResource("10_pcuc3")
 initial_state = NodePath("CanAttack")
 
+[node name="AttackCooldown" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnAttackRedy" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/AttackCooldown"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../CanAttack/CanWeakAttack")
+event = &"attack_ready"
+
 [node name="Attacking" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates"]
 editor_description = "Игрок находится в состоянии атаки. Пока текущая атака не закончилась, новую начать нельзя."
 script = ExtResource("11_2qsfj")
 
 [node name="OnAttackEnd" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates/Attacking"]
 script = ExtResource("11_6k34h")
-to = NodePath("../../CanAttack/CanWeakAttack")
+to = NodePath("../../AttackCooldown")
 event = &"attack_end"
 
 [node name="CanAttack" type="Node" parent="StateChart/ParallelState/LogicStates/AttackStates"]
@@ -409,10 +467,12 @@ script = ExtResource("11_6k34h")
 to = NodePath("../../NonCombatAnimations/GoToLastAnimation")
 event = &"attack_end"
 
+[connection signal="frame_changed" from="AnimatedSprite2D" to="PlayerAnimationController" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="step" from="PlayerAnimationController" to="PlayerSounds/FootSteps" method="play"]
 [connection signal="character_look_left" from="PlayerMovement" to="PlayerAnimationController" method="player_look_left"]
 [connection signal="character_look_right" from="PlayerMovement" to="PlayerAnimationController" method="player_look_right"]
 [connection signal="attack" from="PlayerAttack" to="PlayerController" method="_on_player_attack_attack"]
-[connection signal="attack_ended" from="PlayerAttack" to="PlayerController" method="_on_player_attack_attack_ended"]
+[connection signal="attack_ready" from="PlayerAttack" to="PlayerController" method="_on_player_attack_attack_ready"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/MovingStates" to="PlayerController" method="_on_moving_states_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/Jump&FallStates" to="PlayerController" method="_on_jump_fall_states_state_physics_processing"]
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/Jump&FallStates/CanJump" to="PlayerController" method="_on_can_jump_state_unhandled_input"]
@@ -420,7 +480,10 @@ event = &"attack_end"
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanWeakAttack" to="PlayerController" method="_on_can_weak_attack_state_unhandled_input"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/IdleAnimation" to="PlayerAnimationController" method="_on_idle_animation_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/RunAnimation" to="PlayerAnimationController" method="_on_run_animation_state_entered"]
+[connection signal="taken" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnLand" to="PlayerSounds/Land" method="play"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/Jump" to="PlayerAnimationController" method="_on_jump_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/Jump" to="PlayerSounds/Jump" method="play"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/Falling" to="PlayerAnimationController" method="_on_falling_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnWall" to="PlayerAnimationController" method="_on_on_wall_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/Attack" to="PlayerAnimationController" method="_on_attack_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/Attack" to="PlayerSounds/Attack" method="play"]

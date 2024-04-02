@@ -3,6 +3,10 @@ class_name PlayerAnimationController
 extends CustomNode
 ## Отвечает за анимации игрока на основе состояний из [StateChart].
 
+## Произошёл один шаг в анимации бега. В этот момент стоит воспроизвести звук
+## шага.
+signal step
+
 # ToDo setter'ы с обновлением ошибок конфигурации
 ## Корень StateChart'ов, отвечает за состояния игрока
 @export var state_chart: StateChart
@@ -72,3 +76,11 @@ func _on_on_wall_state_entered():
 
 func _on_attack_state_entered():
 	animated_sprite.play("attack" + animation_postfix)
+
+
+func _on_animated_sprite_2d_frame_changed():
+	match animated_sprite.animation:
+		"run_left", "run_right":
+			match animated_sprite.frame:
+				1, 3, 5:
+					step.emit()

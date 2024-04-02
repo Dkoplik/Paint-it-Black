@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
 [ext_resource type="SpriteFrames" uid="uid://dlj10bsjifa2w" path="res://player/resources/player_animations.tres" id="2_mc37b"]
+[ext_resource type="Script" path="res://player/scripts/player_animation_controller.gd" id="3_eywrf"]
 [ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/resources/player_movement_data.tres" id="3_pti2n"]
-[ext_resource type="Script" path="res://player/animations/player_animation_controller.gd" id="3_rkoyo"]
 [ext_resource type="Script" path="res://player/scripts/player_attack.gd" id="7_bi60k"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="9_2qwus"]
 [ext_resource type="AudioStream" uid="uid://cwsdi5ldyv0lw" path="res://sounds/FootstepsConcrete1.wav" id="9_oy0ya"]
@@ -198,7 +198,7 @@ attack_component = NodePath("../PlayerAttack")
 state_chart = NodePath("../StateChart")
 
 [node name="PlayerAnimationController" type="Node" parent="." node_paths=PackedStringArray("state_chart", "animated_sprite")]
-script = ExtResource("3_rkoyo")
+script = ExtResource("3_eywrf")
 state_chart = NodePath("../StateChart")
 animated_sprite = NodePath("../AnimatedSprite2D")
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ShootData" load_steps=3 format=3 uid="uid://p5a26dn7rgxg"]
+
+[ext_resource type="Script" path="res://enemies/basic_rifle_man/resources/shoot_data.gd" id="1_gv8xb"]
+[ext_resource type="PackedScene" uid="uid://dw6y6pqb7u6ry" path="res://bullet.tscn" id="1_j1mf1"]
+
+[resource]
+script = ExtResource("1_gv8xb")
+projectile = ExtResource("1_j1mf1")
+cooldown = 2.0
+spread_angle = 0.05

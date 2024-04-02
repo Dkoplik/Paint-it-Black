@@ -77,6 +77,7 @@ func move_in_direction(direction: Vector2) -> void:
 	if direction.x < 0:
 		character_look_left.emit()
 
+	direction = direction.normalized()
 	character_body.velocity.x = _calculate_speed_in_direction(direction)
 
 

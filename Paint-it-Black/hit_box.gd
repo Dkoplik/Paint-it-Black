@@ -18,10 +18,10 @@ signal hit_solid_surface(solid_surface: Node2D)
 
 ## Названия групп, которые данный hitbox может атаковать.
 @export var hittable_groups: Array[StringName]
-
 ## Параметры атаки, которые будут переданы в [BasicHurtBox] для последующей
 ## обработки.
-var attack_data: BasicIncomingAttack
+@export var attack_data: BasicIncomingAttack
+
 ## Есть ли ссылка на [member attack_data].
 var _has_attack_data := false
 
@@ -34,9 +34,8 @@ func _init() -> void:
 	connect("body_entered", _on_body_entered)
 
 
-func check_configuration(_warnings: PackedStringArray = []) -> bool:
-	if attack_data != null:
-		_has_attack_data = true
+func check_configuration(warnings: PackedStringArray = []) -> bool:
+	_has_attack_data = Utilities.check_resource(attack_data, "BasicIncomingAttack", warnings)
 	return _has_attack_data
 
 

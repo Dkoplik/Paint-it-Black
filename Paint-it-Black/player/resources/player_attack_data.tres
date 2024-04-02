@@ -4,8 +4,7 @@
 
 [resource]
 script = ExtResource("1_2btn8")
-damage = 10
 duration = 0.15
-cooldown = 0.15
-strong_impulse = 93.05
-weak_impulse = 92.45
+cooldown = 0.1
+strong_impulse = 200.0
+weak_impulse = 50.0

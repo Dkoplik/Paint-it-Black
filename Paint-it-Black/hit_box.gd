@@ -34,7 +34,7 @@ func _init() -> void:
 	connect("body_entered", _on_body_entered)
 
 
-func check_configuration(warnings: PackedStringArray = []) -> bool:
+func check_configuration(_warnings: PackedStringArray = []) -> bool:
 	if attack_data != null:
 		_has_attack_data = true
 	return _has_attack_data

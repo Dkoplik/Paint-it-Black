@@ -31,6 +31,6 @@ func is_class_name(string_name: StringName) -> bool:
 
 
 ## Проверка конфигурации узла, выполняется как в редакторе, так и в игре.
-func check_configuration(warnings: PackedStringArray = []) -> bool:
+func check_configuration(_warnings: PackedStringArray = []) -> bool:
 	push_warning("check_configuration не переопределён")
 	return false

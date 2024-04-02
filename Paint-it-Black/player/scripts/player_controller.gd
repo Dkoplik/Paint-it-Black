@@ -24,7 +24,9 @@ var _has_state_chart := false
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
-	_has_movement_component = Utilities.check_reference(movement_component, "PlayerMovement", warnings)
+	_has_movement_component = Utilities.check_reference(
+		movement_component, "PlayerMovement", warnings
+	)
 	_has_attack_component = Utilities.check_reference(attack_component, "PlayerAttack", warnings)
 	_has_state_chart = Utilities.check_reference(state_chart, "StateChart", warnings)
 	return _has_movement_component and _has_attack_component and _has_state_chart
@@ -32,7 +34,7 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 
 ## Обработка управления перемещения и создание соотевтсвующих ивентов для
 ## ветки состояний "MovingStates".
-func _on_moving_states_state_physics_processing(delta):
+func _on_moving_states_state_physics_processing(_delta):
 	if Engine.is_editor_hint():
 		return
 
@@ -45,7 +47,7 @@ func _on_moving_states_state_physics_processing(delta):
 		direction.x -= 1
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
-	if (direction == Vector2.ZERO):
+	if direction == Vector2.ZERO:
 		movement_component.decelerate_to_stop()
 		state_chart.send_event("stop_moving")
 	else:
@@ -54,7 +56,7 @@ func _on_moving_states_state_physics_processing(delta):
 
 
 ## Обработка ивентов для переключения между состояниями в ветке "Jump&FallStates".
-func _on_jump_fall_states_state_physics_processing(delta):
+func _on_jump_fall_states_state_physics_processing(_delta):
 	if Engine.is_editor_hint():
 		return
 
@@ -97,7 +99,9 @@ func _on_can_strong_attack_state_unhandled_input(event):
 		if not _has_movement_component:
 			push_error("Невозможно совершить атаку без _movement_component")
 			return
-		var attack_direction: Vector2 = get_viewport().get_mouse_position() - movement_component.character_body.position
+		var attack_direction: Vector2 = (
+			get_viewport().get_mouse_position() - movement_component.character_body.position
+		)
 		attack_component.strong_impulse_attack(attack_direction)
 
 
@@ -110,7 +114,9 @@ func _on_can_weak_attack_state_unhandled_input(event):
 		if not _has_movement_component:
 			push_error("Невозможно совершить атаку без _movement_component")
 			return
-		var attack_direction: Vector2 = get_viewport().get_mouse_position() - movement_component.character_body.position
+		var attack_direction: Vector2 = (
+			get_viewport().get_mouse_position() - movement_component.character_body.position
+		)
 		attack_component.weak_impulse_attack(attack_direction)
 
 

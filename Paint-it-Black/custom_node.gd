@@ -20,7 +20,7 @@ var _class_name: StringName = &"CustomNode":
 
 
 func _ready():
-	# Автоматический запуск проверки конфигурации в игре	
+	# Автоматический запуск проверки конфигурации в игре
 	check_configuration()
 
 
@@ -29,6 +29,7 @@ func _get_configuration_warnings():
 	var warnings: PackedStringArray = []
 	check_configuration(warnings)
 	return warnings
+
 
 ## Возвращает название класса в виде уникальной строки [StringName].
 func get_class_name() -> StringName:
@@ -42,6 +43,6 @@ func is_class_name(string_name: StringName) -> bool:
 
 
 ## Проверка конфигурации узла, выполняется как в редакторе, так и в игре.
-func check_configuration(warnings: PackedStringArray = []) -> bool:
+func check_configuration(_warnings: PackedStringArray = []) -> bool:
 	push_warning("check_configuration не переопределён")
 	return false

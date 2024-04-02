@@ -5,7 +5,7 @@ var hp_component: HP
 
 
 func before_run(actor: Node, blackboard: Blackboard) -> void:
-	hp_component = actor.get_hp_component()
+	hp_component = blackboard.get_value("hp_component")
 
 
 func tick(actor: Node, _blackboard: Blackboard) -> int:

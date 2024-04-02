@@ -11,8 +11,8 @@ size = Vector2(2, 0.5)
 [node name="Bullet" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-1.49012e-08, 0)
-scale = Vector2(0.0195312, 0.00195313)
+position = Vector2(-1.77636e-15, 5.96046e-08)
+scale = Vector2(0.0195312, 0.0166016)
 texture = ExtResource("1_tj163")
 
 [node name="Parryable" type="Node" parent="." node_paths=PackedStringArray("root_node")]

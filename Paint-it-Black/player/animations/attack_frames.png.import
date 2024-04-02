@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clnmth4vbic54"
-path="res://.godot/imported/wall_right_frames.png-569a5683f15003b3823c7c115aeec980.ctex"
+uid="uid://d0ecr4shjudlw"
+path="res://.godot/imported/attack_frames.png-089e063bed782d0cd97e653f71e2e09e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/animations/wall_right_frames.png"
-dest_files=["res://.godot/imported/wall_right_frames.png-569a5683f15003b3823c7c115aeec980.ctex"]
+source_file="res://player/animations/attack_frames.png"
+dest_files=["res://.godot/imported/attack_frames.png-089e063bed782d0cd97e653f71e2e09e.ctex"]
 
 [params]
 

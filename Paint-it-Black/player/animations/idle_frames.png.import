@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blsh24erw4sch"
-path="res://.godot/imported/fall_left_frames.png-a5609d1f287f0c72926689ef59c1001c.ctex"
+uid="uid://ywkg3v5tlrh7"
+path="res://.godot/imported/idle_frames.png-99817d383c29147d6e570749933ce9e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/animations/fall_left_frames.png"
-dest_files=["res://.godot/imported/fall_left_frames.png-a5609d1f287f0c72926689ef59c1001c.ctex"]
+source_file="res://player/animations/idle_frames.png"
+dest_files=["res://.godot/imported/idle_frames.png-99817d383c29147d6e570749933ce9e4.ctex"]
 
 [params]
 

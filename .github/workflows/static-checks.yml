@@ -7,12 +7,16 @@ on:
       - 'develop'
     paths:
       - '**.gd'
+    paths-ignore:
+      - './Paint-it-Black/addons/'
   push:
     branches:
       - 'main'
       - 'develop'
     paths:
       - '**.gd'
+    paths-ignore:
+      - './Paint-it-Black/addons/'
 
 jobs:
   linter-checks:

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cxktq6j2fvd4"
+path="res://.godot/imported/Stone Land.wav-9145851ac502aa347b1c729338a03154.sample"
+
+[deps]
+
+source_file="res://sounds/Stone Land.wav"
+dest_files=["res://.godot/imported/Stone Land.wav-9145851ac502aa347b1c729338a03154.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,6 +1,6 @@
 @tool
 class_name HPData
-extends Resource
+extends CustomResource
 ## Этот ресурс хранит параметры, связанные с жизнями персонажа.
 ##
 ## Этот ресурс отвечает за максимальное количество жизней и на их изначальное
@@ -17,11 +17,16 @@ extends Resource
 	get = get_initial_hp
 
 
+func _init() -> void:
+	_class_name = &"HPData"
+
+
 ## Setter для поля [member max_hp]. Не позволяет значению поля выйти за границы
 ## диапазона [0..100], а также перепроверяет значение initial_hp.
 func set_max_hp(value: int) -> void:
 	max_hp = max(0, value)
 	max_hp = min(max_hp, 100)
+
 	# Вызов setter для initial_hp, чтобы оно не превисило max_hp
 	initial_hp = initial_hp
 
@@ -41,14 +46,3 @@ func set_initial_hp(value: int) -> void:
 ## Getter для поля [member initial_hp].
 func get_initial_hp() -> int:
 	return initial_hp
-
-
-## Возвращает название класса в строковом виде.
-func get_class_name() -> String:
-	return "HPData"
-
-
-## Возвращает true, если указанная строка [param name] является названием
-## текущего класса или одного из его предков в строковом виде, иначе false
-func is_class_name(name: String) -> bool:
-	return name == get_class_name() or self.is_class(name)

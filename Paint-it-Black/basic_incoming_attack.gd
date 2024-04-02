@@ -6,7 +6,7 @@ extends CustomResource
 ## конкретные типы атак должны наследоваться от этого класса.
 
 ## Количество наносимого урона.
-var damage: int:
+@export var damage: int:
 	get = get_damage,
 	set = set_damage
 

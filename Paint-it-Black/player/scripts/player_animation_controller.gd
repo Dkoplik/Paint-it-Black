@@ -13,9 +13,6 @@ signal step
 ## Покадровые анимации игрока
 @export var animated_sprite: AnimatedSprite2D
 
-## Постфикс анимации, который определяет направление анимации: влево или вправо
-var animation_postfix := "_right"
-
 ## Есть ли компонента [StateChart] в качестве дочернего узла?
 var _has_state_chart := false
 ## Есть ли компонента [AnimatedSprite2D] в качестве дочернего узла?
@@ -30,52 +27,36 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 
 ## Указать, что игрок теперь смотрит направо
 func player_look_right() -> void:
-	animation_postfix = "_right"
-	_change_animation_direction_to(animation_postfix)
+	animated_sprite.flip_h = false
 
 
 ## Указать, что игрок теперь смотрит налево
 func player_look_left() -> void:
-	animation_postfix = "_left"
-	_change_animation_direction_to(animation_postfix)
-
-
-## Заменяет текущую анимацию на зеркальный вариант, не прерывая прогресс
-## анимации.
-func _change_animation_direction_to(new_postfix: String) -> void:
-	var animation_info: PackedStringArray = animated_sprite.animation.split("_")
-	var animation_name: String = animation_info[0]
-	var new_animation: String = animation_name + new_postfix
-
-	var current_frame: int = animated_sprite.frame
-	var current_frame_progress: float = animated_sprite.frame_progress
-
-	animated_sprite.play(new_animation)
-	animated_sprite.set_frame_and_progress(current_frame, current_frame_progress)
+	animated_sprite.flip_h = true
 
 
 func _on_idle_animation_state_entered():
-	animated_sprite.play("idle" + animation_postfix)
+	animated_sprite.play("idle")
 
 
 func _on_run_animation_state_entered():
-	animated_sprite.play("run" + animation_postfix)
+	animated_sprite.play("run")
 
 
 func _on_jump_state_entered():
-	animated_sprite.play("jump" + animation_postfix)
+	animated_sprite.play("jump")
 
 
 func _on_falling_state_entered():
-	animated_sprite.play("fall" + animation_postfix)
+	animated_sprite.play("fall")
 
 
 func _on_on_wall_state_entered():
-	animated_sprite.play("wall" + animation_postfix)
+	animated_sprite.play("wall")
 
 
 func _on_attack_state_entered():
-	animated_sprite.play("attack" + animation_postfix)
+	animated_sprite.play("attack")
 
 
 func _on_animated_sprite_2d_frame_changed():

@@ -195,7 +195,7 @@ collision_mask = 4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
-animation = &"run_left"
+animation = &"wall"
 
 [node name="CharacterBodyShape" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)

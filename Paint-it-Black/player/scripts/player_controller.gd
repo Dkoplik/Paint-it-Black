@@ -8,12 +8,18 @@ extends CustomNode
 ## благодаря чему остальные компоненты будут следовать за перемещением игрока.
 
 # ToDo для @export полей нужны setter'ы с обновлением ошибок конфигурации
-## Компонента движения
-@export var movement_component: PlayerMovement
-## Компонента атаки
-@export var attack_component: PlayerAttack
-## Корень StateChart'ов, отвечает за состояния игрока
-@export var state_chart: StateChart
+## Компонента движения.
+@export var movement_component: PlayerMovement:
+	set = set_movement_component
+## Компонента атаки.
+@export var attack_component: PlayerAttack:
+	set = set_attack_component
+## Корень StateChart'ов, отвечает за состояния игрока.
+@export var state_chart: StateChart:
+	set = set_state_chart
+## Корень игрока.
+@export var root: CharacterBody2D:
+	set = set_root
 
 ## Есть ли компонента [PlayerMovement] в качестве дочернего узла?
 var _has_movement_component := false
@@ -21,6 +27,17 @@ var _has_movement_component := false
 var _has_attack_component := false
 ## Есть ли компонента [StateChart] в качестве дочернего узла?
 var _has_state_chart := false
+## Есть ли ссылка на корень?
+var _has_root := false
+
+
+func _ready() -> void:
+	super()
+
+	if Engine.is_editor_hint():
+		return
+
+	GameManager.player = root
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
@@ -29,7 +46,32 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 	)
 	_has_attack_component = Utilities.check_reference(attack_component, "PlayerAttack", warnings)
 	_has_state_chart = Utilities.check_reference(state_chart, "StateChart", warnings)
-	return _has_movement_component and _has_attack_component and _has_state_chart
+	_has_root = Utilities.check_reference(root, "CharacterBody2D", warnings)
+	return _has_movement_component and _has_attack_component and _has_state_chart and _has_root
+
+
+## Setter для поля [member movement_component]. Обновляет ошибки конфигурации.
+func set_movement_component(value: PlayerMovement) -> void:
+	movement_component = value
+	update_configuration_warnings()
+
+
+## Setter для поля [member attack_component]. Обновляет ошибки конфигурации.
+func set_attack_component(value: PlayerAttack) -> void:
+	attack_component = value
+	update_configuration_warnings()
+
+
+## Setter для поля [member state_chart]. Обновляет ошибки конфигурации.
+func set_state_chart(value: StateChart) -> void:
+	state_chart = value
+	update_configuration_warnings()
+
+
+## Setter для поля [member root]. Обновляет ошибки конфигурации.
+func set_root(value: CharacterBody2D) -> void:
+	root = value
+	update_configuration_warnings()
 
 
 ## Обработка управления перемещения и создание соотевтсвующих ивентов для

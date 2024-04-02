@@ -197,11 +197,12 @@ position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_20xhv")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("movement_component", "attack_component", "state_chart")]
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("movement_component", "attack_component", "state_chart", "root")]
 script = ExtResource("1_kt7rl")
 movement_component = NodePath("../PlayerMovement")
 attack_component = NodePath("../PlayerAttack")
 state_chart = NodePath("../StateChart")
+root = NodePath("..")
 
 [node name="PlayerAnimationController" type="Node" parent="." node_paths=PackedStringArray("state_chart", "animated_sprite")]
 script = ExtResource("3_eywrf")
@@ -217,10 +218,11 @@ character_body = NodePath("..")
 script = ExtResource("7_bi60k")
 attack_data = ExtResource("10_j7iwd")
 movement_component = NodePath("../PlayerMovement")
-animation_name = &"hitbox_animation"
+hit_box_animation_name = &"hitbox_animation"
 
 [node name="HitBox" type="Area2D" parent="PlayerAttack"]
 position = Vector2(0, -10)
+collision_mask = 2
 script = ExtResource("10_urtlw")
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="PlayerAttack/HitBox"]

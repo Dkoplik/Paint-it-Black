@@ -18,7 +18,7 @@ signal attack_ready
 ## Компонента движения
 @export var movement_component: PlayerMovement
 ## Название анимации хитбокса
-@export var animation_name: StringName
+@export var hit_box_animation_name: StringName
 
 # Есть ли ссылка на [PlayerAttackData].
 var _has_attack_data := false
@@ -56,7 +56,7 @@ func _ready() -> void:
 		push_error("Невозможно изменять hitbox атаки без _animation_player")
 		return
 
-	_custom_speed = (_animation_player.get_animation(animation_name).length / attack_data.duration)
+	_custom_speed = (_animation_player.get_animation(hit_box_animation_name).length / attack_data.duration)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
@@ -129,7 +129,7 @@ func _attack(direction: Vector2, impulse: float) -> void:
 	# Вращение хитбокса в заданном направлении
 	_hit_box.look_at(direction + _hit_box.global_position)
 	# Анимация хитбокса во время атаки
-	_animation_player.play(animation_name, -1, _custom_speed)
+	_animation_player.play(hit_box_animation_name, -1, _custom_speed)
 
 	await get_tree().create_timer(attack_data.cooldown + attack_data.duration).timeout
 	_is_attack_ready = true
@@ -150,6 +150,6 @@ func _advance_animation():
 
 	if _animation_player.is_playing():
 		var advance_seconds: float
-		advance_seconds = _animation_player.get_animation(animation_name).length
+		advance_seconds = _animation_player.get_animation(hit_box_animation_name).length
 		advance_seconds -= 2 * _animation_player.current_animation_position
 		_animation_player.advance(advance_seconds)

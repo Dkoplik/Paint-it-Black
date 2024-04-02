@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dw6y6pqb7u6ry"]
+
+[ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://icon.svg" id="1_tj163"]
+[ext_resource type="Script" path="res://parryable.gd" id="2_jmgxq"]
+[ext_resource type="Script" path="res://projectile_movement.gd" id="3_tv8kn"]
+[ext_resource type="Script" path="res://hit_box.gd" id="4_qd255"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wywd"]
+size = Vector2(2, 0.5)
+
+[node name="Bullet" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.49012e-08, 0)
+scale = Vector2(0.0195312, 0.00195313)
+texture = ExtResource("1_tj163")
+
+[node name="Parryable" type="Node" parent="." node_paths=PackedStringArray("root_node")]
+script = ExtResource("2_jmgxq")
+root_node = NodePath("..")
+
+[node name="ProjectileMovement" type="Node" parent="." node_paths=PackedStringArray("root_node")]
+script = ExtResource("3_tv8kn")
+root_node = NodePath("..")
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("4_qd255")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_3wywd")

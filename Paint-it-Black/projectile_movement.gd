@@ -32,7 +32,7 @@ func _process(delta) -> void:
 
 ## Выполняет движение [member root_node] по его направлению вперёд со скоростью
 ## [member speed].
-func _move(_delta: float) -> void:
+func _move(delta: float) -> void:
 	if !Engine.is_editor_hint():
 		# ToDo: получить направление, куда повёрнут корневой узел, и в этом
 		# Направлении сместить корневой узел на значение speed * delta.

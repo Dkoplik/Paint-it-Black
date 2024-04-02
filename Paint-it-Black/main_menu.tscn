@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cn2u8ntjh4m3r"]
+[gd_scene load_steps=4 format=3 uid="uid://cn2u8ntjh4m3r"]
 
 [ext_resource type="Script" path="res://main_menu.gd" id="1_mf5i0"]
+[ext_resource type="AudioStream" uid="uid://cjb5cbm68ilgy" path="res://sounds/Interface Button Hover.wav" id="2_o8yxc"]
+[ext_resource type="AudioStream" uid="uid://bv6u5athkvt4j" path="res://sounds/Button Click.wav" id="3_bxndg"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -54,5 +56,15 @@ text = "На данный момент какие-либо анимации от
 + меню паузы: esc"
 autowrap_mode = 3
 
+[node name="ButtonHoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_o8yxc")
+
+[node name="ButtonClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bxndg")
+
+[connection signal="button_down" from="PlayButton" to="ButtonClickSound" method="play"]
+[connection signal="mouse_entered" from="PlayButton" to="ButtonHoverSound" method="play"]
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="button_down" from="ExitButton" to="ButtonClickSound" method="play"]
+[connection signal="mouse_entered" from="ExitButton" to="ButtonHoverSound" method="play"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

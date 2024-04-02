@@ -1,194 +1,128 @@
 @tool
-extends CharacterBody2D
+class_name PlayerController
+extends CustomNode
+## Обработчик управления для игрока.
+##
+## Наследование от [CustomNode2D] позволяет использовать этот узел в качестве
+## корня игрока. Этот узел дублирует координаты дочернего [CharacterBody2D],
+## благодаря чему остальные компоненты будут следовать за перемещением игрока.
 
-## Данные о жизнях
-@export var hp_data: Resource  # ToDo: пока нет ресурса под жизни
-## Данные движения
-@export var movement_data: PlayerMovementData
-## Данные об атаке
-@export var attack_data: PlayerAttackData
-
+# ToDo для @export полей нужны setter'ы с обновлением ошибок конфигурации
 ## Компонента движения
-var movement_component: PlayerMovement
+@export var movement_component: PlayerMovement
 ## Компонента атаки
-var attack_component: PlayerAttack
-## HitBox
-var hit_box  # ToDo добавить тип, когда будет
-## HurtBox
-var hurt_box: PlayerHurtBox
+@export var attack_component: PlayerAttack
+## Корень StateChart'ов, отвечает за состояния игрока
+@export var state_chart: StateChart
+
+## Есть ли компонента [PlayerMovement] в качестве дочернего узла?
+var _has_movement_component := false
+## Есть ли компонента [PlayerAttack] в качестве дочернего узла?
+var _has_attack_component := false
+## Есть ли компонента [StateChart] в качестве дочернего узла?
+var _has_state_chart := false
 
 
-func _ready():
-	# Проверка наличия компонент
-	_check_movement_component()
-	_check_attack_component()
-	_check_hit_box_component()
-	_check_hurt_box_component()
-
-	# Проверка наличия данных
-	#_check_hp_data() пока отсутствует
-	_check_movement_data()
-	_check_attack_data()
-
-
-## Обработка управления
-func _physics_process(_delta: float) -> void:
-	if not Engine.is_editor_hint():
-		var direction = Vector2.ZERO
-		if Input.is_action_pressed("move_left"):
-			direction.x -= 1
-		if Input.is_action_pressed("move_right"):
-			direction.x += 1
-		movement_component.move(direction)
-
-
-## Обработка прыжка и атаки
-func _unhandled_input(event):
-	if not Engine.is_editor_hint():
-		# Прыжок
-		if event.is_action_pressed("jump"):
-			movement_component.jump()
-		# Атака
-		if event.is_action_pressed("attack"):
-			attack_component.attack(get_viewport().get_mouse_position() - position)
-
-
-## Обработка ошибок конфигурации
-func _get_configuration_warnings() -> PackedStringArray:
-	# Ошибки конфигурации
-	var warnings: PackedStringArray = []
-
-	# Проверка наличия компонент
-	_check_movement_component(warnings)
-	_check_attack_component(warnings)
-	_check_hit_box_component(warnings)
-	_check_hurt_box_component(warnings)
-
-	# Проверка наличия данных
-	_check_hp_data(warnings)
-	_check_movement_data(warnings)
-	_check_attack_data(warnings)
-
-	return warnings
-
-
-## Возвращает компоненту движения игрока
-func get_movement_component() -> PlayerMovement:
-	return movement_component
-
-
-## Возвращает компоненту атаки игрока
-func get_attack_component():
-	pass  # ToDo, добавить компоненту атаки, когда будет готова
-
-
-## Возвращает hitbox игрока
-func get_hit_box_component():
-	pass  # ToDo когда появиться хитбокс
-
-
-## Возвращает hurtbox игрока
-func get_hurt_box_component() -> PlayerHurtBox:
-	print(1)
-	return hurt_box
-
-
-## Проверяет наличие единственной компоненты движения и передаёт все необходимые
-## данные от этого узла компоненте.
-func _check_movement_component(warnings: PackedStringArray = []) -> void:
-	var movement_components: Array = get_children().filter(
-		func(node): return node is PlayerMovement
+func check_configuration(warnings: PackedStringArray = []) -> bool:
+	_has_movement_component = Utilities.check_reference(
+		movement_component, "PlayerMovement", warnings
 	)
+	_has_attack_component = Utilities.check_reference(attack_component, "PlayerAttack", warnings)
+	_has_state_chart = Utilities.check_reference(state_chart, "StateChart", warnings)
+	return _has_movement_component and _has_attack_component and _has_state_chart
 
-	if movement_components.size() > 1:
-		if Engine.is_editor_hint():
-			warnings.push_back("Обнаружено несколько компонент PlayerMovement")
-		else:
-			assert(false, "Обнаружено несколько компонент PlayerMovement")
-		movement_component = null
-	elif movement_components.size() == 0:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не найдена компонента PlayerMovement")
-		else:
-			assert(false, "Не найдена компонента PlayerMovement")
-		movement_component = null
+
+## Обработка управления перемещения и создание соотевтсвующих ивентов для
+## ветки состояний "MovingStates".
+func _on_moving_states_state_physics_processing(_delta):
+	if Engine.is_editor_hint():
+		return
+
+	if not _has_movement_component:
+		push_error("Невозможно осуществить движение без _movement_component")
+		return
+
+	var direction = Vector2.ZERO
+	if Input.is_action_pressed("move_left"):
+		direction.x -= 1
+	if Input.is_action_pressed("move_right"):
+		direction.x += 1
+	if direction == Vector2.ZERO:
+		movement_component.decelerate_to_stop()
+		state_chart.send_event("stop_moving")
 	else:
-		movement_component = movement_components[0] as PlayerMovement
-		movement_component.movement_data = movement_data
+		movement_component.move_in_direction(direction)
+		state_chart.send_event("start_moving")
 
 
-## Находит компоненту атаки среди дочерних узлов
-func _check_attack_component(warnings: PackedStringArray = []) -> void:
-	var attack_components: Array = get_children().filter(func(node): return node is PlayerAttack)
+## Обработка ивентов для переключения между состояниями в ветке "Jump&FallStates".
+func _on_jump_fall_states_state_physics_processing(_delta):
+	if Engine.is_editor_hint():
+		return
 
-	if attack_components.size() > 1:
-		if Engine.is_editor_hint():
-			warnings.push_back("Обнаружено несколько компонент PlayerAttack")
-		else:
-			assert(false, "Обнаружено несколько компонент PlayerAttack")
-		attack_component = null
-	elif attack_components.size() == 0:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не найдена компонента PlayerAttack")
-		else:
-			assert(false, "Не найдена компонента PlayerAttack")
-		attack_component = null
-	else:
-		attack_component = attack_components[0] as PlayerAttack
-		attack_component.attack_data = attack_data
+	if not _has_movement_component:
+		push_error("Невозможно обработать текущее состояние игрока без _movement_component")
+		return
+
+	if movement_component.character_body.is_on_floor():
+		state_chart.send_event("land")
+	elif movement_component.character_body.is_on_wall():
+		state_chart.send_event("wall_collision")
+	elif movement_component.character_body.velocity.y > 0:
+		state_chart.send_event("fall")
 
 
-## Находит компоненту hitbox среди дочерних узлов
-# gdlint:ignore = unused-argument
-func _check_hit_box_component(warnings: PackedStringArray = []) -> void:
-	pass  #ToDo
+## Обработка прыжка из состояний в ветке "CanJump". Из других состояний
+## совершить прыжок нельзя.
+func _on_can_jump_state_unhandled_input(event):
+	if Engine.is_editor_hint():
+		return
+
+	if event.is_action_pressed("jump"):
+		if not _has_movement_component:
+			push_error("Невозможно совершить прыжок без _movement_component")
+			return
+
+		movement_component.jump()
+		# Необходима небольшая пауза, иначе игрок не успеет оторваться от земли,
+		# из-за чего из состояния "jump" сразу же перейдёт в "grounded".
+		await Utilities.wait_for(0.05)
+		state_chart.send_event("jump")
 
 
-## Проверяет наличие единственной компоненты hurtbox и передаёт все необходимые
-## данные от этого узла компоненте.
-func _check_hurt_box_component(warnings: PackedStringArray = []) -> void:
-	var hurt_box_components: Array = get_children().filter(func(node): return node is PlayerHurtBox)
+## Обработка сильной атаки
+func _on_can_strong_attack_state_unhandled_input(event):
+	if Engine.is_editor_hint():
+		return
 
-	if hurt_box_components.size() > 1:
-		if Engine.is_editor_hint():
-			warnings.push_back("Обнаружено несколько компонент PlayerHurtBox")
-		else:
-			assert(false, "Обнаружено несколько компонент PlayerHurtBox")
-		hurt_box = null
-	elif hurt_box_components.size() == 0:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не найдена компонента PlayerHurtBox")
-		else:
-			assert(false, "Не найдена компонента PlayerHurtBox")
-		hurt_box = null
-	else:
-		hurt_box = hurt_box_components[0]
-
-	# ToDo, компоненте HP передать ресурс HP
+	if event.is_action_pressed("attack"):
+		if not _has_movement_component:
+			push_error("Невозможно совершить атаку без _movement_component")
+			return
+		var attack_direction: Vector2 = (
+			get_viewport().get_mouse_position() - movement_component.character_body.position
+		)
+		attack_component.strong_impulse_attack(attack_direction)
 
 
-## Проверка наличия данных о hp
-func _check_hp_data(warnings: PackedStringArray = []) -> void:
-	if hp_data == null:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не обнаружена HPData")
-		else:
-			assert(false, "Не обнаружена HPData")
+## Обработка слабой атаки
+func _on_can_weak_attack_state_unhandled_input(event):
+	if Engine.is_editor_hint():
+		return
+
+	if event.is_action_pressed("attack"):
+		if not _has_movement_component:
+			push_error("Невозможно совершить атаку без _movement_component")
+			return
+		var attack_direction: Vector2 = (
+			get_viewport().get_mouse_position() - movement_component.character_body.position
+		)
+		attack_component.weak_impulse_attack(attack_direction)
 
 
-## Проверка наличия данных о движении
-func _check_movement_data(warnings: PackedStringArray = []) -> void:
-	if movement_data == null:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не обнаружена PlayerMovementData")
-		else:
-			assert(false, "Не обнаружена PlayerMovementData")
+func _on_player_attack_attack():
+	state_chart.send_event("attack")
 
 
-## Проверка наличия данных об атаке
-func _check_attack_data(warnings: PackedStringArray = []) -> void:
-	if attack_data == null:
-		if Engine.is_editor_hint():
-			warnings.push_back("Не обнаружена PlayerAttackData")
-		else:
-			assert(false, "Не обнаружена PlayerAttackData")
+func _on_player_attack_attack_ready():
+	state_chart.send_event("attack_ready")

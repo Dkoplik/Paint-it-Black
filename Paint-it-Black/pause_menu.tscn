@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://k34ercw2vbnj"]
+[gd_scene load_steps=4 format=3 uid="uid://k34ercw2vbnj"]
 
 [ext_resource type="Script" path="res://pause_manager.gd" id="1_m2ijo"]
+[ext_resource type="AudioStream" uid="uid://cjb5cbm68ilgy" path="res://sounds/Interface Button Hover.wav" id="2_120a1"]
+[ext_resource type="AudioStream" uid="uid://bv6u5athkvt4j" path="res://sounds/Button Click.wav" id="3_wseme"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -37,6 +39,18 @@ offset_bottom = 419.0
 theme_override_font_sizes/font_size = 30
 text = "Выйти из игры"
 
+[node name="ButtonHoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_120a1")
+
+[node name="ButtonClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_wseme")
+
+[connection signal="button_down" from="ContinueButton" to="ButtonClickSound" method="play"]
+[connection signal="mouse_entered" from="ContinueButton" to="ButtonHoverSound" method="play"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="button_down" from="ExitToMainMenuButton" to="ButtonClickSound" method="play"]
+[connection signal="mouse_entered" from="ExitToMainMenuButton" to="ButtonHoverSound" method="play"]
 [connection signal="pressed" from="ExitToMainMenuButton" to="." method="_on_exit_to_main_menu_button_pressed"]
+[connection signal="button_down" from="ExitGameButton" to="ButtonClickSound" method="play"]
+[connection signal="mouse_entered" from="ExitGameButton" to="ButtonHoverSound" method="play"]
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

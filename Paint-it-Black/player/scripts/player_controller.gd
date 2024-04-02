@@ -118,5 +118,5 @@ func _on_player_attack_attack():
 	state_chart.send_event("attack")
 
 
-func _on_player_attack_attack_ended():
-	state_chart.send_event("attack_end")
+func _on_player_attack_attack_ready():
+	state_chart.send_event("attack_ready")

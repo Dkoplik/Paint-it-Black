@@ -10,8 +10,8 @@ extends CustomNode2D
 
 ## Была начата атака.
 signal attack
-## Атака закончилась.
-signal attack_ended
+## Можно совершить новую атаку.
+signal attack_ready
 
 ## Параметры атаки игрока.
 @export var attack_data: PlayerAttackData
@@ -133,7 +133,7 @@ func _attack(direction: Vector2, impulse: float) -> void:
 
 	await get_tree().create_timer(attack_data.cooldown + attack_data.duration).timeout
 	_is_attack_ready = true
-	attack_ended.emit()
+	attack_ready.emit()
 
 
 ## Отменяет атаку при пересечении с твёрдой поверхностью.

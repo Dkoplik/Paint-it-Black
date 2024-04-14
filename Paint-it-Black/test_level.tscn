@@ -15,8 +15,9 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608,
 [node name="PauseMenu" parent="." instance=ExtResource("1_uwsbl")]
 visible = false
 
-[node name="Player" parent="." instance=ExtResource("2_hw8bi")]
+[node name="Player" parent="." node_paths=PackedStringArray("tile_map") instance=ExtResource("2_hw8bi")]
 position = Vector2(243, 295)
+tile_map = NodePath("../TileMap")
 
 [node name="BasicRifleMan" parent="." instance=ExtResource("5_1tjml")]
 position = Vector2(711, 366)

@@ -75,7 +75,7 @@ movement_component = NodePath("../BasicCharacterMovement")
 shoot_component = NodePath("../ShootComponent")
 beehave_tree = NodePath("../BeehaveTree")
 blackboard = {
-"shoot_distance": 50.0
+"shoot_distance": 400.0
 }
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]

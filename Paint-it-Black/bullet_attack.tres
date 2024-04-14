@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BasicIncomingAttack" load_steps=2 format=3 uid="uid://bfg1uwtgxxi2b"]
+
+[ext_resource type="Script" path="res://basic_incoming_attack.gd" id="1_iedao"]
+
+[resource]
+script = ExtResource("1_iedao")
+damage = 1

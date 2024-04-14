@@ -7,17 +7,11 @@ extends CustomResource
 
 ## Количество наносимого урона.
 @export var damage: int:
-	get = get_damage,
 	set = set_damage
 
 
 func _init() -> void:
-	_class_name = &"IncomingAttack"
-
-
-## Getter для поля [member damage].
-func get_damage() -> int:
-	return damage
+	_class_name = &"BasicIncomingAttack"
 
 
 ## Setter для поля [member damage]. При попытке присвоить отрицательный урон

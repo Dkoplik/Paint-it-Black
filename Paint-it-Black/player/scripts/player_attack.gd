@@ -126,6 +126,9 @@ func _attack(direction: Vector2, impulse: float) -> void:
 	direction = direction.normalized()
 	movement_component.add_velocity(direction * impulse)
 
+	# Задать новое направление атаки в ресурс
+	_hit_box.attack_data.direction = direction
+
 	# Вращение хитбокса в заданном направлении
 	_hit_box.look_at(direction + _hit_box.global_position)
 	# Анимация хитбокса во время атаки

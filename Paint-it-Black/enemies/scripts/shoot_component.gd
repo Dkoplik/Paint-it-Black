@@ -54,7 +54,7 @@ func shoot_in_direction(direction: Vector2) -> bool:
 	var spread_angle := randf_range(-shoot_data.spread_angle, shoot_data.spread_angle)
 	var cur_direction := direction.rotated(spread_angle)
 	projectile.look_at(cur_direction)
-	projectile.position = projectile_spawn.position
+	projectile.position = projectile_spawn.global_position
 
 	_cooldown = shoot_data.cooldown
 

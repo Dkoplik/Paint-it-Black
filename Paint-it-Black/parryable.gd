@@ -1,14 +1,13 @@
 @tool
 class_name Parryable
-extends CustomNode
+extends BasicHurtBox
 
 ## Испускается, когда снаряд был парирован.
 signal parried
 
 ## Корневой узел снаряда.
 @export var root_node: Node2D:
-	set = set_root,
-	get = get_root
+	set = set_root
 
 ## Есть ли ссылка на [member root_node].
 var _has_root_node := false
@@ -24,11 +23,10 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 
 
 ## Получает данные об атаке и разворачивает снаряд в направлении атаки.
-func parry(attack_data: BasicIncomingAttack) -> void:
+func parry(attack_data: PlayerIncomingAttack) -> void:
 	if Engine.is_editor_hint():
 		return
-	# ToDo тут нет direction, надо либо добавить его в базовый класс, либо
-	# заменить BasicIncomingAttack на что-то другое.
+
 	root_node.look_at(root_node.position + attack_data.direction)
 	parried.emit()
 
@@ -43,6 +41,12 @@ func set_root(value: Node2D) -> void:
 	update_configuration_warnings()
 
 
-## Getter для поля [member root_node].
-func get_root() -> Node2D:
-	return root_node
+## Принимает входящую атаку
+func receive_attack(attack: BasicIncomingAttack) -> void:
+	if Engine.is_editor_hint():
+		return
+
+	if not attack.has_method("get_direction"):
+		return
+
+	parry(attack)

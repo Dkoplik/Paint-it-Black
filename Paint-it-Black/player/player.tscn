@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="9_2qwus"]
 [ext_resource type="Script" path="res://basic_hurt_box.gd" id="9_obpaw"]
 [ext_resource type="AudioStream" uid="uid://cwsdi5ldyv0lw" path="res://sounds/FootstepsConcrete1.wav" id="9_oy0ya"]
-[ext_resource type="Script" path="res://basic_incoming_attack.gd" id="9_trxmv"]
+[ext_resource type="Script" path="res://player/scripts/player_incoming_atttack.gd" id="9_t1hns"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_uli4m"]
 [ext_resource type="Resource" uid="uid://dchkf655ulbpo" path="res://player/resources/player_attack_data.tres" id="10_j7iwd"]
 [ext_resource type="Script" path="res://hp.gd" id="10_kupgm"]
@@ -30,8 +30,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_20xhv"]
 size = Vector2(20, 64)
 
-[sub_resource type="Resource" id="Resource_pib2t"]
-script = ExtResource("9_trxmv")
+[sub_resource type="Resource" id="Resource_86q88"]
+script = ExtResource("9_t1hns")
+direction = Vector2(0, 0)
 damage = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtmv3"]
@@ -227,10 +228,10 @@ hit_box_animation_name = &"hitbox_animation"
 
 [node name="HitBox" type="Area2D" parent="PlayerAttack"]
 position = Vector2(0, -10)
-collision_mask = 2
+collision_mask = 14
 script = ExtResource("10_urtlw")
-hittable_groups = Array[StringName]([&"enemy"])
-attack_data = SubResource("Resource_pib2t")
+hittable_groups = Array[StringName]([&"enemy", &"bullet"])
+attack_data = SubResource("Resource_86q88")
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="PlayerAttack/HitBox"]
 position = Vector2(13, 0)
@@ -244,7 +245,7 @@ libraries = {
 "": SubResource("AnimationLibrary_fmbkw")
 }
 
-[node name="BasicHurtBox" type="Area2D" parent="."]
+[node name="BasicHurtBox" type="Area2D" parent="." groups=["player"]]
 script = ExtResource("9_obpaw")
 
 [node name="HP" type="Node" parent="BasicHurtBox"]

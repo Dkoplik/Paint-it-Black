@@ -1,30 +1,47 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw6y6pqb7u6ry"]
+[gd_scene load_steps=8 format=3 uid="uid://dw6y6pqb7u6ry"]
 
+[ext_resource type="Script" path="res://bullet.gd" id="1_41t3i"]
 [ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://icon.svg" id="1_tj163"]
 [ext_resource type="Script" path="res://parryable.gd" id="2_jmgxq"]
 [ext_resource type="Script" path="res://projectile_movement.gd" id="3_tv8kn"]
 [ext_resource type="Script" path="res://hit_box.gd" id="4_qd255"]
+[ext_resource type="Resource" uid="uid://bfg1uwtgxxi2b" path="res://bullet_attack.tres" id="6_dj2we"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wywd"]
-size = Vector2(2, 0.5)
+size = Vector2(18, 10)
 
 [node name="Bullet" type="Node2D"]
+script = ExtResource("1_41t3i")
+life_time = 20.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1.77636e-15, 5.96046e-08)
-scale = Vector2(0.0195312, 0.0166016)
+scale = Vector2(0.15, 0.08)
 texture = ExtResource("1_tj163")
 
-[node name="Parryable" type="Node" parent="." node_paths=PackedStringArray("root_node")]
+[node name="Parryable" type="Area2D" parent="." node_paths=PackedStringArray("root_node") groups=["bullet"]]
+collision_layer = 8
+collision_mask = 7
 script = ExtResource("2_jmgxq")
 root_node = NodePath("..")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Parryable"]
+shape = SubResource("RectangleShape2D_3wywd")
+debug_color = Color(0, 0.6, 0, 0.419608)
+
 [node name="ProjectileMovement" type="Node" parent="." node_paths=PackedStringArray("root_node")]
 script = ExtResource("3_tv8kn")
+speed = 200.0
 root_node = NodePath("..")
 
 [node name="HitBox" type="Area2D" parent="."]
 script = ExtResource("4_qd255")
+hittable_groups = Array[StringName]([&"player"])
+attack_data = ExtResource("6_dj2we")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("RectangleShape2D_3wywd")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[connection signal="hit" from="HitBox" to="." method="_delete_bullet" flags=3]
+[connection signal="hit_solid_surface" from="HitBox" to="." method="_delete_bullet" flags=3]

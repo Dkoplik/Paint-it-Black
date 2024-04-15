@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://bq8pia3orjmgh"]
 
-[ext_resource type="Script" path="res://projectile_movement.gd" id="1_b412x"]
+[ext_resource type="Script" path="res://enemies/bullet/scripts/projectile_movement.gd" id="1_b412x"]
 [ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://icon.svg" id="1_vokmm"]
+
 
 [node name="Test" type="Sprite2D"]
 position = Vector2(98, 448)

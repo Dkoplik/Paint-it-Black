@@ -35,6 +35,8 @@ speed = 200.0
 root_node = NodePath("..")
 
 [node name="HitBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 7
 script = ExtResource("5_ydosa")
 hittable_groups = Array[StringName]([&"player"])
 attack_data = ExtResource("6_6j5q0")

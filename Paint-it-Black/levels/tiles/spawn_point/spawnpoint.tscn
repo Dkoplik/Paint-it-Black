@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6pcwthfhceaf"]
 
-[ext_resource type="Script" path="res://levels/spawn_point/spawn_point.gd" id="1_7hwoa"]
+[ext_resource type="Script" path="res://levels/tiles/spawn_point/spawnpoint.gd" id="1_akkt7"]
 
 [node name="SpawnPoint" type="Marker2D"]
 gizmo_extents = 15.0
-script = ExtResource("1_7hwoa")
+script = ExtResource("1_akkt7")
 
 [node name="LabelName" type="Label" parent="."]
 unique_name_in_owner = true

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://clxaq510xpi2d"]
+[gd_scene load_steps=6 format=3 uid="uid://clxaq510xpi2d"]
 
 [ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="1_uwsbl"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_hw8bi"]
 [ext_resource type="TileSet" uid="uid://begtbirhbccrw" path="res://test_tile_set.tres" id="2_k0l1u"]
+[ext_resource type="PackedScene" uid="uid://b6pcwthfhceaf" path="res://levels/tiles/spawn_point/spawnpoint.tscn" id="4_hrs5u"]
 [ext_resource type="PackedScene" uid="uid://s7hke7hh2dnc" path="res://enemies/basic_rifle_man/basic_rifle_man.tscn" id="5_1tjml"]
 
 [node name="TestLevel" type="Node"]
@@ -19,5 +20,8 @@ visible = false
 position = Vector2(243, 295)
 tile_map = NodePath("../TileMap")
 
-[node name="BasicRifleMan" parent="." instance=ExtResource("5_1tjml")]
-position = Vector2(711, 366)
+[node name="SpawnPoint" parent="." instance=ExtResource("4_hrs5u")]
+position = Vector2(729, 357)
+spawn_scene = ExtResource("5_1tjml")
+spawn_delay = 5.0
+spawnpoint_name = "Enemy"

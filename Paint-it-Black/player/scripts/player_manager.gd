@@ -1,5 +1,5 @@
-extends CharacterBody2D
 class_name Player
+extends CharacterBody2D
 
 @export var tile_map : TileMap
 @onready var camera = $Camera2D as Camera2D

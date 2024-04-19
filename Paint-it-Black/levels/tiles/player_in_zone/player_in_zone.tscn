@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnhfxcuyvom0l"]
+
+[ext_resource type="Script" path="res://levels/tiles/player_in_zone/player_in_zone.gd" id="1_oaows"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tjr6p"]
+
+[node name="PlayerInZone" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_oaows")
+player_group = "player"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tjr6p")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

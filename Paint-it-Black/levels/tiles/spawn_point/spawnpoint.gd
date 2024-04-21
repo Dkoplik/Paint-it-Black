@@ -59,6 +59,21 @@ func set_enabled(value: bool) -> void:
 		start_count_down()
 
 
+## Включает точку спавна.
+func enable() -> void:
+	enabled = true
+
+
+## Отключает точку спавна.
+func disable() -> void:
+	enabled = false
+
+
+## Переключает [member enabled] точки спавна.
+func switch() -> void:
+	enabled = not enabled
+
+
 func set_spawnpoint_name(value: String) -> void:
 	if not Engine.is_editor_hint():
 		return

@@ -9,6 +9,10 @@ func before_run(actor: Node, blackboard: Blackboard) -> void:
 
 
 func tick(actor: Node, _blackboard: Blackboard) -> int:
+	if hp_component == null:
+		push_warning("Отсутствует hp_component для узла дерева поведения")
+		return FAILURE
+
 	if (hp_component.get_current_hp() > 0):
 		return SUCCESS
 	return FAILURE

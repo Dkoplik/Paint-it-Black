@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cigqxgmwsxsbv"]
+
+[ext_resource type="Texture2D" uid="uid://bhi0xaks3dc1j" path="res://levels/level_manager/loading_screen/loading_icon.png" id="1_gvhgg"]
+[ext_resource type="Script" path="res://levels/level_manager/loading_screen/loading_icon_anim.gd" id="2_wavey"]
+
+[sub_resource type="Gradient" id="Gradient_bkk4e"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y36rk"]
+gradient = SubResource("Gradient_bkk4e")
+
+[node name="loading_sceen" type="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(515, 291.5)
+scale = Vector2(20.0938, 11.6406)
+texture = SubResource("GradientTexture2D_y36rk")
+
+[node name="LoadingIcon" type="Sprite2D" parent="."]
+position = Vector2(894, 474)
+texture = ExtResource("1_gvhgg")
+offset = Vector2(0, -3)
+script = ExtResource("2_wavey")
+rotation_speed = 5.0

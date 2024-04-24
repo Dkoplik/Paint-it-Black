@@ -4,6 +4,10 @@ extends ConditionLeaf
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
 	var target: Node2D = blackboard.get_value("target")
+	if target == null:
+		push_warning("Отсутствует target для узла дерева поведения")
+		return FAILURE
+
 	var shoot_distance: float = blackboard.get_value("shoot_distance")
 	if _distance_to(actor, target) <= shoot_distance:
 		return SUCCESS

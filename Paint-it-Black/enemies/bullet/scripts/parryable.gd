@@ -17,6 +17,11 @@ func _init() -> void:
 	_class_name = &"Parryable"
 
 
+func _ready() -> void:
+	super()
+	connect("parried", GameManager.on_parry_hit_stop)
+
+
 func check_configuration(warnings: PackedStringArray = []) -> bool:
 	_has_root_node = Utilities.check_reference(root_node, "Node2D", warnings)
 	return _has_root_node

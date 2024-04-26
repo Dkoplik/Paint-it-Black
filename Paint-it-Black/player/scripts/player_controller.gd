@@ -168,3 +168,13 @@ func _on_player_attack_attack():
 
 func _on_player_attack_attack_ready():
 	state_chart.send_event("attack_ready")
+
+
+func _on_hit_box_hit(hurt_box):
+	if hurt_box is Parryable:
+		return
+	GameManager.on_hit_hit_stop()
+
+
+func _on_basic_hurt_box_hurt(attack):
+	GameManager.on_hurt_hit_stop()

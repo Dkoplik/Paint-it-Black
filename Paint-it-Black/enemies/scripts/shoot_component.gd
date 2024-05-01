@@ -98,7 +98,7 @@ func reset_cooldown() -> void:
 
 ## Обновляет значение [member _cooldown] в соответсвии с пройденным временем.
 func tick_cooldown(delta: float) -> void:
-	if _cooldown <= 0.0: # Сигнал attack_ready достаточно испустить 1 раз
+	if _cooldown <= 0.0:  # Сигнал attack_ready достаточно испустить 1 раз
 		return
 
 	_cooldown = max(0.0, _cooldown - delta)

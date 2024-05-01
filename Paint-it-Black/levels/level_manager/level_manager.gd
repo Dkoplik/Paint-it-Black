@@ -1,7 +1,7 @@
 extends Node
 
 ## Типы уровней (сцен).
-enum LevelType { MAIN_MENU, DEFAULT, GAME_LEVEL}
+enum LevelType { MAIN_MENU, DEFAULT, GAME_LEVEL }
 
 ## Данные о всех уровнях.
 var levels_resource: LevelsResource = preload("res://levels/level_manager/levels_resource.tres")
@@ -23,7 +23,10 @@ func _physics_process(_delta):
 	if not _waiting_to_load:
 		return
 
-	if ResourceLoader.load_threaded_get_status(_loading_path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+	if (
+		ResourceLoader.load_threaded_get_status(_loading_path)
+		== ResourceLoader.THREAD_LOAD_IN_PROGRESS
+	):
 		return
 	if ResourceLoader.load_threaded_get_status(_loading_path) == ResourceLoader.THREAD_LOAD_LOADED:
 		await _fade_out()
@@ -44,7 +47,7 @@ func get_current_game_lvl() -> int:
 ## Загружает и устанавливает указанный игровой уровень. Если [param value] за
 ## пределами массива игровых уровней, то загружается сцена по-умолчанию.
 func load_lvl(value: int):
-	if (not _is_valid_lvl_num(value)):
+	if not _is_valid_lvl_num(value):
 		load_default_scene()
 	else:
 		await _fade_in()

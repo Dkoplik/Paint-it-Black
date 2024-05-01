@@ -16,7 +16,6 @@ extends CustomMarker2D
 @export var spawnpoint_name: String:
 	set = set_spawnpoint_name
 
-
 ## Отображает [member spawnpoint_name].
 var _label_name: Label
 ## Есть ли [member spawn_scene].
@@ -46,7 +45,7 @@ func set_spawn_scene(value: PackedScene) -> void:
 
 
 func set_spawn_delay(value: float) -> void:
-	if (value < 0.0):
+	if value < 0.0:
 		return
 	spawn_delay = value
 
@@ -76,7 +75,7 @@ func switch() -> void:
 func set_spawnpoint_name(value: String) -> void:
 	if not Engine.is_editor_hint():
 		return
-	
+
 	_label_name = %LabelName
 	spawnpoint_name = value
 

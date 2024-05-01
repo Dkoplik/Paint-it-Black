@@ -11,5 +11,6 @@ extends CustomResource
 ## Максимальное расстояние стрельбы.
 @export_range(0.0, 1000.0, 0.1, "or_greater") var shoot_range: float
 
+
 func _init() -> void:
 	_class_name = &"ShootData"

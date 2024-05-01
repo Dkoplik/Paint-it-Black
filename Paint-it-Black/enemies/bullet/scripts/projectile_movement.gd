@@ -49,7 +49,7 @@ func set_speed(value: float) -> void:
 
 ## Getter для поля [member speed].
 func get_speed() -> float:
-	return speed # ToDo: просто возвращает скорость.
+	return speed  # ToDo: просто возвращает скорость.
 
 
 ## Setter для поля [member root_node]. Не позволяет изменить корневой узел во
@@ -69,4 +69,4 @@ func set_root(value: Node2D) -> void:
 
 ## Getter для поля [member root_node].
 func get_root() -> Node2D:
-	return root_node # ToDo просто вернуть root_node
+	return root_node  # ToDo просто вернуть root_node

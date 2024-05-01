@@ -7,6 +7,7 @@ extends CustomNode2D
 ## Сколько осталось до удаления.
 var life_count_down: float
 
+
 func _init() -> void:
 	_class_name = &"Bullet"
 

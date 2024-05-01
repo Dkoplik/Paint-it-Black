@@ -56,7 +56,9 @@ func _ready() -> void:
 		push_error("Невозможно изменять hitbox атаки без _animation_player")
 		return
 
-	_custom_speed = (_animation_player.get_animation(hit_box_animation_name).length / attack_data.duration)
+	_custom_speed = (
+		_animation_player.get_animation(hit_box_animation_name).length / attack_data.duration
+	)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:

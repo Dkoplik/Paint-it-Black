@@ -7,7 +7,6 @@ extends CustomNode
 ## корня игрока. Этот узел дублирует координаты дочернего [CharacterBody2D],
 ## благодаря чему остальные компоненты будут следовать за перемещением игрока.
 
-# ToDo для @export полей нужны setter'ы с обновлением ошибок конфигурации
 ## Компонента движения.
 @export var movement_component: PlayerMovement:
 	set = set_movement_component
@@ -128,7 +127,7 @@ func _on_can_jump_state_unhandled_input(event):
 		movement_component.jump()
 		# Необходима небольшая пауза, иначе игрок не успеет оторваться от земли,
 		# из-за чего из состояния "jump" сразу же перейдёт в "grounded".
-		await Utilities.wait_for(0.05)
+		await AutoloadUtilities.wait_for(0.05)
 		state_chart.send_event("jump")
 
 
@@ -176,5 +175,5 @@ func _on_hit_box_hit(hurt_box):
 	GameManager.on_hit_hit_stop()
 
 
-func _on_basic_hurt_box_hurt(attack):
+func _on_basic_hurt_box_hurt(_attack):
 	GameManager.on_hurt_hit_stop()

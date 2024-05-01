@@ -107,3 +107,8 @@ static func check_single_component(
 			push_error("Не найдена компонента %s" % component_class)
 		return null
 	return children[0]
+
+
+## Возвращает расстояние между двумя указанными узлами.
+static func distance_between(from: Node2D, to: Node2D) -> float:
+	return from.position.distance_to(to.position)

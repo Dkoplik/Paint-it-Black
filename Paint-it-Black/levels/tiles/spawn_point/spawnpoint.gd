@@ -90,7 +90,7 @@ func set_spawnpoint_name(value: String) -> void:
 
 ## Начинает отсчёт времени и спавнить сцену.
 func start_count_down() -> void:
-	await Utilities.wait_for(spawn_delay)
+	await AutoloadUtilities.wait_for(spawn_delay)
 
 	if not _has_spawn_scene:
 		push_error("Отсутствует сцена для спавна")

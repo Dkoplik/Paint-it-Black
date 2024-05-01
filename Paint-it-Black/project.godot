@@ -18,8 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Utilities="*res://utilities.gd"
-BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
-BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 GameManager="*res://game_manager/game_manager.gd"
 LevelManager="*res://levels/level_manager/level_manager.gd"
 

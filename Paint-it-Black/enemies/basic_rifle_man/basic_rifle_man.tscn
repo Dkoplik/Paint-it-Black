@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://s7hke7hh2dnc"]
+[gd_scene load_steps=12 format=3 uid="uid://s7hke7hh2dnc"]
 
 [ext_resource type="SpriteFrames" uid="uid://cutqu2ktq3u8f" path="res://enemies/basic_rifle_man/resources/animations.tres" id="1_0k482"]
 [ext_resource type="Script" path="res://basic_character_movement.gd" id="2_dv44l"]
@@ -8,17 +8,6 @@
 [ext_resource type="Resource" uid="uid://p5a26dn7rgxg" path="res://enemies/basic_rifle_man/resources/shoot_data.tres" id="5_45oi0"]
 [ext_resource type="Script" path="res://hp.gd" id="5_xqlou"]
 [ext_resource type="Script" path="res://hp_data.gd" id="6_pyl3l"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="7_i3vc1"]
-[ext_resource type="Script" path="res://enemies/basic_rifle_man/scripts/rifle_man_blackboard.gd" id="7_vsf8a"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="8_vd3ii"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="9_rf1tx"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="10_pqxip"]
-[ext_resource type="Script" path="res://enemies/beehave_parts/is_alive.gd" id="11_hbjxd"]
-[ext_resource type="Script" path="res://enemies/beehave_parts/free_character.gd" id="13_7um6u"]
-[ext_resource type="Script" path="res://enemies/beehave_parts/is_in_shoot_distance.gd" id="16_4s5qg"]
-[ext_resource type="Script" path="res://enemies/beehave_parts/move_to_target.gd" id="17_lkd36"]
-[ext_resource type="Script" path="res://enemies/beehave_parts/shoot_target.gd" id="18_etrhg"]
-[ext_resource type="Script" path="res://enemies/beehave_parts/stop_moving.gd" id="18_jpmb5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huqft"]
 size = Vector2(21, 60)
@@ -67,61 +56,3 @@ hp_data = SubResource("Resource_6m447")
 
 [node name="ProjectileSpawn" type="Marker2D" parent="."]
 position = Vector2(22, -5)
-
-[node name="RifleManBlackboard" type="Node" parent="." node_paths=PackedStringArray("hp_component", "movement_component", "shoot_component", "beehave_tree")]
-script = ExtResource("7_vsf8a")
-hp_component = NodePath("../BasicHurtBox/HP")
-movement_component = NodePath("../BasicCharacterMovement")
-shoot_component = NodePath("../ShootComponent")
-beehave_tree = NodePath("../BeehaveTree")
-blackboard = {
-"shoot_distance": 400.0
-}
-
-[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
-script = ExtResource("7_i3vc1")
-actor_node_path = NodePath("..")
-blackboard = NodePath("../RifleManBlackboard")
-actor = NodePath("..")
-
-[node name="Root" type="Node" parent="BeehaveTree"]
-script = ExtResource("8_vd3ii")
-
-[node name="Dead" type="Node" parent="BeehaveTree/Root"]
-script = ExtResource("9_rf1tx")
-
-[node name="InverterDecorator" type="Node" parent="BeehaveTree/Root/Dead"]
-script = ExtResource("10_pqxip")
-
-[node name="IsAlive" type="Node" parent="BeehaveTree/Root/Dead/InverterDecorator"]
-script = ExtResource("11_hbjxd")
-
-[node name="FreeCharacter" type="Node" parent="BeehaveTree/Root/Dead"]
-script = ExtResource("13_7um6u")
-
-[node name="SelectorComposite" type="Node" parent="BeehaveTree/Root"]
-script = ExtResource("8_vd3ii")
-
-[node name="MoveToTarget" type="Node" parent="BeehaveTree/Root/SelectorComposite"]
-script = ExtResource("9_rf1tx")
-
-[node name="InverterDecorator" type="Node" parent="BeehaveTree/Root/SelectorComposite/MoveToTarget"]
-script = ExtResource("10_pqxip")
-
-[node name="IsInShootDistance" type="Node" parent="BeehaveTree/Root/SelectorComposite/MoveToTarget/InverterDecorator"]
-script = ExtResource("16_4s5qg")
-
-[node name="MoveToTaget" type="Node" parent="BeehaveTree/Root/SelectorComposite/MoveToTarget"]
-script = ExtResource("17_lkd36")
-
-[node name="SequenceComposite" type="Node" parent="BeehaveTree/Root/SelectorComposite"]
-script = ExtResource("9_rf1tx")
-
-[node name="IsInShootDistance" type="Node" parent="BeehaveTree/Root/SelectorComposite/SequenceComposite"]
-script = ExtResource("16_4s5qg")
-
-[node name="StopMoving" type="Node" parent="BeehaveTree/Root/SelectorComposite/SequenceComposite"]
-script = ExtResource("18_jpmb5")
-
-[node name="ShootTarget" type="Node" parent="BeehaveTree/Root/SelectorComposite/SequenceComposite"]
-script = ExtResource("18_etrhg")

@@ -21,8 +21,6 @@ extends Node
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		assert(root_node, "Корневой узел отсутствует.")
-		# ToDo: проверить наличие корневого узла. Если он отсутствует, то
-		# прервать программу через assert.
 
 
 ## Запускает движение снаряда.
@@ -49,7 +47,7 @@ func set_speed(value: float) -> void:
 
 ## Getter для поля [member speed].
 func get_speed() -> float:
-	return speed # ToDo: просто возвращает скорость.
+	return speed
 
 
 ## Setter для поля [member root_node]. Не позволяет изменить корневой узел во
@@ -69,4 +67,4 @@ func set_root(value: Node2D) -> void:
 
 ## Getter для поля [member root_node].
 func get_root() -> Node2D:
-	return root_node # ToDo просто вернуть root_node
+	return root_node

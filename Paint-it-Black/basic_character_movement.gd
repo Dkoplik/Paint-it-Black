@@ -81,6 +81,11 @@ func move_in_direction(direction: Vector2) -> void:
 	character_body.velocity.x = _calculate_speed_in_direction(direction)
 
 
+func move_to_target(target: Node2D) -> void:
+	var move_direction := (target.global_position - character_body.global_position).normalized()
+	return move_in_direction(move_direction)
+
+
 ## Вычисляет и возвращает текущую скорость для осуществления движения в
 ## направлении [param direction] с ускорением
 ## [member BasicMovementData.movement_acceleration]. Скорость не может превысить

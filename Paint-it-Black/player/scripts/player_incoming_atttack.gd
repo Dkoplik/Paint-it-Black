@@ -13,10 +13,10 @@ func _init() -> void:
 
 
 ## Setter для поля [member direction].
-func set_direction(value: Vector2) ->  void:
+func set_direction(value: Vector2) -> void:
 	direction = value.normalized()
 
 
 ## Getter для поля [member direction].
-func get_direction() ->  Vector2:
+func get_direction() -> Vector2:
 	return direction

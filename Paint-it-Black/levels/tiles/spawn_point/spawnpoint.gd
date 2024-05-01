@@ -16,8 +16,6 @@ extends CustomMarker2D
 @export var spawnpoint_name: String:
 	set = set_spawnpoint_name
 
-## Сколько осталось до спавна.
-var _before_spawn: float
 ## Отображает [member spawnpoint_name].
 var _label_name: Label
 ## Есть ли [member spawn_scene].
@@ -47,7 +45,7 @@ func set_spawn_scene(value: PackedScene) -> void:
 
 
 func set_spawn_delay(value: float) -> void:
-	if (value < 0.0):
+	if value < 0.0:
 		return
 	spawn_delay = value
 
@@ -77,7 +75,7 @@ func switch() -> void:
 func set_spawnpoint_name(value: String) -> void:
 	if not Engine.is_editor_hint():
 		return
-	
+
 	_label_name = %LabelName
 	spawnpoint_name = value
 
@@ -90,12 +88,11 @@ func set_spawnpoint_name(value: String) -> void:
 
 ## Начинает отсчёт времени и спавнить сцену.
 func start_count_down() -> void:
-	await Utilities.wait_for(spawn_delay)
-
 	if not _has_spawn_scene:
 		push_error("Отсутствует сцена для спавна")
 		return
 
+	await AutoloadUtilities.wait_for(spawn_delay)
 	var new_scene = spawn_scene.instantiate()
 	new_scene.position = self.global_position
 	get_tree().root.add_child(new_scene)

@@ -11,7 +11,6 @@ extends CharacterBody2D
 func _ready() -> void:
 	#Установка лимитов камеры на границах уровня
 	var r = tile_map.get_used_rect()
-	var vp = tile_map.get_viewport_rect()
 	var qs = tile_map.cell_quadrant_size
 	camera.limit_left = r.position.x * qs
 	camera.limit_top = r.position.y * qs

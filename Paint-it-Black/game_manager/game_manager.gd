@@ -15,7 +15,7 @@ func hit_stop(time_scale: float, duration: float) -> void:
 	var initial_time_scale := Engine.time_scale
 
 	Engine.time_scale = time_scale
-	await Utilities.wait_for(duration * time_scale)
+	await AutoloadUtilities.wait_for(duration * time_scale)
 	Engine.time_scale = initial_time_scale
 
 	_is_hit_stop = false

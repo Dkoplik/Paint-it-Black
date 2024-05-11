@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="2_tdkgi"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="3_mavrb"]
 [ext_resource type="PackedScene" uid="uid://b6pcwthfhceaf" path="res://levels/tiles/spawn_point/spawnpoint.tscn" id="4_sx1ew"]
-[ext_resource type="PackedScene" uid="uid://s7hke7hh2dnc" path="res://enemies/basic_rifle_man/basic_rifle_man.tscn" id="5_80i0y"]
+[ext_resource type="PackedScene" uid="uid://s7hke7hh2dnc" path="res://enemies/rifle_man/rifle_man.tscn" id="5_80i0y"]
 [ext_resource type="PackedScene" uid="uid://cnhfxcuyvom0l" path="res://levels/tiles/player_in_zone/player_in_zone.tscn" id="6_o761t"]
 [ext_resource type="PackedScene" uid="uid://bneqy8ykvbqb1" path="res://levels/tiles/ending_door/ending_door.tscn" id="7_c1m6e"]
 

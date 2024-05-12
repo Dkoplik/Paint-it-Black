@@ -402,6 +402,26 @@ script = ExtResource("11_6k34h")
 to = NodePath("../../CanStrongAttack")
 event = &"wall_collision"
 
+[node name="PlatformStates" type="Node" parent="StateChart/ParallelState/LogicStates"]
+script = ExtResource("10_pcuc3")
+initial_state = NodePath("StayOnPlatform")
+
+[node name="StayOnPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnFallThroughPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates/StayOnPlatform"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../FallThoughPlatform")
+event = &"fall_through_platform"
+
+[node name="FallThoughPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnStayOnPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates/FallThoughPlatform"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../StayOnPlatform")
+event = &"stay_on_platform"
+
 [node name="AnimationStates" type="Node" parent="StateChart/ParallelState"]
 editor_description = "Эта ветка состояний отвечает только за анимации и не связана с логикой механик игрока.
 
@@ -522,6 +542,10 @@ editor_draw_drag_margin = true
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/Jump&FallStates/CanJump" to="PlayerController" method="_on_can_jump_state_unhandled_input"]
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanStrongAttack" to="PlayerController" method="_on_can_strong_attack_state_unhandled_input"]
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanWeakAttack" to="PlayerController" method="_on_can_weak_attack_state_unhandled_input"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/PlatformStates/StayOnPlatform" to="PlayerController" method="_on_stay_on_platform_state_entered"]
+[connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/PlatformStates/StayOnPlatform" to="PlayerController" method="_on_stay_on_platform_state_unhandled_input"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/PlatformStates/FallThoughPlatform" to="PlayerController" method="_on_fall_though_platform_state_entered"]
+[connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/PlatformStates/FallThoughPlatform" to="PlayerController" method="_on_fall_though_platform_state_unhandled_input"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/IdleAnimation" to="PlayerAnimationController" method="_on_idle_animation_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/RunAnimation" to="PlayerAnimationController" method="_on_run_animation_state_entered"]
 [connection signal="taken" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnLand" to="PlayerSounds/Land" method="play"]

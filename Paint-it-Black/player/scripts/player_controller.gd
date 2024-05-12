@@ -147,7 +147,7 @@ func _on_can_strong_attack_state_unhandled_input(event):
 
 
 ## Обработка слабой атаки
-func _on_can_weak_attack_state_unhandled_input(event):
+func _on_can_weak_attack_state_unhandled_input(event: InputEvent):
 	if Engine.is_editor_hint():
 		return
 
@@ -177,3 +177,21 @@ func _on_hit_box_hit(hurt_box):
 
 func _on_basic_hurt_box_hurt(_attack):
 	GameManager.on_hurt_hit_stop()
+
+
+func _on_stay_on_platform_state_unhandled_input(event: InputEvent):
+	if event.is_action_pressed("fall_through_platform"):
+		state_chart.send_event("fall_through_platform")
+
+
+func _on_stay_on_platform_state_entered():
+	movement_component.turn_on_platform_collision()
+
+
+func _on_fall_though_platform_state_unhandled_input(event):
+	if event.is_action_released("fall_through_platform"):
+		state_chart.send_event("stay_on_platform")
+
+
+func _on_fall_though_platform_state_entered():
+	movement_component.turn_off_platform_collision()

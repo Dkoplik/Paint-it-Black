@@ -11,6 +11,9 @@ signal character_look_right
 ## Персонаж смотрит налево
 signal character_look_left
 
+## Номер слоя физики для платформ.
+const PLATFORM_PHYSICS_LAYER := 5
+
 ## Ресурс [BasicMovementData], необходим для работы данной компоненты.
 @export var movement_data: BasicMovementData:
 	set = set_movement_data
@@ -39,6 +42,14 @@ func _physics_process(delta) -> void:
 
 	_apply_gravity(delta)
 	character_body.move_and_slide()
+
+
+func turn_on_platform_collision() -> void:
+	character_body.set_collision_mask_value(PLATFORM_PHYSICS_LAYER, true)
+
+
+func turn_off_platform_collision() -> void:
+	character_body.set_collision_mask_value(PLATFORM_PHYSICS_LAYER, false)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:

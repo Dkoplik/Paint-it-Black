@@ -40,7 +40,6 @@ tile_map = NodePath("../LevelTiles")
 position = Vector2(380, 238)
 actions_order = Array[Resource("res://levels/tiles/spawn_point/spawn_point_action.gd")]([SubResource("Resource_e30kg"), SubResource("Resource_8wetu"), SubResource("Resource_itat1")])
 default_wait_time = 5.0
-enabled = true
 
 [node name="PlayerInZone" parent="." instance=ExtResource("6_o761t")]
 position = Vector2(1340, 108)
@@ -56,6 +55,11 @@ position = Vector2(19.5, -24)
 
 [node name="EndingDoor" parent="." instance=ExtResource("7_c1m6e")]
 position = Vector2(1261, 567)
+
+[node name="PlayerInZone3" parent="." instance=ExtResource("6_o761t")]
+position = Vector2(322, 420)
+
+[connection signal="player_entered" from="PlayerInZone3" to="Spawnpoint" method="enable"]
 
 [editable path="PlayerInZone"]
 [editable path="PlayerInZone2"]

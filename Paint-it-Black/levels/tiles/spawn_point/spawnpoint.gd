@@ -22,6 +22,10 @@ var _has_actions := false
 
 func _ready() -> void:
 	super()
+
+	if Engine.is_editor_hint():
+		return
+
 	actions_order.reverse()
 	_spawning_marker = $"SpawnPointMarker"
 	_prepare_spawn_actions()
@@ -43,7 +47,6 @@ func set_enabled(value: bool) -> void:
 	if value == false:
 		push_warning("Точка спавна не рассчитана на отключение, могут быть баги.")
 	enabled = value
-	# ToDo обработка массива
 
 
 ## Включает точку спавна.
@@ -52,6 +55,9 @@ func enable() -> void:
 
 
 func _process_actions() -> void:
+	if not enabled:
+		return
+
 	if actions_order.is_empty():
 		return
 	

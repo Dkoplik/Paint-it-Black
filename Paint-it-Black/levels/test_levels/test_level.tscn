@@ -1,12 +1,28 @@
-[gd_scene load_steps=8 format=3 uid="uid://clxaq510xpi2d"]
+[gd_scene load_steps=13 format=3 uid="uid://clxaq510xpi2d"]
 
 [ext_resource type="PackedScene" uid="uid://d0epmg43sv7ak" path="res://levels/tiles/level_tiles.tscn" id="1_gs11s"]
 [ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="2_tdkgi"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="3_mavrb"]
 [ext_resource type="PackedScene" uid="uid://b6pcwthfhceaf" path="res://levels/tiles/spawn_point/spawnpoint.tscn" id="4_sx1ew"]
 [ext_resource type="PackedScene" uid="uid://s7hke7hh2dnc" path="res://enemies/rifle_man/rifle_man.tscn" id="5_80i0y"]
+[ext_resource type="Script" path="res://levels/tiles/spawn_point/wait_action.gd" id="5_jug7p"]
+[ext_resource type="Script" path="res://levels/tiles/spawn_point/spawn_scene_action.gd" id="6_nepvh"]
 [ext_resource type="PackedScene" uid="uid://cnhfxcuyvom0l" path="res://levels/tiles/player_in_zone/player_in_zone.tscn" id="6_o761t"]
 [ext_resource type="PackedScene" uid="uid://bneqy8ykvbqb1" path="res://levels/tiles/ending_door/ending_door.tscn" id="7_c1m6e"]
+
+[sub_resource type="Resource" id="Resource_e30kg"]
+script = ExtResource("5_jug7p")
+wait_time = 1.5
+
+[sub_resource type="Resource" id="Resource_8wetu"]
+script = ExtResource("6_nepvh")
+spawning_scene = ExtResource("5_80i0y")
+offset = Vector2(0, 50)
+
+[sub_resource type="Resource" id="Resource_itat1"]
+script = ExtResource("6_nepvh")
+spawning_scene = ExtResource("5_80i0y")
+offset = Vector2(-100, 0)
 
 [node name="TestLevel" type="Node"]
 
@@ -20,29 +36,11 @@ visible = false
 position = Vector2(100, 428)
 tile_map = NodePath("../LevelTiles")
 
-[node name="SpawnPoint" parent="." instance=ExtResource("4_sx1ew")]
-position = Vector2(728, 481)
-spawn_scene = ExtResource("5_80i0y")
-spawn_delay = 5.0
-spawnpoint_name = "Enemy"
-
-[node name="SpawnPoint2" parent="." instance=ExtResource("4_sx1ew")]
-position = Vector2(59, 206)
-spawn_scene = ExtResource("5_80i0y")
-spawn_delay = 5.0
-spawnpoint_name = "Enemy"
-
-[node name="SpawnPoint3" parent="." instance=ExtResource("4_sx1ew")]
-position = Vector2(1252, 86)
-spawn_scene = ExtResource("5_80i0y")
-enabled = false
-spawnpoint_name = "Enemy"
-
-[node name="SpawnPoint4" parent="." instance=ExtResource("4_sx1ew")]
-position = Vector2(777, 92)
-spawn_scene = ExtResource("5_80i0y")
-enabled = false
-spawnpoint_name = "Enemy"
+[node name="Spawnpoint" parent="." instance=ExtResource("4_sx1ew")]
+position = Vector2(380, 238)
+actions_order = Array[Resource("res://levels/tiles/spawn_point/spawn_point_action.gd")]([SubResource("Resource_e30kg"), SubResource("Resource_8wetu"), SubResource("Resource_itat1")])
+default_wait_time = 5.0
+enabled = true
 
 [node name="PlayerInZone" parent="." instance=ExtResource("6_o761t")]
 position = Vector2(1340, 108)
@@ -58,11 +56,6 @@ position = Vector2(19.5, -24)
 
 [node name="EndingDoor" parent="." instance=ExtResource("7_c1m6e")]
 position = Vector2(1261, 567)
-
-[connection signal="player_entered" from="PlayerInZone" to="SpawnPoint3" method="enable" flags=6]
-[connection signal="player_entered" from="PlayerInZone" to="SpawnPoint4" method="enable" flags=6]
-[connection signal="player_entered" from="PlayerInZone2" to="SpawnPoint3" method="enable" flags=6]
-[connection signal="player_entered" from="PlayerInZone2" to="SpawnPoint4" method="enable" flags=6]
 
 [editable path="PlayerInZone"]
 [editable path="PlayerInZone2"]

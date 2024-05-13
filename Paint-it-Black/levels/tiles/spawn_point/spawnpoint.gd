@@ -1,60 +1,49 @@
 @tool
 class_name SpawnPoint
-extends CustomMarker2D
+extends CustomNode2D
 
-## Что спавнить?
-@export var spawn_scene: PackedScene:
-	set = set_spawn_scene
-## Через сколько заспавнить после активации. Если активно с самого начала,
-## то отчёт с начала загрузки сцены.
-@export var spawn_delay: float = 0.0:
-	set = set_spawn_delay
+## Что делать и в каком порядке? Действия выполняются от 0-ого до последнего.
+@export var actions_order: Array[SpawnPointAction]
+## Стандартное время ожидания между действиями.
+@export var default_wait_time := 0.5
 ## Включена ли точка спавна. Если false, то ничего не происходит.
-@export var enabled: bool = true:
+@export var enabled: bool = false:
 	set = set_enabled
-## Название спавна, отображается только в редакторе и нужно для удобства.
-@export var spawnpoint_name: String:
-	set = set_spawnpoint_name
 
-## Отображает [member spawnpoint_name].
-var _label_name: Label
-## Есть ли [member spawn_scene].
-var _has_spawn_scene: bool = false
+## Маркер, на котором будут спавниться сцены.
+var _spawning_marker: Marker2D
+## Было ли уже ожидание следующего действия?
+var _has_waited := false
+## Началось ли выполнение какого-либо действия?
+var _is_action_started := false
+## Есть ли в массиве какие-либо действия?
+var _has_actions := false
 
 
 func _ready() -> void:
 	super()
+	actions_order.reverse()
+	_spawning_marker = $"SpawnPointMarker"
+	_prepare_spawn_actions()
 
-	_label_name = %LabelName
+
+func _physics_process(_delta):
 	if Engine.is_editor_hint():
 		return
 
-	_label_name.hide()
-	if enabled:
-		start_count_down()
+	_process_actions()
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
-	_has_spawn_scene = Utilities.check_reference(spawn_scene, "PackedScene", warnings)
-	return _has_spawn_scene
-
-
-func set_spawn_scene(value: PackedScene) -> void:
-	spawn_scene = value
-	update_configuration_warnings()
-
-
-func set_spawn_delay(value: float) -> void:
-	if value < 0.0:
-		return
-	spawn_delay = value
+	_check_any_action(warnings)
+	return _has_actions
 
 
 func set_enabled(value: bool) -> void:
+	if value == false:
+		push_warning("Точка спавна не рассчитана на отключение, могут быть баги.")
 	enabled = value
-
-	if not Engine.is_editor_hint() and enabled:
-		start_count_down()
+	# ToDo обработка массива
 
 
 ## Включает точку спавна.
@@ -62,37 +51,52 @@ func enable() -> void:
 	enabled = true
 
 
-## Отключает точку спавна.
-func disable() -> void:
-	enabled = false
-
-
-## Переключает [member enabled] точки спавна.
-func switch() -> void:
-	enabled = not enabled
-
-
-func set_spawnpoint_name(value: String) -> void:
-	if not Engine.is_editor_hint():
+func _process_actions() -> void:
+	if actions_order.is_empty():
+		return
+	
+	if _is_action_started:
 		return
 
-	_label_name = %LabelName
-	spawnpoint_name = value
+	_is_action_started = true
+	var current_action = actions_order.back()
+	await _process_waiting(current_action)
 
-	if spawnpoint_name == "":
-		_label_name.hide()
-	else:
-		_label_name.text = spawnpoint_name
-		_label_name.show()
+	var is_action_successful: bool = await current_action.do_action()
+	while not is_action_successful:
+		is_action_successful = await current_action.do_action()
+
+	if not current_action.is_class_name(&"WaitAction"):
+		_has_waited = false
+	actions_order.pop_back()
+	_is_action_started = false
 
 
-## Начинает отсчёт времени и спавнить сцену.
-func start_count_down() -> void:
-	if not _has_spawn_scene:
-		push_error("Отсутствует сцена для спавна")
+## Обработка ожидания между действиями. Учитывает стандартное время ожидания
+## и кастомное через действия ожидания.
+func _process_waiting(current_action) -> void:
+	if _has_waited:
 		return
 
-	await AutoloadUtilities.wait_for(spawn_delay)
-	var new_scene = spawn_scene.instantiate()
-	new_scene.position = self.global_position
-	get_tree().root.add_child(new_scene)
+	if current_action.is_class_name(&"WaitAction"):
+		_has_waited = true
+		return
+
+	await AutoloadUtilities.wait_for(default_wait_time)
+	_has_waited = true
+
+
+## Содержит ли массив действий хотя бы какое-то действие?
+func _check_any_action(warnings: PackedStringArray = []) -> void:
+	_has_actions = not actions_order.is_empty()
+	if not _has_actions:
+		if Engine.is_editor_hint():
+			warnings.push_back("Список действий пуст")
+		else:
+			push_warning("Список действий пуст")
+
+
+func _prepare_spawn_actions() -> void:
+	for action in actions_order:
+		if action.is_class_name(&"SpawnSceneAction"):
+			action.spawning_marker = _spawning_marker

@@ -2,13 +2,8 @@
 
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/spawnpoint.gd" id="1_akkt7"]
 
-[node name="SpawnPoint" type="Marker2D"]
-gizmo_extents = 15.0
+[node name="SpawnPoint" type="Node2D"]
 script = ExtResource("1_akkt7")
 
-[node name="LabelName" type="Label" parent="."]
-unique_name_in_owner = true
-visible = false
-modulate = Color(1, 0, 0, 1)
-offset_top = -23.0
-offset_right = 40.0
+[node name="SpawnPointMarker" type="Marker2D" parent="."]
+gizmo_extents = 15.0

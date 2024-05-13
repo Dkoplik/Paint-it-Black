@@ -10,7 +10,7 @@ func wait_for(seconds: float):
 
 # ToDo check_resource и check_reference почти дублируют друг друга.
 ## Проверяет наличие ресурса в поданной переменной. Если ресурс
-## [member resource]отсутствует, то возвращает false, в редакторе добавляет
+## [member resource] отсутствует, то возвращает false, в редакторе добавляет
 ## предупреждение, в игре кидает ошибку через [method push_error]. Иначе
 ## просто возвращает true.
 static func check_resource(

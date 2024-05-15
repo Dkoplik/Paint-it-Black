@@ -12,3 +12,5 @@ movement_acceleration = 600.0
 max_movement_speed = 200.0
 gravity = 300.0
 max_fall_speed = 400.0
+max_up_speed = 600.0
+max_horizontal_speed = 500.0

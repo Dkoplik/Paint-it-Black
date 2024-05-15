@@ -13,7 +13,7 @@ extends CustomArea2D
 signal hurt(attack: BasicIncomingAttack)
 
 ## Ссылка на узел-компоненту [HP], автоматически ищется среди дочерних узлов.
-var _hp: HP = null
+var hp: HP = null
 ## Есть ли ссылка на компоненту [HP].
 var _has_hp := false
 
@@ -23,8 +23,8 @@ func _init():
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
-	_hp = Utilities.check_single_component(self, &"HP", warnings)
-	if _hp != null:
+	hp = Utilities.check_single_component(self, &"HP", warnings)
+	if hp != null:
 		_has_hp = true
 	return _has_hp
 
@@ -40,4 +40,4 @@ func receive_attack(attack: BasicIncomingAttack) -> void:
 		push_error("Невозможно осуществить receive_attack() без компоненты hp")
 		return
 
-	_hp.deal_damage(attack.damage)
+	hp.deal_damage(attack.damage)

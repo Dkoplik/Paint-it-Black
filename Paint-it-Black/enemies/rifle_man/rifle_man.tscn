@@ -37,13 +37,6 @@ sprite_frames = ExtResource("1_7i8ll")
 position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_huqft")
 
-[node name="RifleManController" type="Node" parent="." node_paths=PackedStringArray("movement_component", "shoot_component", "state_chart", "root")]
-script = ExtResource("2_74xtn")
-movement_component = NodePath("../BasicCharacterMovement")
-shoot_component = NodePath("../ShootComponent")
-state_chart = NodePath("../StateChart")
-root = NodePath("..")
-
 [node name="BasicCharacterMovement" type="Node" parent="." node_paths=PackedStringArray("character_body")]
 script = ExtResource("2_wjbqi")
 movement_data = ExtResource("3_566ko")
@@ -144,6 +137,14 @@ event = &"shoot"
 
 [node name="Dead" type="Node" parent="StateChart/ParallelState/LogicStates"]
 script = ExtResource("13_fc7rk")
+
+[node name="RifleManController" type="Node" parent="." node_paths=PackedStringArray("movement_component", "shoot_component", "hurt_box", "state_chart", "root")]
+script = ExtResource("2_74xtn")
+movement_component = NodePath("../BasicCharacterMovement")
+shoot_component = NodePath("../ShootComponent")
+hurt_box = NodePath("../BasicHurtBox")
+state_chart = NodePath("../StateChart")
+root = NodePath("..")
 
 [connection signal="attack" from="ShootComponent" to="StateChart" method="send_event" binds= [&"shoot"]]
 [connection signal="attack_ready" from="ShootComponent" to="StateChart" method="send_event" binds= [&"cooldown_ended"]]

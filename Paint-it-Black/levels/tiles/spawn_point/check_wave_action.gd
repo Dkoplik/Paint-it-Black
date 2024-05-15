@@ -11,6 +11,4 @@ func _init() -> void:
 
 
 func do_action() -> bool:
-	## ToDo пока хз, как сделать, нужно наладить Game Manager
-	push_warning("Метод do_action() не переопределён")
-	return false
+	return GameManager.wave_number >= wave_number

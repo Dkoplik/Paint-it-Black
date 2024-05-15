@@ -2,6 +2,15 @@
 class_name SpawnPoint
 extends CustomNode2D
 
+## Точка спавна начала свою работу.
+signal was_enabled
+## Точка спавна выполнила все действия и завершила свою работу.
+signal out_of_actions
+## Началась новая волна.
+signal wave_started
+## Текущая волна закончилась.
+signal wave_ended
+
 ## Что делать и в каком порядке? Действия выполняются от 0-ого до последнего.
 @export var actions_order: Array[SpawnPointAction]
 ## Стандартное время ожидания между действиями.
@@ -18,6 +27,9 @@ var _has_waited := false
 var _is_action_started := false
 ## Есть ли в массиве какие-либо действия?
 var _has_actions := false
+## Есть ли сейчас активная волна?
+var _is_wave_active := false:
+	set = set_is_wave_active
 
 
 func _ready() -> void:
@@ -26,6 +38,12 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 
+	connect("was_enabled", GameManager.increase_active_spawn_points_count)
+	connect("out_of_actions", GameManager.decrease_active_spawn_points_count)
+
+	connect("wave_started", GameManager.increase_active_waves_count)
+	connect("wave_ended", GameManager.decrease_active_waves_count)
+
 	actions_order.reverse()
 	_spawning_marker = $"SpawnPointMarker"
 	_prepare_spawn_actions()
@@ -33,6 +51,9 @@ func _ready() -> void:
 
 func _physics_process(_delta):
 	if Engine.is_editor_hint():
+		return
+	
+	if not _has_actions:
 		return
 
 	_process_actions()
@@ -46,6 +67,8 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 func set_enabled(value: bool) -> void:
 	if value == false:
 		push_warning("Точка спавна не рассчитана на отключение, могут быть баги.")
+	else:
+		was_enabled.emit()
 	enabled = value
 
 
@@ -57,11 +80,14 @@ func enable() -> void:
 func _process_actions() -> void:
 	if not enabled:
 		return
-
-	if actions_order.is_empty():
-		return
 	
 	if _is_action_started:
+		return
+
+	# Закончились действия
+	if actions_order.is_empty():
+		out_of_actions.emit()
+		_has_actions = false
 		return
 
 	_is_action_started = true
@@ -69,11 +95,17 @@ func _process_actions() -> void:
 	await _process_waiting(current_action)
 
 	var is_action_successful: bool = await current_action.do_action()
-	while not is_action_successful:
-		is_action_successful = await current_action.do_action()
+	if not is_action_successful:
+		if "wave_number" in current_action:
+			_is_wave_active = false
+		_is_action_started = false
+		return
+
+	_is_wave_active = true # Действие успешно обработано, значит, новая волна начата.
 
 	if not current_action.is_class_name(&"WaitAction"):
 		_has_waited = false
+
 	actions_order.pop_back()
 	_is_action_started = false
 
@@ -106,3 +138,14 @@ func _prepare_spawn_actions() -> void:
 	for action in actions_order:
 		if action.is_class_name(&"SpawnSceneAction"):
 			action.spawning_marker = _spawning_marker
+
+
+func set_is_wave_active(value: bool) -> void:
+	if _is_wave_active == value:
+		return
+
+	_is_wave_active = value
+	if _is_wave_active:
+		wave_started.emit()
+	else:
+		wave_ended.emit()

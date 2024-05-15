@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://clxaq510xpi2d"]
+[gd_scene load_steps=15 format=3 uid="uid://clxaq510xpi2d"]
 
 [ext_resource type="PackedScene" uid="uid://d0epmg43sv7ak" path="res://levels/tiles/level_tiles.tscn" id="1_gs11s"]
 [ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="2_tdkgi"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/spawn_scene_action.gd" id="6_nepvh"]
 [ext_resource type="PackedScene" uid="uid://cnhfxcuyvom0l" path="res://levels/tiles/player_in_zone/player_in_zone.tscn" id="6_o761t"]
 [ext_resource type="PackedScene" uid="uid://bneqy8ykvbqb1" path="res://levels/tiles/ending_door/ending_door.tscn" id="7_c1m6e"]
+[ext_resource type="Script" path="res://levels/tiles/spawn_point/check_wave_action.gd" id="9_uxtvk"]
 
 [sub_resource type="Resource" id="Resource_e30kg"]
 script = ExtResource("5_jug7p")
@@ -18,6 +19,10 @@ wait_time = 1.5
 script = ExtResource("6_nepvh")
 spawning_scene = ExtResource("5_80i0y")
 offset = Vector2(0, 50)
+
+[sub_resource type="Resource" id="Resource_xg6uw"]
+script = ExtResource("9_uxtvk")
+wave_number = 1
 
 [sub_resource type="Resource" id="Resource_itat1"]
 script = ExtResource("6_nepvh")
@@ -38,7 +43,7 @@ tile_map = NodePath("../LevelTiles")
 
 [node name="Spawnpoint" parent="." instance=ExtResource("4_sx1ew")]
 position = Vector2(380, 238)
-actions_order = Array[Resource("res://levels/tiles/spawn_point/spawn_point_action.gd")]([SubResource("Resource_e30kg"), SubResource("Resource_8wetu"), SubResource("Resource_itat1")])
+actions_order = Array[Resource("res://levels/tiles/spawn_point/spawn_point_action.gd")]([SubResource("Resource_e30kg"), SubResource("Resource_8wetu"), SubResource("Resource_xg6uw"), SubResource("Resource_itat1")])
 default_wait_time = 5.0
 
 [node name="PlayerInZone" parent="." instance=ExtResource("6_o761t")]

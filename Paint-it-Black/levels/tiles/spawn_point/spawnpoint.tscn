@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6pcwthfhceaf"]
+[gd_scene load_steps=3 format=3 uid="uid://b6pcwthfhceaf"]
 
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/spawnpoint.gd" id="1_akkt7"]
+[ext_resource type="PackedScene" uid="uid://5pqt4vqme52s" path="res://levels/tiles/spawn_point/spawn_door/spawn_door.tscn" id="2_kdsw4"]
 
 [node name="SpawnPoint" type="Node2D"]
 script = ExtResource("1_akkt7")
 
 [node name="SpawnPointMarker" type="Marker2D" parent="."]
+position = Vector2(-6, 8)
 gizmo_extents = 15.0
+
+[node name="spawn_door" parent="." instance=ExtResource("2_kdsw4")]
+
+[connection signal="out_of_actions" from="." to="spawn_door" method="close"]
+[connection signal="was_enabled" from="." to="spawn_door" method="open"]

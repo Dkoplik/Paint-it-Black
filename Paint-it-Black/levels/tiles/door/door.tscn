@@ -10,15 +10,16 @@ size = Vector2(32, 40)
 size = Vector2(32, 40)
 
 [node name="Door" type="Node2D"]
-position = Vector2(289, 176)
 script = ExtResource("1_aw3dh")
 animation_duration = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 8)
 sprite_frames = ExtResource("2_45500")
 animation = &"door_anim"
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+position = Vector2(0, 8)
 collision_layer = 4
 collision_mask = 0
 

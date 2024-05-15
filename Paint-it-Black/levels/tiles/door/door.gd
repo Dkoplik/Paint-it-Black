@@ -8,6 +8,9 @@ signal closed
 ## Закрыта ли дверь?
 @export var is_closed := true:
 	set = set_is_closed
+## Является ли эта дверь следующей в текущей комнате?
+@export var is_current_room := false:
+	set = set_is_current_room
 @export var animation_duration := 1.0
 
 const UPPER_PART_CLOSED_POSITION := Vector2(0, -20)
@@ -50,6 +53,26 @@ func set_is_closed(value: bool) -> void:
 		_play_close_anim()
 	else:
 		_play_open_anim()
+
+
+func set_is_current_room(value: bool) -> void:
+	if is_current_room == value:
+		return
+
+	is_current_room = value
+	if is_current_room:
+		GameManager.connect("room_ended", open)
+		GameManager.connect("room_ended", disable_as_current_room)
+	else:
+		GameManager.disconnect("room_ended", open)
+
+
+func make_current_room() -> void:
+	is_current_room = true
+
+
+func disable_as_current_room() -> void:
+	is_current_room = false
 
 
 func open() -> void:

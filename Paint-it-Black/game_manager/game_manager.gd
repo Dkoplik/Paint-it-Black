@@ -65,6 +65,7 @@ func set_active_spawn_points_count(value: int) -> void:
 		return
 
 	if active_spawn_points_count == 0 and value > 0:
+		wave_number = 0
 		room_started.emit()
 	if active_spawn_points_count > 0 and value == 0:
 		_check_room_ended()
@@ -80,7 +81,6 @@ func decrease_active_spawn_points_count() -> void:
 
 
 func set_active_waves_count(value: int) -> void:
-	print("change active waves count")
 	if value < 0:
 		push_error("Попытка сделать отрицательным счётчик спавнов с активной волной")
 		return
@@ -126,10 +126,8 @@ func _check_room_ended() -> void:
 
 
 func _check_wave_ended() -> void:
-	print("checking for wave end")
 	await enemies_ended
 	if active_waves_count != 0:
 		push_warning("Какой-то спавн стал с активной волной до окончания всех врагов")
 		return
-	print("wave inc")
 	wave_number += 1

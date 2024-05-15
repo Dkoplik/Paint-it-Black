@@ -87,12 +87,14 @@ func _process_actions() -> void:
 	# Закончились действия
 	if actions_order.is_empty():
 		out_of_actions.emit()
+		_is_wave_active = false
 		_has_actions = false
 		return
 
 	_is_action_started = true
 	var current_action = actions_order.back()
-	await _process_waiting(current_action)
+	if not "wave_number" in current_action:
+		await _process_waiting(current_action)
 
 	var is_action_successful: bool = await current_action.do_action()
 	if not is_action_successful:

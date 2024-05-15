@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dd7oahp8wqsqp"]
+
+[ext_resource type="Script" path="res://levels/tiles/door/door.gd" id="1_aw3dh"]
+[ext_resource type="SpriteFrames" uid="uid://csyaqa3arrf4p" path="res://levels/tiles/door/door_sprite_frames.tres" id="2_45500"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kklh"]
+size = Vector2(32, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qbkwf"]
+size = Vector2(32, 40)
+
+[node name="Door" type="Node2D"]
+position = Vector2(289, 176)
+script = ExtResource("1_aw3dh")
+animation_duration = 0.5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_45500")
+animation = &"door_anim"
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="UpperCollision" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_4kklh")
+
+[node name="LowerCollision" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_qbkwf")

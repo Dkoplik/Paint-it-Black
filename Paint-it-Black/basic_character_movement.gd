@@ -42,6 +42,7 @@ func _physics_process(delta) -> void:
 
 	_apply_gravity(delta)
 	character_body.move_and_slide()
+	_crop_speed()
 
 
 func turn_on_platform_collision() -> void:
@@ -170,3 +171,16 @@ func add_velocity(velocity: Vector2) -> void:
 		push_error("Невозможно осуществить add_velocity() без character_body")
 		return
 	character_body.velocity += velocity
+
+
+func set_velocity(velocity: Vector2) -> void:
+	if not _has_character_body:
+		push_error("Невозможно осуществить set_velocity() без character_body")
+		return
+	character_body.velocity = velocity
+	_crop_speed()
+
+
+func _crop_speed() -> void:
+	character_body.velocity.x = clampf(character_body.velocity.x, -movement_data.max_horizontal_speed, movement_data.max_horizontal_speed)
+	character_body.velocity.y = clampf(character_body.velocity.y, -movement_data.max_up_speed, movement_data.max_fall_speed)

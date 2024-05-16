@@ -143,14 +143,12 @@ func _attack(direction: Vector2, impulse: float) -> void:
 
 func _calc_velocity(velocity: Vector2):
 	if sign(movement_component.character_body.velocity.x) == sign(velocity.x):
-		movement_component.character_body.velocity.x += velocity.x
-	else:
-		movement_component.character_body.velocity.x = velocity.x
+		velocity.x += movement_component.character_body.velocity.x
 
-	if sign(movement_component.character_body.velocity.y) == sign(velocity.y):
-		movement_component.character_body.velocity.y += velocity.y
-	else:
-		movement_component.character_body.velocity.y = velocity.y
+	if sign(movement_component.character_body.velocity.y) != sign(velocity.y):
+		velocity.y += movement_component.character_body.velocity.y
+
+	movement_component.set_character_velocity(velocity)
 
 
 ## Отменяет атаку при пересечении с твёрдой поверхностью.

@@ -5,3 +5,11 @@
 [node name="LevelTiles" type="TileMap"]
 tile_set = ExtResource("1_50pm3")
 format = 2
+layer_0/name = "BackgroundLayer"
+layer_1/name = "MainLayer"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()

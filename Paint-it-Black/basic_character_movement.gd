@@ -163,16 +163,47 @@ func _calculate_fall_speed(delta_time: float) -> float:
 
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
-## вектор скорости [param velocity]. Эта функция нужна для тех случаев, когда на
-## движение персонажа влияют какие-то внешние явления, по типу атаки игрока или
-## откидывание при получении урона.
+## вектор скорости [param velocity] и испускает новый сигнал направления игрока.
+func add_character_velocity(velocity: Vector2) -> void:
+	if not _has_character_body:
+		push_error("Невозможно осуществить add_character_velocity() без character_body")
+		return
+	character_body.velocity += velocity
+	_crop_speed()
+
+	if velocity.x > 0:
+		character_look_right.emit()
+	if velocity.x < 0:
+		character_look_left.emit()
+
+
+## Устанавливает новую скорость [member CharacterBody2D.velocity] равную
+## вектору скорости [param velocity] и испускает новый сигнал направления игрока.
+func set_character_velocity(velocity: Vector2) -> void:
+	if not _has_character_body:
+		push_error("Невозможно осуществить set_character_velocity() без character_body")
+		return
+	character_body.velocity = velocity
+	_crop_speed()
+
+	if velocity.x > 0:
+		character_look_right.emit()
+	if velocity.x < 0:
+		character_look_left.emit()
+
+
+## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
+## вектор скорости [param velocity], но не меняет направление персонажа.
 func add_velocity(velocity: Vector2) -> void:
 	if not _has_character_body:
 		push_error("Невозможно осуществить add_velocity() без character_body")
 		return
 	character_body.velocity += velocity
+	_crop_speed()
 
 
+## Устанавливает новую скорость [member CharacterBody2D.velocity] равную
+## вектору скорости [param velocity], но не меняет направление персонажа.
 func set_velocity(velocity: Vector2) -> void:
 	if not _has_character_body:
 		push_error("Невозможно осуществить set_velocity() без character_body")

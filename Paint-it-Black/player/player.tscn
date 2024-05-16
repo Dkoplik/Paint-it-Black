@@ -218,7 +218,7 @@ position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_20xhv")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("movement_component", "attack_component", "state_chart", "root")]
+[node name="PlayerController" type="Node2D" parent="." node_paths=PackedStringArray("movement_component", "attack_component", "state_chart", "root")]
 script = ExtResource("1_kt7rl")
 movement_component = NodePath("../PlayerMovement")
 attack_component = NodePath("../PlayerAttack")

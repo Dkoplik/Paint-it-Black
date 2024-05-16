@@ -1,6 +1,6 @@
 @tool
 class_name PlayerController
-extends CustomNode
+extends CustomNode2D
 ## Обработчик управления для игрока.
 ##
 ## Наследование от [CustomNode2D] позволяет использовать этот узел в качестве
@@ -140,9 +140,7 @@ func _on_can_strong_attack_state_unhandled_input(event):
 		if not _has_movement_component:
 			push_error("Невозможно совершить атаку без _movement_component")
 			return
-		var attack_direction: Vector2 = (
-			get_viewport().get_mouse_position() - movement_component.character_body.position
-		)
+		var attack_direction: Vector2 = _get_attack_direction()
 		attack_component.strong_impulse_attack(attack_direction)
 
 
@@ -155,11 +153,13 @@ func _on_can_weak_attack_state_unhandled_input(event: InputEvent):
 		if not _has_movement_component:
 			push_error("Невозможно совершить атаку без _movement_component")
 			return
-		var attack_direction: Vector2 = (
-			get_viewport().get_mouse_position() - movement_component.character_body.position
-		)
+		var attack_direction: Vector2 = _get_attack_direction()
 		attack_component.weak_impulse_attack(attack_direction)
 
+
+func _get_attack_direction() -> Vector2:
+	var global_mouse_pos: Vector2 = get_global_mouse_position()
+	return global_mouse_pos - movement_component.character_body.position
 
 func _on_player_attack_attack():
 	state_chart.send_event("attack")

@@ -8,7 +8,7 @@
 
 [resource]
 script = ExtResource("4_iwe1t")
-levels = PackedStringArray("res://levels/test_levels/test_level.tscn", "res://levels/test_levels/test_level2.tscn")
+levels = PackedStringArray("res://levels/level_0.tscn", "res://levels/level_1.tscn")
 main_menu = ExtResource("3_b32nb")
 default_scene = ExtResource("1_rc6ku")
 loading_sceen = ExtResource("2_klbrj")

@@ -17,8 +17,11 @@ extends CustomResource
 ## Действующая гравитация.
 @export_range(0, 100, 0.1, "or_greater")
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+@export_group("Max Speed")
 ## Максимальная скорость падения.
 @export_range(0, 100, 0.1, "or_greater") var max_fall_speed: float
+@export_range(0, 100, 0.1, "or_greater") var max_up_speed: float
+@export_range(0, 100, 0.1, "or_greater") var max_horizontal_speed: float
 
 
 func _init() -> void:

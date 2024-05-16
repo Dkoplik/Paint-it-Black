@@ -126,7 +126,7 @@ func _attack(direction: Vector2, impulse: float) -> void:
 
 	# Импульс в заданном направлении
 	direction = direction.normalized()
-	movement_component.add_velocity(direction * impulse)
+	_calc_velocity(direction * impulse)
 
 	# Задать новое направление атаки в ресурс
 	_hit_box.attack_data.direction = direction
@@ -139,6 +139,16 @@ func _attack(direction: Vector2, impulse: float) -> void:
 	await get_tree().create_timer(attack_data.cooldown + attack_data.duration).timeout
 	_is_attack_ready = true
 	attack_ready.emit()
+
+
+func _calc_velocity(velocity: Vector2):
+	if sign(movement_component.character_body.velocity.x) == sign(velocity.x):
+		velocity.x += movement_component.character_body.velocity.x
+
+	if sign(movement_component.character_body.velocity.y) != sign(velocity.y):
+		velocity.y += movement_component.character_body.velocity.y
+
+	movement_component.set_character_velocity(velocity)
 
 
 ## Отменяет атаку при пересечении с твёрдой поверхностью.

@@ -1,14 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://dw6y6pqb7u6ry"]
+[gd_scene load_steps=9 format=3 uid="uid://dw6y6pqb7u6ry"]
 
 [ext_resource type="Script" path="res://enemies/bullet/scripts/bullet.gd" id="1_mutds"]
 [ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://icon.svg" id="2_60g83"]
 [ext_resource type="Script" path="res://enemies/bullet/scripts/parryable.gd" id="3_xpayt"]
 [ext_resource type="Script" path="res://enemies/bullet/scripts/projectile_movement.gd" id="4_n5ld3"]
 [ext_resource type="Script" path="res://hit_box.gd" id="5_ydosa"]
-[ext_resource type="Resource" uid="uid://bfg1uwtgxxi2b" path="res://enemies/bullet/resources/bullet_attack.tres" id="6_6j5q0"]
+[ext_resource type="Script" path="res://player/scripts/player_incoming_atttack.gd" id="6_ksg5e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wywd"]
 size = Vector2(18, 10)
+
+[sub_resource type="Resource" id="Resource_kxwnj"]
+script = ExtResource("6_ksg5e")
+direction = Vector2(0, 0)
+damage = 1
 
 [node name="Bullet" type="Node2D" node_paths=PackedStringArray("hit_box")]
 script = ExtResource("1_mutds")
@@ -42,7 +47,7 @@ collision_layer = 8
 collision_mask = 7
 script = ExtResource("5_ydosa")
 hittable_groups = Array[StringName]([&"player"])
-attack_data = ExtResource("6_6j5q0")
+attack_data = SubResource("Resource_kxwnj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("RectangleShape2D_3wywd")

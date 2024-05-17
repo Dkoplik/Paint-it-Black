@@ -61,7 +61,7 @@ func _on_attack_state_entered():
 
 func _on_animated_sprite_2d_frame_changed():
 	match animated_sprite.animation:
-		"run_left", "run_right":
+		"run":
 			match animated_sprite.frame:
 				1, 3, 5:
 					step.emit()

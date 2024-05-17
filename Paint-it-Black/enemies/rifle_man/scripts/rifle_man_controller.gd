@@ -15,9 +15,11 @@ extends CustomNode
 ## Корень StateChart'ов, отвечает за состояния игрока.
 @export var state_chart: StateChart:
 	set = set_state_chart
+@export var animation_controller: RifleManAnimationController
 ## Корень игрока.
 @export var root: CharacterBody2D:
 	set = set_root
+@export var dead_impulse := 100.0
 
 ## Есть ли компонента [PlayerMovement] в качестве дочернего узла?
 var _has_movement_component := false
@@ -99,7 +101,20 @@ func _on_moving_states_state_physics_processing(_delta: float) -> void:
 
 func _on_moving_to_player_state_physics_processing(_delta: float) -> void:
 	movement_component.move_to_target(_player)
+	if movement_component.character_body.velocity.x > 0:
+		animation_controller.enemy_look_right()
+	elif movement_component.character_body.velocity.x < 0:
+		animation_controller.enemy_look_left()
 
 
 func _on_shoot_state_entered() -> void:
 	shoot_component.shoot_target(_player)
+
+
+func _on_dead_state_physics_processing(_delta):
+	if movement_component.character_body.is_on_floor():
+		movement_component.decelerate_to_stop()
+
+
+func _on_dead_state_entered():
+	hurt_box.queue_free()

@@ -336,9 +336,8 @@ text = "Поздравляем с прохождением обучения!
 пройдите через дверь"
 label_settings = SubResource("LabelSettings_4m62h")
 
-[node name="Player" parent="." node_paths=PackedStringArray("tile_map") instance=ExtResource("2_ndh7t")]
+[node name="Player" parent="." instance=ExtResource("2_ndh7t")]
 position = Vector2(62, 128)
-tile_map = NodePath("../LevelTiles")
 
 [connection signal="player_entered" from="PlayerInZone" to="Door" method="close"]
 [connection signal="player_entered" from="PlayerInZone" to="Door2" method="make_current_room"]

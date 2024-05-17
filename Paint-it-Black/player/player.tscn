@@ -1,6 +1,6 @@
 [gd_scene load_steps=37 format=3 uid="uid://b5qdqaaw2hat6"]
 
-[ext_resource type="Script" path="res://player/scripts/player_manager.gd" id="1_3hyi7"]
+[ext_resource type="Script" path="res://player/scripts/player_camera.gd" id="1_3hyi7"]
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
 [ext_resource type="SpriteFrames" uid="uid://dlj10bsjifa2w" path="res://player/resources/player_animations.tres" id="2_mc37b"]
@@ -207,7 +207,6 @@ stream_3/weight = 1.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 top_level = true
 collision_mask = 20
-script = ExtResource("1_3hyi7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
@@ -541,6 +540,8 @@ drag_right_margin = 0.05
 drag_bottom_margin = 0.05
 editor_draw_limits = true
 editor_draw_drag_margin = true
+script = ExtResource("1_3hyi7")
+max_offset = 150.0
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="PlayerAnimationController" method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="step" from="PlayerAnimationController" to="PlayerSounds/FootSteps" method="play"]

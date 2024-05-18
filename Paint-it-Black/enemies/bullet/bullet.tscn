@@ -39,7 +39,7 @@ debug_color = Color(0, 0.6, 0, 0.419608)
 
 [node name="ProjectileMovement" type="Node" parent="." node_paths=PackedStringArray("root_node")]
 script = ExtResource("4_n5ld3")
-speed = 200.0
+speed = 360.0
 root_node = NodePath("..")
 
 [node name="HitBox" type="Area2D" parent="."]

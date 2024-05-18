@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_gv8xb")
 projectile = ExtResource("1_j1mf1")
-cooldown = 2.0
+cooldown = 0.9
 spread_angle = 0.05
 shoot_range = 400.0

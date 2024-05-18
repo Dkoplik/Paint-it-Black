@@ -96,7 +96,6 @@ hurt_box = NodePath("../EnemyHurtBox")
 state_chart = NodePath("../StateChart")
 animation_controller = NodePath("../RifleManAnimationController")
 root = NodePath("..")
-dead_impulse = null
 
 [node name="ProjectileSpawn" type="Marker2D" parent="."]
 position = Vector2(22, -5)

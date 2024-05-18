@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://blk20emuop7fa"]
+
+[ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="1_jj0y1"]
+[ext_resource type="PackedScene" uid="uid://bctxqcmy86pc" path="res://hp_bar.tscn" id="2_ggsml"]
+
+[node name="test_hp_bar" type="Node"]
+
+[node name="Player" parent="." instance=ExtResource("1_jj0y1")]
+
+[node name="HpBar" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_ggsml")]
+player = NodePath("../Player")

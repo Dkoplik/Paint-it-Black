@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bctxqcmy86pc"]
+
+[ext_resource type="Texture2D" uid="uid://0k2dlbg21c8g" path="res://EmptyHeart.png" id="1_itlwc"]
+[ext_resource type="Texture2D" uid="uid://ft06r8hfxr7d" path="res://FullHeart.png" id="2_d2fwf"]
+
+[node name="HpBar" type="CanvasLayer"]
+
+[node name="EmptyHealth" type="TextureRect" parent="."]
+offset_right = 70.0
+offset_bottom = 70.0
+texture = ExtResource("1_itlwc")
+stretch_mode = 1
+
+[node name="FullHealth" type="TextureRect" parent="."]
+offset_right = 70.0
+offset_bottom = 70.0
+texture = ExtResource("2_d2fwf")
+stretch_mode = 1

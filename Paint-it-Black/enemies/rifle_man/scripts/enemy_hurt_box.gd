@@ -18,7 +18,6 @@ func receive_attack(attack: BasicIncomingAttack) -> void:
 		return
 
 	hurt.emit(attack)
-	print("enemy hurt")
 	if not _has_hp:
 		push_error("Невозможно осуществить receive_attack() без компоненты hp")
 		return

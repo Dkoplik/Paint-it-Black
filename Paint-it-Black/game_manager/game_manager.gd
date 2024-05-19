@@ -147,5 +147,6 @@ func _player_dead() -> void:
 	is_player_dead = true
 	get_tree().paused = true
 	var death_screen: Control = death_scene.instantiate()
-	death_screen.global_position = player.get_node("Camera2D").global_position
+	var camera = get_tree().root.get_camera_2d()
+	death_screen.global_position = camera.get_screen_center_position()
 	get_tree().current_scene.add_child(death_screen)

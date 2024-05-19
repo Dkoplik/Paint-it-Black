@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cn2u8ntjh4m3r"]
+[gd_scene load_steps=5 format=3 uid="uid://cn2u8ntjh4m3r"]
 
 [ext_resource type="Script" path="res://main_menu.gd" id="1_mf5i0"]
+[ext_resource type="FontFile" uid="uid://bnvnw1nbot7fr" path="res://font/PublicPixel-E447g.ttf" id="2_16us4"]
 [ext_resource type="AudioStream" uid="uid://cjb5cbm68ilgy" path="res://sounds/Interface Button Hover.wav" id="2_o8yxc"]
 [ext_resource type="AudioStream" uid="uid://bv6u5athkvt4j" path="res://sounds/Button Click.wav" id="3_bxndg"]
 
@@ -14,12 +15,13 @@ start_scene = "res://test_level.tscn"
 
 [node name="PlayButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 280.0
+offset_left = 277.0
 offset_top = 170.0
-offset_right = 680.0
+offset_right = 682.0
 offset_bottom = 250.0
-theme_override_font_sizes/font_size = 48
-text = "Продолжить"
+theme_override_fonts/font = ExtResource("2_16us4")
+theme_override_font_sizes/font_size = 23
+text = "Начать с начала"
 icon_alignment = 1
 
 [node name="ExitButton" type="Button" parent="."]
@@ -28,16 +30,18 @@ offset_left = 279.0
 offset_top = 401.0
 offset_right = 679.0
 offset_bottom = 481.0
-theme_override_font_sizes/font_size = 48
+theme_override_fonts/font = ExtResource("2_16us4")
+theme_override_font_sizes/font_size = 23
 text = "Выйти из игры"
 
 [node name="LevelButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 280.0
-offset_top = 291.0
+offset_top = 283.0
 offset_right = 679.0
-offset_bottom = 371.0
-theme_override_font_sizes/font_size = 48
+offset_bottom = 363.0
+theme_override_fonts/font = ExtResource("2_16us4")
+theme_override_font_sizes/font_size = 23
 text = "Выбор уровня"
 
 [node name="TempPopUp" type="AcceptDialog" parent="."]

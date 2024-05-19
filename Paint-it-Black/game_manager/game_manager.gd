@@ -11,6 +11,7 @@ signal enemies_ended
 
 var player: CharacterBody2D
 var death_scene = preload("res://death_screen.tscn")
+var is_player_dead := false
 
 ## Номер текущей волны в активной комнате.
 var wave_number := 0
@@ -143,6 +144,7 @@ func _check_wave_ended() -> void:
 
 
 func _player_dead() -> void:
+	is_player_dead = true
 	get_tree().paused = true
 	var death_screen: Control = death_scene.instantiate()
 	death_screen.global_position = player.get_node("Camera2D").global_position

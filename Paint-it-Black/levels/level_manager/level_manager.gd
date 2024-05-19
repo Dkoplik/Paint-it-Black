@@ -57,6 +57,7 @@ func load_lvl(value: int):
 	if not _is_valid_lvl_num(value):
 		load_default_scene()
 	else:
+		GameManager.is_player_dead = false
 		await _fade_in()
 		get_tree().change_scene_to_packed(levels_resource.loading_sceen)
 		get_tree().paused = false

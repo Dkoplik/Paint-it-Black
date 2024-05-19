@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://dx8wxjp57gqg0"]
+[gd_scene load_steps=88 format=3 uid="uid://dx8wxjp57gqg0"]
 
 [ext_resource type="PackedScene" uid="uid://d0epmg43sv7ak" path="res://levels/tiles/level_tiles.tscn" id="1_m8bqi"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_qqwpl"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/wait_action.gd" id="7_8ft1n"]
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/check_wave_action.gd" id="8_j5tia"]
 [ext_resource type="PackedScene" uid="uid://dd7oahp8wqsqp" path="res://levels/tiles/door/door.tscn" id="8_o6yrb"]
+[ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="11_clorh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lic15"]
 resource_local_to_scene = true
@@ -516,6 +517,8 @@ shape = SubResource("RectangleShape2D_udyfm")
 [node name="Player" parent="." instance=ExtResource("2_qqwpl")]
 position = Vector2(96, 464)
 
+[node name="PauseMenu" parent="." instance=ExtResource("11_clorh")]
+
 [connection signal="player_entered" from="PlayerInZone" to="Door" method="close"]
 [connection signal="player_entered" from="PlayerInZone" to="Door2" method="make_current_room"]
 [connection signal="player_entered" from="PlayerInZone" to="SpawnPoint" method="set_enabled" binds= [true]]
@@ -540,8 +543,8 @@ position = Vector2(96, 464)
 [connection signal="player_entered" from="PlayerInZone5" to="Door6" method="make_current_room"]
 [connection signal="player_entered" from="PlayerInZone5" to="SpawnPoint13" method="set_enabled" binds= [true]]
 [connection signal="player_entered" from="PlayerInZone5" to="SpawnPoint14" method="set_enabled" binds= [true]]
-[connection signal="player_entered" from="PlayerInZone6" to="Door6" method="close"]
 [connection signal="player_entered" from="PlayerInZone6" to="Door6" method="make_current_room"]
+[connection signal="player_entered" from="PlayerInZone6" to="Door6" method="close"]
 [connection signal="player_entered" from="PlayerInZone6" to="Door7" method="make_current_room"]
 [connection signal="player_entered" from="PlayerInZone6" to="SpawnPoint15" method="set_enabled" binds= [true]]
 [connection signal="player_entered" from="PlayerInZone6" to="SpawnPoint16" method="set_enabled" binds= [true]]

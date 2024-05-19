@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://hyrbtcgo82lx"]
+[gd_scene load_steps=137 format=3 uid="uid://hyrbtcgo82lx"]
 
 [ext_resource type="PackedScene" uid="uid://d0epmg43sv7ak" path="res://levels/tiles/level_tiles.tscn" id="1_6hpjf"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_egs56"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/check_wave_action.gd" id="6_4xics"]
 [ext_resource type="PackedScene" uid="uid://cnhfxcuyvom0l" path="res://levels/tiles/player_in_zone/player_in_zone.tscn" id="6_u8w08"]
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/wait_action.gd" id="7_kb63r"]
+[ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="11_i7nm4"]
 
 [sub_resource type="Resource" id="Resource_cgcsw"]
 script = ExtResource("4_2nljq")
@@ -723,6 +724,8 @@ shape = SubResource("RectangleShape2D_7q8m7")
 
 [node name="Player" parent="." instance=ExtResource("2_egs56")]
 position = Vector2(1974, 2352)
+
+[node name="PauseMenu" parent="." instance=ExtResource("11_i7nm4")]
 
 [connection signal="player_entered" from="PlayerInZone" to="Door" method="close"]
 [connection signal="player_entered" from="PlayerInZone" to="Door3" method="make_current_room"]

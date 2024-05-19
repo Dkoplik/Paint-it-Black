@@ -6,6 +6,7 @@ extends BasicHurtBox
 @export var additional_impulse: Vector2
 @export var movement_component: BasicCharacterMovement
 
+var blood_particles: PackedScene = preload("res://enemies/blood_particles/blood_particles.tscn")
 
 func _init():
 	_class_name = &"EnemyHurtBox"
@@ -26,3 +27,7 @@ func receive_attack(attack: BasicIncomingAttack) -> void:
 
 	if "direction" in attack:
 		movement_component.set_velocity(damage_impulse * attack.direction + additional_impulse)
+		var particles = blood_particles.instantiate()
+		particles.global_position = global_position
+		get_tree().root.add_child(particles)
+		particles.emit_in_direction(attack.direction)

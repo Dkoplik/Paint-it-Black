@@ -119,6 +119,13 @@ func decrease_enemies_count() -> void:
 	enemies_count -= 1
 
 
+func reset_game_lvl_params() -> void:
+	wave_number = 0
+	active_spawn_points_count = 0
+	active_waves_count = 0
+	enemies_count = 0
+
+
 func _check_room_ended() -> void:
 	await enemies_ended
 	if active_spawn_points_count != 0:

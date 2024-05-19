@@ -19,7 +19,7 @@ func _ready():
 
 func _on_hp_changed(previous_hp, new_hp):
 	currentHp = new_hp
-	full_heart.size.x = currentHp * 70
+	full_heart.size.x = currentHp * 32
 
 func _process(delta):
 	pass

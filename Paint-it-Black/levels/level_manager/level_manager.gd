@@ -28,6 +28,7 @@ func _physics_process(_delta):
 		== ResourceLoader.THREAD_LOAD_IN_PROGRESS
 	):
 		return
+
 	if ResourceLoader.load_threaded_get_status(_loading_path) == ResourceLoader.THREAD_LOAD_LOADED:
 		await _fade_out()
 		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(_loading_path))
@@ -52,6 +53,7 @@ func load_lvl(value: int):
 	else:
 		await _fade_in()
 		get_tree().change_scene_to_packed(levels_resource.loading_sceen)
+		get_tree().paused = false
 		_loading_path = levels_resource.levels[value]
 		ResourceLoader.load_threaded_request(_loading_path)
 		_waiting_to_load = true
@@ -74,7 +76,7 @@ func _fade_out():
 
 
 func _add_fading():
-	var fading = levels_resource.fading_screen.instantiate()
+	var fading: CanvasLayer = levels_resource.fading_screen.instantiate()
 	var camera = get_viewport().get_camera_2d()
 	if camera == null:
 		camera = get_tree().root
@@ -100,6 +102,7 @@ func load_main_menu() -> void:
 	_current_game_lvl = -1
 	_current_lvl_type = LevelType.MAIN_MENU
 	get_tree().change_scene_to_packed(levels_resource.main_menu)
+	get_tree().paused = false
 
 
 ## Загрузить и установить сцену по-умолчанию.
@@ -111,3 +114,7 @@ func load_default_scene() -> void:
 
 func _is_valid_lvl_num(lvl_num: int) -> bool:
 	return lvl_num >= 0 and lvl_num < levels_resource.levels.size()
+
+
+func reload_lvl() -> void:
+	load_lvl(_current_game_lvl)

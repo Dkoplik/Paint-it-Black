@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d03oory860buy"]
+
+[ext_resource type="FontFile" uid="uid://bnvnw1nbot7fr" path="res://font/PublicPixel-E447g.ttf" id="1_qtbxd"]
+
+[resource]
+font = ExtResource("1_qtbxd")
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)

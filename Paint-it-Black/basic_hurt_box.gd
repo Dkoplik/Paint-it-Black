@@ -39,5 +39,4 @@ func receive_attack(attack: BasicIncomingAttack) -> void:
 	if not _has_hp:
 		push_error("Невозможно осуществить receive_attack() без компоненты hp")
 		return
-
 	hp.deal_damage(attack.damage)

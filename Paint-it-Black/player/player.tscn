@@ -211,7 +211,9 @@ collision_mask = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
-animation = &"wall"
+animation = &"attack_up"
+frame = 2
+frame_progress = 1.0
 
 [node name="VFX" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -573,5 +575,6 @@ max_offset = 50.0
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/Jump" to="PlayerSounds/Jump" method="play"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/Falling" to="PlayerAnimationController" method="_on_falling_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnWall" to="PlayerAnimationController" method="_on_on_wall_state_entered"]
+[connection signal="state_exited" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnWall" to="PlayerAnimationController" method="_on_on_wall_state_exited"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/Attack" to="PlayerAnimationController" method="_on_attack_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/Attack" to="PlayerSounds/Attack" method="play"]

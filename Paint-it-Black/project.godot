@@ -25,6 +25,7 @@ LevelManager="*res://levels/level_manager/level_manager.gd"
 
 window/size/viewport_width=960
 window/size/viewport_height=540
+window/size/mode=3
 window/stretch/mode="viewport"
 
 [editor_plugins]

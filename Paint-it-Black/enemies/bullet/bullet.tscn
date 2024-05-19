@@ -1,19 +1,45 @@
-[gd_scene load_steps=9 format=3 uid="uid://dw6y6pqb7u6ry"]
+[gd_scene load_steps=14 format=3 uid="uid://dw6y6pqb7u6ry"]
 
 [ext_resource type="Script" path="res://enemies/bullet/scripts/bullet.gd" id="1_mutds"]
-[ext_resource type="Texture2D" uid="uid://bsj18niyqjau2" path="res://icon.svg" id="2_60g83"]
+[ext_resource type="Texture2D" uid="uid://w08dsurvlicg" path="res://enemies/bullet/white_bullet.png" id="2_je5ix"]
+[ext_resource type="Texture2D" uid="uid://bi5ivwehdvq5c" path="res://enemies/bullet/parry_vfx.png" id="3_girfi"]
 [ext_resource type="Script" path="res://enemies/bullet/scripts/parryable.gd" id="3_xpayt"]
 [ext_resource type="Script" path="res://enemies/bullet/scripts/projectile_movement.gd" id="4_n5ld3"]
 [ext_resource type="Script" path="res://hit_box.gd" id="5_ydosa"]
 [ext_resource type="Script" path="res://player/scripts/player_incoming_atttack.gd" id="6_ksg5e"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wywd"]
-size = Vector2(18, 10)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwjhf"]
+atlas = ExtResource("3_girfi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2d3k"]
+atlas = ExtResource("3_girfi")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xjsdl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwjhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i2d3k")
+}],
+"loop": false,
+"name": &"parry",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3s15a"]
+size = Vector2(20, 8)
 
 [sub_resource type="Resource" id="Resource_kxwnj"]
 script = ExtResource("6_ksg5e")
 direction = Vector2(0, 0)
 damage = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wywd"]
+size = Vector2(14.0625, 4.8125)
 
 [node name="Bullet" type="Node2D" node_paths=PackedStringArray("hit_box")]
 script = ExtResource("1_mutds")
@@ -23,9 +49,15 @@ after_parry_hittable_groups = Array[StringName]([&"enemy"])
 hit_box = NodePath("HitBox")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-1.77636e-15, 5.96046e-08)
-scale = Vector2(0.15, 0.08)
-texture = ExtResource("2_60g83")
+modulate = Color(0.960784, 0.27451, 0.298039, 1)
+position = Vector2(-8, -8)
+texture = ExtResource("2_je5ix")
+centered = false
+
+[node name="ParryVFX" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_xjsdl")
+animation = &"parry"
 
 [node name="Parryable" type="Area2D" parent="." node_paths=PackedStringArray("root_node") groups=["bullet"]]
 collision_layer = 8
@@ -34,7 +66,7 @@ script = ExtResource("3_xpayt")
 root_node = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Parryable"]
-shape = SubResource("RectangleShape2D_3wywd")
+shape = SubResource("RectangleShape2D_3s15a")
 debug_color = Color(0, 0.6, 0, 0.419608)
 
 [node name="ProjectileMovement" type="Node" parent="." node_paths=PackedStringArray("root_node")]
@@ -53,6 +85,7 @@ attack_data = SubResource("Resource_kxwnj")
 shape = SubResource("RectangleShape2D_3wywd")
 debug_color = Color(1, 0, 0, 0.419608)
 
+[connection signal="animation_finished" from="ParryVFX" to="." method="_on_parry_vfx_animation_finished"]
 [connection signal="parried" from="Parryable" to="." method="switch_parried"]
 [connection signal="hit" from="HitBox" to="." method="_delete_bullet" flags=3]
 [connection signal="hit_solid_surface" from="HitBox" to="." method="_delete_bullet" flags=3]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://nafntpdddl6m"]
+[gd_scene load_steps=29 format=3 uid="uid://nafntpdddl6m"]
 
 [ext_resource type="PackedScene" uid="uid://d0epmg43sv7ak" path="res://levels/tiles/level_tiles.tscn" id="1_4wsvv"]
 [ext_resource type="PackedScene" uid="uid://dd7oahp8wqsqp" path="res://levels/tiles/door/door.tscn" id="2_djjd5"]
@@ -8,8 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://b6pcwthfhceaf" path="res://levels/tiles/spawn_point/spawnpoint.tscn" id="6_trfqj"]
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/spawn_scene_action.gd" id="8_jfvdx"]
 [ext_resource type="PackedScene" uid="uid://s7hke7hh2dnc" path="res://enemies/rifle_man/rifle_man.tscn" id="9_hgery"]
+[ext_resource type="Texture2D" uid="uid://1r82hmkjooya" path="res://levels/pics/parry_pic.png" id="9_pbdg4"]
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/check_wave_action.gd" id="10_r2lfp"]
 [ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="11_01pef"]
+[ext_resource type="Texture2D" uid="uid://b7t2hyi8fiukt" path="res://levels/pics/s_down_pic.png" id="12_7wrd4"]
+[ext_resource type="Texture2D" uid="uid://b2is8d08e5r5k" path="res://levels/pics/danger_pic.png" id="13_kqt4v"]
+[ext_resource type="Texture2D" uid="uid://dq5wmepaw6r8t" path="res://levels/pics/jumping_pic.png" id="14_2pnus"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g5f5t"]
 resource_local_to_scene = true
@@ -71,9 +75,6 @@ offset = Vector2(0, 0)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v31oq"]
 resource_local_to_scene = true
 size = Vector2(7, 112)
-
-[sub_resource type="LabelSettings" id="LabelSettings_4m62h"]
-font_size = 10
 
 [node name="Node" type="Node"]
 
@@ -173,29 +174,21 @@ position = Vector2(3034, 167)
 position = Vector2(-49.5, -31)
 shape = SubResource("RectangleShape2D_v31oq")
 
-[node name="Label" type="Label" parent="."]
-offset_left = 318.0
-offset_top = 67.0
-offset_right = 622.0
-offset_bottom = 145.0
-text = "Добавить рисунок парирования "
-label_settings = SubResource("LabelSettings_4m62h")
+[node name="ParryPic" type="Sprite2D" parent="."]
+position = Vector2(281, 90)
+texture = ExtResource("9_pbdg4")
 
-[node name="Label2" type="Label" parent="."]
-offset_left = 927.0
-offset_top = 82.0
-offset_right = 1231.0
-offset_bottom = 160.0
-text = "Добавить рисунок кнопки s и стрелку вниз "
-label_settings = SubResource("LabelSettings_4m62h")
+[node name="DangerPic" type="Sprite2D" parent="."]
+position = Vector2(1478, 266)
+texture = ExtResource("13_kqt4v")
 
-[node name="Label4" type="Label" parent="."]
-offset_left = 2144.0
-offset_top = 241.0
-offset_right = 2448.0
-offset_bottom = 319.0
-text = "Добавить стрелки"
-label_settings = SubResource("LabelSettings_4m62h")
+[node name="JumpingPic" type="Sprite2D" parent="."]
+position = Vector2(2229, 253)
+texture = ExtResource("14_2pnus")
+
+[node name="SDownPic" type="Sprite2D" parent="."]
+position = Vector2(975, 108)
+texture = ExtResource("12_7wrd4")
 
 [node name="Player" parent="." instance=ExtResource("2_ndh7t")]
 position = Vector2(-97, 125)

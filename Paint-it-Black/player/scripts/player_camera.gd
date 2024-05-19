@@ -61,7 +61,7 @@ func _clamp_offset_to_max_speed(new_offset: Vector2, delta: float) -> Vector2:
 	return offset_change
 
 
-func _clamp_offset_to_borders(new_offset: Vector2) -> Vector2:
+func _clamp_offset_to_borders(_new_offset: Vector2) -> Vector2:
 	return Vector2.ZERO
 
 

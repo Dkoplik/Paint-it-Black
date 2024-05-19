@@ -10,6 +10,7 @@ signal enemies_started
 signal enemies_ended
 
 var player: CharacterBody2D
+
 ## Номер текущей волны в активной комнате.
 var wave_number := 0
 ## Счётчик активных точек спавна.

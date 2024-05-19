@@ -52,6 +52,8 @@ func set_is_parried(value: bool):
 	if is_parried:
 		hit_box.hittable_groups = after_parry_hittable_groups
 		$Sprite2D.modulate = Color(0.286, 0.584, 0.953)
+		$ParryVFX.visible = true
+		$ParryVFX.play("parry")
 	else:
 		hit_box.hittable_groups = before_parry_hittable_groups
 		$Sprite2D.modulate = Color(0.961, 0.275, 0.298)
@@ -64,3 +66,7 @@ func switch_parried():
 # Удаляет пулю после столкновения с hurt_box или твёрдым объектом.
 func _delete_bullet(_object: Object) -> void:
 	queue_free()
+
+
+func _on_parry_vfx_animation_finished():
+	$ParryVFX.visible = false

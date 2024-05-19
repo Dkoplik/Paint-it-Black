@@ -61,7 +61,12 @@ func _on_on_wall_state_exited():
 
 
 func _on_attack_state_entered():
-	animated_sprite.play("attack")
+	var direction: Vector2 = $"../PlayerController"._get_attack_direction()
+	direction = direction.normalized()
+	if direction.y >= -0.1:
+		animated_sprite.play("attack_down")
+	else:
+		animated_sprite.play("attack_up")
 	$"../VFX".show()
 	$"../VFX".play("vfx_slash")
 

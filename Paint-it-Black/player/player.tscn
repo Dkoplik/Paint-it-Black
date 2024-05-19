@@ -211,7 +211,9 @@ collision_mask = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
-animation = &"attack"
+animation = &"attack_up"
+frame = 2
+frame_progress = 1.0
 
 [node name="VFX" type="AnimatedSprite2D" parent="."]
 visible = false

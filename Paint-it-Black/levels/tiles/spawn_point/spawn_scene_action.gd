@@ -27,7 +27,7 @@ func do_action() -> bool:
 
 	var scene_instance := spawning_scene.instantiate()
 	scene_instance.position = spawning_marker.global_position + offset
-	spawning_marker.get_tree().root.add_child(scene_instance)
+	spawning_marker.get_tree().current_scene.add_child(scene_instance)
 
 	action_completed.emit()
 	return true

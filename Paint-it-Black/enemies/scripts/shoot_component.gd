@@ -72,7 +72,7 @@ func shoot_in_direction(direction: Vector2) -> bool:
 	projectile.look_at(cur_direction)
 	projectile.position = projectile_spawn.global_position
 
-	get_tree().root.add_child(projectile)
+	get_tree().current_scene.add_child(projectile)
 	return true
 
 

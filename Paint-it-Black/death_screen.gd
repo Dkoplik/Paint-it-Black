@@ -1,10 +1,6 @@
 extends Control
 
 
-func _ready() -> void:
-	visible = false
-
-
 func _on_restart_button_pressed() -> void:
 	LevelManager.reload_lvl()
 

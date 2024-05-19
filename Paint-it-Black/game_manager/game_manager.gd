@@ -10,6 +10,7 @@ signal enemies_started
 signal enemies_ended
 
 var player: CharacterBody2D
+var death_scene = preload("res://death_screen.tscn")
 
 ## Номер текущей волны в активной комнате.
 var wave_number := 0
@@ -132,3 +133,10 @@ func _check_wave_ended() -> void:
 		push_warning("Какой-то спавн стал с активной волной до окончания всех врагов")
 		return
 	wave_number += 1
+
+
+func _player_dead() -> void:
+	get_tree().paused = true
+	var death_screen: Control = death_scene.instantiate()
+	death_screen.global_position = player.get_node("Camera2D").global_position
+	get_tree().current_scene.add_child(death_screen)

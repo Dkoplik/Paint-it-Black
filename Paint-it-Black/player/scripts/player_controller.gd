@@ -20,6 +20,8 @@ extends CustomNode2D
 @export var root: CharacterBody2D:
 	set = set_root
 
+var is_dead := false
+
 ## Есть ли компонента [PlayerMovement] в качестве дочернего узла?
 var _has_movement_component := false
 ## Есть ли компонента [PlayerAttack] в качестве дочернего узла?
@@ -37,6 +39,7 @@ func _ready() -> void:
 		return
 
 	GameManager.player = root
+	$"../BasicHurtBox/HP".connect("killed", GameManager._player_dead)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
@@ -79,6 +82,10 @@ func _on_moving_states_state_physics_processing(_delta):
 	if Engine.is_editor_hint():
 		return
 
+	if is_dead:
+		movement_component.decelerate_to_stop()
+		return
+
 	if not _has_movement_component:
 		push_error("Невозможно осуществить движение без _movement_component")
 		return
@@ -101,6 +108,9 @@ func _on_jump_fall_states_state_physics_processing(_delta):
 	if Engine.is_editor_hint():
 		return
 
+	if is_dead:
+		return
+
 	if not _has_movement_component:
 		push_error("Невозможно обработать текущее состояние игрока без _movement_component")
 		return
@@ -117,6 +127,9 @@ func _on_jump_fall_states_state_physics_processing(_delta):
 ## совершить прыжок нельзя.
 func _on_can_jump_state_unhandled_input(event):
 	if Engine.is_editor_hint():
+		return
+
+	if is_dead:
 		return
 
 	if event.is_action_pressed("jump"):
@@ -136,6 +149,9 @@ func _on_can_strong_attack_state_unhandled_input(event):
 	if Engine.is_editor_hint():
 		return
 
+	if is_dead:
+		return
+
 	if event.is_action_pressed("attack"):
 		if not _has_movement_component:
 			push_error("Невозможно совершить атаку без _movement_component")
@@ -147,6 +163,9 @@ func _on_can_strong_attack_state_unhandled_input(event):
 ## Обработка слабой атаки
 func _on_can_weak_attack_state_unhandled_input(event: InputEvent):
 	if Engine.is_editor_hint():
+		return
+
+	if is_dead:
 		return
 
 	if event.is_action_pressed("attack"):
@@ -195,3 +214,7 @@ func _on_fall_though_platform_state_unhandled_input(event):
 
 func _on_fall_though_platform_state_entered():
 	movement_component.turn_off_platform_collision()
+
+
+func turn_on_is_dead() -> void:
+	is_dead = true

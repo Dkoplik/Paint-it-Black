@@ -94,3 +94,11 @@ func _on_combat_state_exited():
 
 func _on_death_state_entered():
 	animated_sprite.play("death")
+
+
+func _on_animated_sprite_2d_frame_changed():
+	match animated_sprite.animation:
+		"move":
+			match animated_sprite.frame:
+				1, 2:
+					step.emit()

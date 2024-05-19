@@ -54,6 +54,7 @@ collision_mask = 20
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_7i8ll")
 animation = &"move"
+frame_progress = 0.857256
 
 [node name="BodyParts" type="Node2D" parent="."]
 

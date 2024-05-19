@@ -18,6 +18,9 @@ func receive_attack(attack: BasicIncomingAttack) -> void:
 	if Engine.is_editor_hint():
 		return
 
+	if hp._current_hp == 0:
+		return
+
 	hurt.emit(attack)
 	if not _has_hp:
 		push_error("Невозможно осуществить receive_attack() без компоненты hp")

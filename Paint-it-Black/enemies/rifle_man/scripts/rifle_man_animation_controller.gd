@@ -100,5 +100,5 @@ func _on_animated_sprite_2d_frame_changed():
 	match animated_sprite.animation:
 		"move":
 			match animated_sprite.frame:
-				1, 2:
+				3, 5:
 					step.emit()

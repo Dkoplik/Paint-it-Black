@@ -1,25 +1,32 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://cs6rj2jq4p5hp"]
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://cs6rj2jq4p5hp"]
 
 [ext_resource type="Texture2D" uid="uid://b8bohdoxay3tb" path="res://player/vfx/attack_slash.png" id="1_g5emb"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ooup2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_e373v"]
 atlas = ExtResource("1_g5emb")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sj247"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kptsm"]
 atlas = ExtResource("1_g5emb")
-region = Rect2(64, 0, 64, 64)
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3amy"]
+atlas = ExtResource("1_g5emb")
+region = Rect2(256, 0, 128, 128)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ooup2")
+"texture": SubResource("AtlasTexture_e373v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sj247")
+"texture": SubResource("AtlasTexture_kptsm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3amy")
 }],
 "loop": false,
 "name": &"vfx_slash",
-"speed": 5.0
+"speed": 20.0
 }]

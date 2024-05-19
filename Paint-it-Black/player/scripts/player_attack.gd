@@ -127,6 +127,7 @@ func _attack(direction: Vector2, impulse: float) -> void:
 	# Импульс в заданном направлении
 	direction = direction.normalized()
 	_calc_velocity(direction * impulse)
+	_handle_y_axe_offset(direction)
 
 	# Задать новое направление атаки в ресурс
 	_hit_box.attack_data.direction = direction
@@ -140,6 +141,14 @@ func _attack(direction: Vector2, impulse: float) -> void:
 	await get_tree().create_timer(attack_data.cooldown + attack_data.duration).timeout
 	_is_attack_ready = true
 	attack_ready.emit()
+
+
+## Отвечает за сдвиг коллизии
+func _handle_y_axe_offset(direction: Vector2) -> void:
+	const MAX_OFFSET := 16.0
+	var y_direction: int = sign(direction.y)
+	var current_y_offset := lerpf(0.0, y_direction * MAX_OFFSET, abs(direction.y))
+	position.y = current_y_offset
 
 
 func _calc_velocity(velocity: Vector2):

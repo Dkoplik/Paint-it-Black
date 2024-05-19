@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://dx8wxjp57gqg0"]
+[gd_scene load_steps=89 format=3 uid="uid://dx8wxjp57gqg0"]
 
 [ext_resource type="PackedScene" uid="uid://d0epmg43sv7ak" path="res://levels/tiles/level_tiles.tscn" id="1_m8bqi"]
 [ext_resource type="PackedScene" uid="uid://b5qdqaaw2hat6" path="res://player/player.tscn" id="2_qqwpl"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://levels/tiles/spawn_point/check_wave_action.gd" id="8_j5tia"]
 [ext_resource type="PackedScene" uid="uid://dd7oahp8wqsqp" path="res://levels/tiles/door/door.tscn" id="8_o6yrb"]
 [ext_resource type="PackedScene" uid="uid://k34ercw2vbnj" path="res://pause_menu.tscn" id="11_clorh"]
+[ext_resource type="PackedScene" uid="uid://8yauufycw42t" path="res://hp_bar.tscn" id="11_e2y8u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lic15"]
 resource_local_to_scene = true
@@ -516,6 +517,9 @@ shape = SubResource("RectangleShape2D_udyfm")
 
 [node name="Player" parent="." instance=ExtResource("2_qqwpl")]
 position = Vector2(96, 464)
+
+[node name="HpBar" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_e2y8u")]
+player = NodePath("../Player")
 
 [node name="PauseMenu" parent="." instance=ExtResource("11_clorh")]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://nafntpdddl6m"]
+[gd_scene load_steps=30 format=3 uid="uid://nafntpdddl6m"]
 
 [ext_resource type="PackedScene" uid="uid://d0epmg43sv7ak" path="res://levels/tiles/level_tiles.tscn" id="1_4wsvv"]
 [ext_resource type="PackedScene" uid="uid://dd7oahp8wqsqp" path="res://levels/tiles/door/door.tscn" id="2_djjd5"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b7t2hyi8fiukt" path="res://levels/pics/s_down_pic.png" id="12_7wrd4"]
 [ext_resource type="Texture2D" uid="uid://b2is8d08e5r5k" path="res://levels/pics/danger_pic.png" id="13_kqt4v"]
 [ext_resource type="Texture2D" uid="uid://dq5wmepaw6r8t" path="res://levels/pics/jumping_pic.png" id="14_2pnus"]
+[ext_resource type="PackedScene" uid="uid://8yauufycw42t" path="res://hp_bar.tscn" id="14_mck8c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g5f5t"]
 resource_local_to_scene = true
@@ -192,6 +193,9 @@ texture = ExtResource("12_7wrd4")
 
 [node name="Player" parent="." instance=ExtResource("2_ndh7t")]
 position = Vector2(-97, 125)
+
+[node name="HpBar" parent="." node_paths=PackedStringArray("player") instance=ExtResource("14_mck8c")]
+player = NodePath("../Player")
 
 [node name="PauseMenu" parent="." instance=ExtResource("11_01pef")]
 

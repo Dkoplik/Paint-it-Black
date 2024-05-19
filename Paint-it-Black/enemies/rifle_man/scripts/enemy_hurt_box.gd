@@ -29,5 +29,5 @@ func receive_attack(attack: BasicIncomingAttack) -> void:
 		movement_component.set_velocity(damage_impulse * attack.direction + additional_impulse)
 		var particles = blood_particles.instantiate()
 		particles.global_position = global_position
-		get_tree().root.add_child(particles)
+		get_tree().current_scene.add_child(particles)
 		particles.emit_in_direction(attack.direction)

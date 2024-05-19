@@ -59,7 +59,7 @@ animation = &"move"
 
 [node name="Head" type="Node2D" parent="BodyParts"]
 visible = false
-position = Vector2(0, -17)
+position = Vector2(2, -15)
 
 [node name="ShootHead" type="Sprite2D" parent="BodyParts/Head"]
 position = Vector2(-2, 15)
@@ -67,7 +67,7 @@ texture = ExtResource("2_wvgeu")
 
 [node name="Arms" type="Node2D" parent="BodyParts"]
 visible = false
-position = Vector2(0, -13)
+position = Vector2(-1, -18)
 
 [node name="ShootArms" type="Sprite2D" parent="BodyParts/Arms"]
 position = Vector2(1, 17)

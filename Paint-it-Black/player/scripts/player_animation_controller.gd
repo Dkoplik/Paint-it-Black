@@ -52,7 +52,12 @@ func _on_falling_state_entered():
 
 
 func _on_on_wall_state_entered():
+	animated_sprite.flip_h = !animated_sprite.flip_h
 	animated_sprite.play("wall")
+
+
+func _on_on_wall_state_exited():
+	animated_sprite.flip_h = !animated_sprite.flip_h
 
 
 func _on_attack_state_entered():

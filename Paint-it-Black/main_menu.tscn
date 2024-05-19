@@ -79,3 +79,4 @@ stream = ExtResource("3_bxndg")
 [connection signal="button_down" from="ExitButton" to="ButtonClickSound" method="play"]
 [connection signal="mouse_entered" from="ExitButton" to="ButtonHoverSound" method="play"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="LevelButton" to="." method="_on_level_button_pressed"]

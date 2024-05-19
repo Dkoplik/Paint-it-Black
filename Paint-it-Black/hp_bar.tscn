@@ -1,15 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bctxqcmy86pc"]
+[gd_scene load_steps=4 format=3 uid="uid://bctxqcmy86pc"]
 
+[ext_resource type="Script" path="res://hp_bar.gd" id="1_2re7o"]
 [ext_resource type="Texture2D" uid="uid://0k2dlbg21c8g" path="res://EmptyHeart.png" id="1_itlwc"]
 [ext_resource type="Texture2D" uid="uid://ft06r8hfxr7d" path="res://FullHeart.png" id="2_d2fwf"]
 
-
 [node name="HpBar" type="CanvasLayer"]
-
-[node name="HpBar" type="CanvasLayer" node_paths=PackedStringArray("player")]
 script = ExtResource("1_2re7o")
-player = NodePath("")
-
 
 [node name="EmptyHealth" type="TextureRect" parent="."]
 offset_right = 70.0

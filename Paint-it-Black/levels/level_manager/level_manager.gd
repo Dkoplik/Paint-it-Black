@@ -31,7 +31,7 @@ func _physics_process(_delta):
 
 	_waiting_to_load = false
 	if ResourceLoader.load_threaded_get_status(_loading_path) == ResourceLoader.THREAD_LOAD_LOADED:
-		var res = await _fade_out()
+		_fade_out()
 		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(_loading_path))
 	else:
 		push_error("Загрузка уровня не удалась")

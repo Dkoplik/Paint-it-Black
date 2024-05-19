@@ -51,8 +51,10 @@ func set_is_parried(value: bool):
 
 	if is_parried:
 		hit_box.hittable_groups = after_parry_hittable_groups
+		$Sprite2D.modulate = Color(0.286, 0.584, 0.953)
 	else:
 		hit_box.hittable_groups = before_parry_hittable_groups
+		$Sprite2D.modulate = Color(0.961, 0.275, 0.298)
 
 
 func switch_parried():

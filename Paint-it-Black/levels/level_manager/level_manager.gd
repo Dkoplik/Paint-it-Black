@@ -5,6 +5,7 @@ enum LevelType { MAIN_MENU, DEFAULT, GAME_LEVEL }
 
 ## Данные о всех уровнях.
 var levels_resource: LevelsResource = preload("res://levels/level_manager/levels_resource.tres")
+var background_music: BackgroundMusic = preload("res://background_music.tscn").instantiate()
 
 ## Тип текущего уровня.
 var _current_lvl_type: LevelType:
@@ -17,6 +18,10 @@ var _current_game_lvl: int:
 var _waiting_to_load := false
 ## Путь загружаемой сцены.
 var _loading_path: String
+
+
+func _ready() -> void:
+	get_tree().root.add_child.call_deferred(background_music)
 
 
 func _physics_process(_delta):
@@ -60,6 +65,7 @@ func load_lvl(value: int):
 		_waiting_to_load = true
 		_current_game_lvl = value
 		_current_lvl_type = LevelType.GAME_LEVEL
+		background_music.play_combat_music()
 
 
 func _fade_in():
@@ -104,6 +110,7 @@ func load_main_menu() -> void:
 	_current_lvl_type = LevelType.MAIN_MENU
 	get_tree().change_scene_to_packed(levels_resource.main_menu)
 	get_tree().paused = false
+	background_music.play_menu_music()
 
 
 ## Загрузить и установить сцену по-умолчанию.

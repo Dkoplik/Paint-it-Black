@@ -35,6 +35,7 @@ func parry(attack_data: PlayerIncomingAttack) -> void:
 	root_node.look_at(root_node.position + attack_data.direction)
 	$"../HitBox".attack_data.direction = attack_data.direction
 	$"../ParrySFX".play()
+	$"../ProjectileMovement".speed += 300
 	parried.emit()
 
 

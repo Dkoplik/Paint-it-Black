@@ -513,9 +513,8 @@ position = Vector2(2247, 452)
 position = Vector2(4.5, 4)
 shape = SubResource("RectangleShape2D_udyfm")
 
-[node name="Player" parent="." node_paths=PackedStringArray("tile_map") instance=ExtResource("2_qqwpl")]
+[node name="Player" parent="." instance=ExtResource("2_qqwpl")]
 position = Vector2(110, 464)
-tile_map = NodePath("../LevelTiles")
 
 [connection signal="player_entered" from="PlayerInZone" to="Door" method="close"]
 [connection signal="player_entered" from="PlayerInZone" to="Door2" method="make_current_room"]

@@ -57,6 +57,8 @@ func _on_on_wall_state_entered():
 
 func _on_attack_state_entered():
 	animated_sprite.play("attack")
+	$"../VFX".show()
+	$"../VFX".play("vfx_slash")
 
 
 func _on_animated_sprite_2d_frame_changed():

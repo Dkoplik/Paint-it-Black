@@ -1,9 +1,10 @@
-[gd_scene load_steps=37 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=38 format=3 uid="uid://b5qdqaaw2hat6"]
 
 [ext_resource type="Script" path="res://player/scripts/player_camera.gd" id="1_3hyi7"]
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
 [ext_resource type="SpriteFrames" uid="uid://dlj10bsjifa2w" path="res://player/resources/player_animations.tres" id="2_mc37b"]
+[ext_resource type="SpriteFrames" uid="uid://cs6rj2jq4p5hp" path="res://player/vfx/vfx_animations.tres" id="2_nafw5"]
 [ext_resource type="Script" path="res://player/scripts/player_animation_controller.gd" id="3_eywrf"]
 [ext_resource type="Script" path="res://player/resources/player_movement_data.gd" id="6_d5dvb"]
 [ext_resource type="Script" path="res://player/scripts/player_attack.gd" id="7_bi60k"]
@@ -211,6 +212,12 @@ collision_mask = 20
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
 animation = &"wall"
+
+[node name="VFX" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("2_nafw5")
+animation = &"vfx_slash"
+frame_progress = 0.888471
 
 [node name="CharacterBodyShape" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
@@ -541,6 +548,7 @@ script = ExtResource("1_3hyi7")
 max_offset = 50.0
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="PlayerAnimationController" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="animation_finished" from="VFX" to="VFX" method="hide"]
 [connection signal="step" from="PlayerAnimationController" to="PlayerSounds/FootSteps" method="play"]
 [connection signal="character_look_left" from="PlayerMovement" to="PlayerAnimationController" method="player_look_left"]
 [connection signal="character_look_right" from="PlayerMovement" to="PlayerAnimationController" method="player_look_right"]

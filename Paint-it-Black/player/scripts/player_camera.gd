@@ -16,10 +16,6 @@ func _ready() -> void:
 	_apply_camera_limits()
 
 
-func _process(delta):
-	pass
-
-
 func _search_tile_map() -> void:
 	var search_result: Array = root.get_parent().find_children("*", "TileMap", false)
 	if search_result.size() == 0:

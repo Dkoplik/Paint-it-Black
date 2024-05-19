@@ -20,7 +20,6 @@ var _life_count_down: float
 var _has_hit_box := false
 
 
-
 func _init() -> void:
 	_class_name = &"Bullet"
 

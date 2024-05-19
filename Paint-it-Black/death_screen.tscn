@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgx8mwea84vyc"]
+
+[ext_resource type="Script" path="res://death_screen.gd" id="1_6tmoh"]
+[ext_resource type="FontFile" uid="uid://bnvnw1nbot7fr" path="res://font/PublicPixel-E447g.ttf" id="1_7khsc"]
+[ext_resource type="LabelSettings" uid="uid://d03oory860buy" path="res://font/font_settings.tres" id="1_53s6k"]
+
+[node name="death_screen" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_6tmoh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Кажется, вы умерли 	¯\\_(ツ)_/¯"
+label_settings = ExtResource("1_53s6k")
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_7khsc")
+text = "Начать заново"
+
+[node name="MainMenuButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_7khsc")
+text = "В главное меню"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

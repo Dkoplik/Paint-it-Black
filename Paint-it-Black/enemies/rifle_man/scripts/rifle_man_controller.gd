@@ -9,17 +9,24 @@ extends CustomNode
 ## Компонента атаки.
 @export var shoot_component: ShootComponent:
 	set = set_shoot_component
+## HurtBox врага.
+@export var hurt_box: BasicHurtBox:
+	set = set_hurt_box
 ## Корень StateChart'ов, отвечает за состояния игрока.
 @export var state_chart: StateChart:
 	set = set_state_chart
+@export var animation_controller: RifleManAnimationController
 ## Корень игрока.
 @export var root: CharacterBody2D:
 	set = set_root
+@export var dead_impulse := 100.0
 
 ## Есть ли компонента [PlayerMovement] в качестве дочернего узла?
 var _has_movement_component := false
 ## Есть ли компонента [PlayerAttack] в качестве дочернего узла?
 var _has_shoot_component := false
+## Есть ли компонента [BasicHurtBox] в качестве дочернего узла?
+var _has_hurt_box := false
 ## Есть ли компонента [StateChart] в качестве дочернего узла?
 var _has_state_chart := false
 ## Есть ли ссылка на корень?
@@ -35,6 +42,13 @@ func _ready() -> void:
 		return
 
 	_player = GameManager.player
+	GameManager.increase_enemies_count()
+
+	if not _has_hurt_box:
+		push_error("Невозможно задать отслеживание живых врагов без HurtBox")
+		return
+
+	hurt_box.hp.connect("killed", GameManager.decrease_enemies_count)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
@@ -42,6 +56,7 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 		movement_component, "PlayerMovement", warnings
 	)
 	_has_shoot_component = Utilities.check_reference(shoot_component, "PlayerAttack", warnings)
+	_has_hurt_box = Utilities.check_reference(hurt_box, "BasicHurtBox", warnings)
 	_has_state_chart = Utilities.check_reference(state_chart, "StateChart", warnings)
 	_has_root = Utilities.check_reference(root, "CharacterBody2D", warnings)
 	return _has_movement_component and _has_shoot_component and _has_state_chart and _has_root
@@ -56,6 +71,12 @@ func set_movement_component(value: BasicCharacterMovement) -> void:
 ## Setter для поля [member shoot_component]. Обновляет ошибки конфигурации.
 func set_shoot_component(value: ShootComponent) -> void:
 	shoot_component = value
+	update_configuration_warnings()
+
+
+## Setter для поля [member hurt_box]. Обновляет ошибки конфигурации.
+func set_hurt_box(value: BasicHurtBox) -> void:
+	hurt_box = value
 	update_configuration_warnings()
 
 
@@ -80,7 +101,20 @@ func _on_moving_states_state_physics_processing(_delta: float) -> void:
 
 func _on_moving_to_player_state_physics_processing(_delta: float) -> void:
 	movement_component.move_to_target(_player)
+	if movement_component.character_body.velocity.x > 0:
+		animation_controller.enemy_look_right()
+	elif movement_component.character_body.velocity.x < 0:
+		animation_controller.enemy_look_left()
 
 
 func _on_shoot_state_entered() -> void:
 	shoot_component.shoot_target(_player)
+
+
+func _on_dead_state_physics_processing(_delta):
+	if movement_component.character_body.is_on_floor():
+		movement_component.decelerate_to_stop()
+
+
+func _on_dead_state_entered():
+	hurt_box.queue_free()

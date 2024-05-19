@@ -62,11 +62,13 @@ func _on_on_wall_state_exited():
 
 func _on_attack_state_entered():
 	animated_sprite.play("attack")
+	$"../VFX".show()
+	$"../VFX".play("vfx_slash")
 
 
 func _on_animated_sprite_2d_frame_changed():
 	match animated_sprite.animation:
-		"run_left", "run_right":
+		"run":
 			match animated_sprite.frame:
 				1, 3, 5:
 					step.emit()

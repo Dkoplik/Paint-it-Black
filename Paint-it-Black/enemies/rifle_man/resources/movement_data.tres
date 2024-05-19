@@ -4,7 +4,9 @@
 
 [resource]
 script = ExtResource("1_2pqg5")
-movement_acceleration = 68.5
-max_movement_speed = 20.5
+movement_acceleration = 150.0
+max_movement_speed = 70.0
 gravity = 250.0
 max_fall_speed = 250.0
+max_up_speed = 250.0
+max_horizontal_speed = 300.0

@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="BasicIncomingAttack" load_steps=2 format=3 uid="uid://bfg1uwtgxxi2b"]
+[gd_resource type="Resource" script_class="PlayerIncomingAttack" load_steps=2 format=3 uid="uid://bfg1uwtgxxi2b"]
 
-[ext_resource type="Script" path="res://basic_incoming_attack.gd" id="1_iedao"]
+[ext_resource type="Script" path="res://player/scripts/player_incoming_atttack.gd" id="1_2mfoh"]
 
 [resource]
-script = ExtResource("1_iedao")
+script = ExtResource("1_2mfoh")
+direction = Vector2(0, 0)
 damage = 1

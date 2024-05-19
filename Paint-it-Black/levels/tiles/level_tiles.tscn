@@ -1,7 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0epmg43sv7ak"]
+[gd_scene load_steps=3 format=3 uid="uid://d0epmg43sv7ak"]
 
 [ext_resource type="TileSet" uid="uid://xeuob8p6gsol" path="res://levels/tiles/level_tiles.tres" id="1_50pm3"]
+
+[sub_resource type="Environment" id="Environment_rlxvo"]
+background_mode = 3
+tonemap_mode = 3
+glow_hdr_threshold = 0.5
 
 [node name="LevelTiles" type="TileMap"]
 tile_set = ExtResource("1_50pm3")
 format = 2
+layer_0/name = "BackgroundLayer"
+layer_1/name = "MainLayer"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rlxvo")

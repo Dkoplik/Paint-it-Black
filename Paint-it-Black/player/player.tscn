@@ -1,11 +1,12 @@
-[gd_scene load_steps=36 format=3 uid="uid://b5qdqaaw2hat6"]
+[gd_scene load_steps=38 format=3 uid="uid://b5qdqaaw2hat6"]
 
-[ext_resource type="Script" path="res://player/scripts/player_manager.gd" id="1_3hyi7"]
+[ext_resource type="Script" path="res://player/scripts/player_camera.gd" id="1_3hyi7"]
 [ext_resource type="Script" path="res://player/scripts/player_controller.gd" id="1_kt7rl"]
 [ext_resource type="Script" path="res://player/scripts/player_movement.gd" id="2_02ofg"]
 [ext_resource type="SpriteFrames" uid="uid://dlj10bsjifa2w" path="res://player/resources/player_animations.tres" id="2_mc37b"]
+[ext_resource type="SpriteFrames" uid="uid://cs6rj2jq4p5hp" path="res://player/vfx/vfx_animations.tres" id="2_nafw5"]
 [ext_resource type="Script" path="res://player/scripts/player_animation_controller.gd" id="3_eywrf"]
-[ext_resource type="Resource" uid="uid://cjeut3m67l1iw" path="res://player/resources/player_movement_data.tres" id="3_pti2n"]
+[ext_resource type="Script" path="res://player/resources/player_movement_data.gd" id="6_d5dvb"]
 [ext_resource type="Script" path="res://player/scripts/player_attack.gd" id="7_bi60k"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="9_2qwus"]
 [ext_resource type="Script" path="res://basic_hurt_box.gd" id="9_obpaw"]
@@ -30,6 +31,19 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_20xhv"]
 size = Vector2(20, 64)
+
+[sub_resource type="Resource" id="Resource_y1hhy"]
+script = ExtResource("6_d5dvb")
+jump_speed = 200.0
+jump_angle = 45.0
+sliding_acceleration = 100.0
+max_sliding_speed = 50.0
+movement_acceleration = 600.0
+max_movement_speed = 200.0
+gravity = 300.0
+max_fall_speed = 400.0
+max_up_speed = 400.0
+max_horizontal_speed = 300.0
 
 [sub_resource type="Resource" id="Resource_86q88"]
 script = ExtResource("9_t1hns")
@@ -142,7 +156,7 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(26, -0.25, 0, 0.25, 0, 56, -0.25, 0, 0.25, 0, 26, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(26, -0.25, 0, 0.25, 0, 62, -0.25, 0, 0.25, 0, 26, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.5, 0.9)
 }
 tracks/4/type = "bezier"
@@ -153,7 +167,7 @@ tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0, 20, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(27, -0.25, 0, 0.25, 0, 27, -0.25, 0, 0.25, 0, 27, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.5, 0.9)
 }
 tracks/5/type = "method"
@@ -194,18 +208,23 @@ stream_3/weight = 1.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 top_level = true
 collision_mask = 20
-script = ExtResource("1_3hyi7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
 animation = &"attack"
+
+[node name="VFX" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("2_nafw5")
+animation = &"vfx_slash"
+frame_progress = 0.888471
 
 [node name="CharacterBodyShape" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_20xhv")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("movement_component", "attack_component", "state_chart", "root")]
+[node name="PlayerController" type="Node2D" parent="." node_paths=PackedStringArray("movement_component", "attack_component", "state_chart", "root")]
 script = ExtResource("1_kt7rl")
 movement_component = NodePath("../PlayerMovement")
 attack_component = NodePath("../PlayerAttack")
@@ -219,7 +238,7 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="PlayerMovement" type="Node" parent="." node_paths=PackedStringArray("character_body")]
 script = ExtResource("2_02ofg")
-movement_data = ExtResource("3_pti2n")
+movement_data = SubResource("Resource_y1hhy")
 character_body = NodePath("..")
 
 [node name="PlayerAttack" type="Node2D" parent="." node_paths=PackedStringArray("movement_component")]
@@ -402,6 +421,26 @@ script = ExtResource("11_6k34h")
 to = NodePath("../../CanStrongAttack")
 event = &"wall_collision"
 
+[node name="PlatformStates" type="Node" parent="StateChart/ParallelState/LogicStates"]
+script = ExtResource("10_pcuc3")
+initial_state = NodePath("StayOnPlatform")
+
+[node name="StayOnPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnFallThroughPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates/StayOnPlatform"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../FallThoughPlatform")
+event = &"fall_through_platform"
+
+[node name="FallThoughPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates"]
+script = ExtResource("11_2qsfj")
+
+[node name="OnStayOnPlatform" type="Node" parent="StateChart/ParallelState/LogicStates/PlatformStates/FallThoughPlatform"]
+script = ExtResource("11_6k34h")
+to = NodePath("../../StayOnPlatform")
+event = &"stay_on_platform"
+
 [node name="AnimationStates" type="Node" parent="StateChart/ParallelState"]
 editor_description = "Эта ветка состояний отвечает только за анимации и не связана с логикой механик игрока.
 
@@ -497,9 +536,6 @@ to = NodePath("../../NonCombatAnimations/GoToLastAnimation")
 event = &"attack_end"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(0, -15)
-zoom = Vector2(1.3, 1.3)
-position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_left_margin = 0.05
@@ -508,8 +544,11 @@ drag_right_margin = 0.05
 drag_bottom_margin = 0.05
 editor_draw_limits = true
 editor_draw_drag_margin = true
+script = ExtResource("1_3hyi7")
+max_offset = 50.0
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="PlayerAnimationController" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="animation_finished" from="VFX" to="VFX" method="hide"]
 [connection signal="step" from="PlayerAnimationController" to="PlayerSounds/FootSteps" method="play"]
 [connection signal="character_look_left" from="PlayerMovement" to="PlayerAnimationController" method="player_look_left"]
 [connection signal="character_look_right" from="PlayerMovement" to="PlayerAnimationController" method="player_look_right"]
@@ -517,11 +556,16 @@ editor_draw_drag_margin = true
 [connection signal="attack_ready" from="PlayerAttack" to="PlayerController" method="_on_player_attack_attack_ready"]
 [connection signal="hit" from="PlayerAttack/HitBox" to="PlayerController" method="_on_hit_box_hit"]
 [connection signal="hurt" from="BasicHurtBox" to="PlayerController" method="_on_basic_hurt_box_hurt"]
+[connection signal="killed" from="BasicHurtBox/HP" to="PlayerController" method="turn_on_is_dead"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/MovingStates" to="PlayerController" method="_on_moving_states_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/Jump&FallStates" to="PlayerController" method="_on_jump_fall_states_state_physics_processing"]
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/Jump&FallStates/CanJump" to="PlayerController" method="_on_can_jump_state_unhandled_input"]
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanStrongAttack" to="PlayerController" method="_on_can_strong_attack_state_unhandled_input"]
 [connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/AttackStates/CanAttack/CanWeakAttack" to="PlayerController" method="_on_can_weak_attack_state_unhandled_input"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/PlatformStates/StayOnPlatform" to="PlayerController" method="_on_stay_on_platform_state_entered"]
+[connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/PlatformStates/StayOnPlatform" to="PlayerController" method="_on_stay_on_platform_state_unhandled_input"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/PlatformStates/FallThoughPlatform" to="PlayerController" method="_on_fall_though_platform_state_entered"]
+[connection signal="state_unhandled_input" from="StateChart/ParallelState/LogicStates/PlatformStates/FallThoughPlatform" to="PlayerController" method="_on_fall_though_platform_state_unhandled_input"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/IdleAnimation" to="PlayerAnimationController" method="_on_idle_animation_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/MovingAnimations/RunAnimation" to="PlayerAnimationController" method="_on_run_animation_state_entered"]
 [connection signal="taken" from="StateChart/ParallelState/AnimationStates/NonCombatAnimations/AirborneAnimations/OnLand" to="PlayerSounds/Land" method="play"]

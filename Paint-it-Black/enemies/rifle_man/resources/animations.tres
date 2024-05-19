@@ -1,15 +1,68 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://cutqu2ktq3u8f"]
+[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://cutqu2ktq3u8f"]
 
-[ext_resource type="Texture2D" uid="uid://1x0ix66s7x50" path="res://enemies/rifle_man/EnemySR.png" id="1_kx05q"]
+[ext_resource type="Texture2D" uid="uid://va1m1clijmk4" path="res://enemies/rifle_man/animations/death_anim.png" id="1_w10j5"]
+[ext_resource type="Texture2D" uid="uid://dmxrv1cdmthyx" path="res://enemies/rifle_man/animations/move_anim.png" id="2_upsk8"]
+[ext_resource type="Texture2D" uid="uid://bl8fxh00x0ohi" path="res://enemies/rifle_man/animations/shoot_body.png" id="3_5rajd"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_yx6wb"]
+atlas = ExtResource("1_w10j5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cl0kr"]
+atlas = ExtResource("1_w10j5")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcp2l"]
+atlas = ExtResource("1_w10j5")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scf45"]
+atlas = ExtResource("2_upsk8")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2ge0"]
+atlas = ExtResource("2_upsk8")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ef6qb"]
+atlas = ExtResource("2_upsk8")
+region = Rect2(128, 0, 64, 64)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_kx05q")
+"texture": SubResource("AtlasTexture_yx6wb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cl0kr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcp2l")
+}],
+"loop": false,
+"name": &"death",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scf45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2ge0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ef6qb")
 }],
 "loop": true,
-"name": &"default",
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5rajd")
+}],
+"loop": true,
+"name": &"shoot_body",
 "speed": 5.0
 }]

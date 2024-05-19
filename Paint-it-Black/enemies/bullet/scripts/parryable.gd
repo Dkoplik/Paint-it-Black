@@ -33,6 +33,7 @@ func parry(attack_data: PlayerIncomingAttack) -> void:
 		return
 
 	root_node.look_at(root_node.position + attack_data.direction)
+	$"../HitBox".attack_data.direction = attack_data.direction
 	parried.emit()
 
 

@@ -75,7 +75,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -94,7 +94,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -128,7 +128,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 7.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -142,5 +142,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"wall",
-"speed": 5.0
+"speed": 2.0
 }]

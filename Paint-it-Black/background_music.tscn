@@ -8,9 +8,11 @@
 script = ExtResource("1_v5dks")
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("1_xmhuv")
 
 [node name="CombatMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("3_2brrb")
 
 [connection signal="finished" from="MenuMusic" to="." method="_repeate_menu_loop"]

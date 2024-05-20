@@ -53,25 +53,25 @@ collision_mask = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_7i8ll")
-animation = &"move"
-frame_progress = 0.857256
+animation = &"death"
 
 [node name="BodyParts" type="Node2D" parent="."]
 
 [node name="Head" type="Node2D" parent="BodyParts"]
-visible = false
-position = Vector2(2, -15)
+position = Vector2(-1, -16)
 
 [node name="ShootHead" type="Sprite2D" parent="BodyParts/Head"]
-position = Vector2(-2, 15)
+position = Vector2(1, 16)
 texture = ExtResource("2_wvgeu")
 
 [node name="Arms" type="Node2D" parent="BodyParts"]
-visible = false
-position = Vector2(-1, -18)
+position = Vector2(-1, -14)
+
+[node name="ProjectileSpawn" type="Marker2D" parent="BodyParts/Arms"]
+position = Vector2(23, 10)
 
 [node name="ShootArms" type="Sprite2D" parent="BodyParts/Arms"]
-position = Vector2(1, 17)
+position = Vector2(1, 14)
 texture = ExtResource("3_2lpsw")
 
 [node name="CharacterBodyShape" type="CollisionShape2D" parent="."]
@@ -116,13 +116,10 @@ state_chart = NodePath("../StateChart")
 animation_controller = NodePath("../RifleManAnimationController")
 root = NodePath("..")
 
-[node name="ProjectileSpawn" type="Marker2D" parent="."]
-position = Vector2(22, -5)
-
 [node name="ShootComponent" type="Node" parent="." node_paths=PackedStringArray("projectile_spawn", "root")]
 script = ExtResource("4_v77bp")
 shoot_data = ExtResource("5_cvpqw")
-projectile_spawn = NodePath("../ProjectileSpawn")
+projectile_spawn = NodePath("../BodyParts/Arms/ProjectileSpawn")
 root = NodePath("..")
 
 [node name="StateChart" type="Node" parent="."]

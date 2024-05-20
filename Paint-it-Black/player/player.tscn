@@ -208,6 +208,7 @@ stream_3/weight = 1.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 top_level = true
 collision_mask = 20
+floor_constant_speed = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")

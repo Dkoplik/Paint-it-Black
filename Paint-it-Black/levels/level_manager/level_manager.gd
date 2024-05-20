@@ -119,6 +119,7 @@ func load_default_scene() -> void:
 	_current_game_lvl = -1
 	_current_lvl_type = LevelType.DEFAULT
 	get_tree().change_scene_to_packed(levels_resource.default_scene)
+	background_music.play_menu_music()
 
 
 func _is_valid_lvl_num(lvl_num: int) -> bool:

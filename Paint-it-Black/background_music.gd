@@ -18,6 +18,8 @@ func play_menu_music() -> void:
 
 
 func play_combat_music() -> void:
+	if $CombatMusic.playing:
+		return
 	is_combat_music = true
 	is_menu_music = false
 	if $MenuMusic.playing:

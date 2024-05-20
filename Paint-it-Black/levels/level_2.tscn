@@ -751,7 +751,7 @@ offset = Vector2(0, 0)
 
 [sub_resource type="Resource" id="Resource_lsptl"]
 script = ExtResource("7_6vb1i")
-wait_time = 19.0
+wait_time = 2.0
 
 [sub_resource type="Resource" id="Resource_qxom4"]
 script = ExtResource("8_wvg4k")

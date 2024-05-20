@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5afpjy442t2k"]
+
+[ext_resource type="Script" path="res://background_music.gd" id="1_v5dks"]
+[ext_resource type="AudioStream" uid="uid://bwq0s26w187rb" path="res://sounds/Main Menu theme.wav" id="1_xmhuv"]
+[ext_resource type="AudioStream" uid="uid://bvydn51t4jbcv" path="res://sounds/Battle theme 2.wav" id="3_2brrb"]
+
+[node name="BackgroundMusic" type="Node"]
+script = ExtResource("1_v5dks")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("1_xmhuv")
+
+[node name="CombatMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("3_2brrb")
+
+[connection signal="finished" from="MenuMusic" to="." method="_repeate_menu_loop"]
+[connection signal="finished" from="CombatMusic" to="." method="_repeate_combat_loop"]

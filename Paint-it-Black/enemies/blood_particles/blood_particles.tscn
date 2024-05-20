@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://bepesfkmc0o5k"]
+
+[ext_resource type="Script" path="res://enemies/blood_particles/blood_particles.gd" id="1_w1duk"]
+[ext_resource type="Texture2D" uid="uid://bigy8rjbh6cam" path="res://enemies/blood_particles/white_circle.png" id="2_d1mo2"]
+
+[sub_resource type="Curve" id="Curve_vnuft"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.543478, 0.726316), -1.49137, -1.49137, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="BloodParticles" type="Node2D"]
+script = ExtResource("1_w1duk")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 32
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.3
+texture = ExtResource("2_d1mo2")
+spread = 20.0
+gravity = Vector2(0, 600)
+initial_velocity_min = 500.0
+initial_velocity_max = 700.0
+scale_amount_min = 0.2
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_vnuft")
+color = Color(0, 0, 0, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.85
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

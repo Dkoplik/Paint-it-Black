@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameManagerResource" load_steps=2 format=3 uid="uid://dsrnl5lnjwend"]
+
+[ext_resource type="Script" path="res://game_manager/game_manager_resource.gd" id="1_nrjxg"]
+
+[resource]
+script = ExtResource("1_nrjxg")
+time_scale = 0.02
+hurt_stop_duration = 0.4
+hit_stop_duration = 0.2
+parry_stop_duration = 0.7

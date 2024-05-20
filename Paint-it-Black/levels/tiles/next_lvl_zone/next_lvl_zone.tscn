@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bneqy8ykvbqb1"]
+
+[ext_resource type="Script" path="res://levels/tiles/next_lvl_zone/next_lvl_zone.gd" id="1_gd7sx"]
+[ext_resource type="PackedScene" uid="uid://cnhfxcuyvom0l" path="res://levels/tiles/player_in_zone/player_in_zone.tscn" id="2_bfhmm"]
+
+[node name="NextLvlZone" type="Node2D"]
+script = ExtResource("1_gd7sx")
+
+[node name="PlayerInZone" parent="." instance=ExtResource("2_bfhmm")]

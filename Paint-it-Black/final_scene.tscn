@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://62vj0n5jarao"]
+
+[ext_resource type="Script" path="res://final_scene.gd" id="1_iaja3"]
+[ext_resource type="Texture2D" uid="uid://bgsummn4q8bt1" path="res://final_pic.png" id="1_v2xsw"]
+[ext_resource type="LabelSettings" uid="uid://d03oory860buy" path="res://font/font_settings.tres" id="2_fy33l"]
+[ext_resource type="FontFile" uid="uid://bnvnw1nbot7fr" path="res://font/PublicPixel-E447g.ttf" id="4_l3fwr"]
+[ext_resource type="AudioStream" uid="uid://cjb5cbm68ilgy" path="res://sounds/Interface Button Hover.wav" id="5_dl163"]
+[ext_resource type="AudioStream" uid="uid://bv6u5athkvt4j" path="res://sounds/Button Click.wav" id="6_u6ivr"]
+
+[node name="final_scene" type="Node2D"]
+script = ExtResource("1_iaja3")
+
+[node name="FinalPic" type="Sprite2D" parent="."]
+texture = ExtResource("1_v2xsw")
+centered = false
+
+[node name="Label" type="Label" parent="."]
+offset_left = 437.0
+offset_top = 330.0
+offset_right = 613.0
+offset_bottom = 353.0
+text = "На этом всё"
+label_settings = ExtResource("2_fy33l")
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 361.0
+offset_top = 444.0
+offset_right = 673.0
+offset_bottom = 468.0
+theme_override_fonts/font = ExtResource("4_l3fwr")
+text = "ВЫЙТИ ИЗ ИГРЫ!111!1"
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_dl163")
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_u6ivr")
+
+[connection signal="button_down" from="ExitButton" to="ClickSound" method="play"]
+[connection signal="mouse_entered" from="ExitButton" to="HoverSound" method="play"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

@@ -1,4 +1,5 @@
 @tool
+class_name Utilities
 extends Node
 
 
@@ -9,7 +10,7 @@ func wait_for(seconds: float):
 
 # ToDo check_resource и check_reference почти дублируют друг друга.
 ## Проверяет наличие ресурса в поданной переменной. Если ресурс
-## [member resource]отсутствует, то возвращает false, в редакторе добавляет
+## [member resource] отсутствует, то возвращает false, в редакторе добавляет
 ## предупреждение, в игре кидает ошибку через [method push_error]. Иначе
 ## просто возвращает true.
 static func check_resource(
@@ -106,3 +107,8 @@ static func check_single_component(
 			push_error("Не найдена компонента %s" % component_class)
 		return null
 	return children[0]
+
+
+## Возвращает расстояние между двумя указанными узлами.
+static func distance_between(from: Node2D, to: Node2D) -> float:
+	return from.position.distance_to(to.position)

@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://csyaqa3arrf4p"]
+
+[ext_resource type="Texture2D" uid="uid://bwpbe0gyxvk32" path="res://levels/tiles/door/door.png" id="1_qrwtv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4aer"]
+atlas = ExtResource("1_qrwtv")
+region = Rect2(0, 0, 32, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlevk"]
+atlas = ExtResource("1_qrwtv")
+region = Rect2(32, 0, 32, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8excl"]
+atlas = ExtResource("1_qrwtv")
+region = Rect2(64, 0, 32, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66odt"]
+atlas = ExtResource("1_qrwtv")
+region = Rect2(96, 0, 32, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0noit"]
+atlas = ExtResource("1_qrwtv")
+region = Rect2(128, 0, 32, 80)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4aer")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlevk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8excl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66odt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0noit")
+}],
+"loop": false,
+"name": &"door_anim",
+"speed": 5.0
+}]

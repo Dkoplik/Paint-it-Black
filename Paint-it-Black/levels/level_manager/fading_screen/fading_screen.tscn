@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://ch7tc4tog6i6j"]
+
+[ext_resource type="Script" path="res://levels/level_manager/fading_screen/fading_screen.gd" id="1_quppd"]
+
+[sub_resource type="Gradient" id="Gradient_1eera"]
+offsets = PackedFloat32Array(0, 0.142145, 0.880299, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_upeco"]
+gradient = SubResource("Gradient_1eera")
+width = 1024
+height = 700
+
+[node name="CanvasLayer" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_quppd")
+
+[node name="fading" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(2400, 264)
+scale = Vector2(2.43506, 1)
+texture = SubResource("GradientTexture2D_upeco")

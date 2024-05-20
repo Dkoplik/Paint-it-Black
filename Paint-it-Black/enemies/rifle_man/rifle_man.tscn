@@ -1,0 +1,283 @@
+[gd_scene load_steps=29 format=3 uid="uid://s7hke7hh2dnc"]
+
+[ext_resource type="SpriteFrames" uid="uid://cutqu2ktq3u8f" path="res://enemies/rifle_man/resources/animations.tres" id="1_7i8ll"]
+[ext_resource type="Script" path="res://enemies/rifle_man/scripts/rifle_man_controller.gd" id="2_74xtn"]
+[ext_resource type="Script" path="res://basic_character_movement.gd" id="2_wjbqi"]
+[ext_resource type="Texture2D" uid="uid://b4sfvkcypktul" path="res://enemies/rifle_man/animations/shoot_head.png" id="2_wvgeu"]
+[ext_resource type="Texture2D" uid="uid://6tmxw0jejjd2" path="res://enemies/rifle_man/animations/shoot_arms.png" id="3_2lpsw"]
+[ext_resource type="Resource" uid="uid://bgh8sib365lx7" path="res://enemies/rifle_man/resources/movement_data.tres" id="3_566ko"]
+[ext_resource type="Script" path="res://enemies/scripts/shoot_component.gd" id="4_v77bp"]
+[ext_resource type="Resource" uid="uid://p5a26dn7rgxg" path="res://enemies/rifle_man/resources/shoot_data.tres" id="5_cvpqw"]
+[ext_resource type="Script" path="res://enemies/rifle_man/scripts/rifle_man_animation_controller.gd" id="6_0dejm"]
+[ext_resource type="Script" path="res://enemies/rifle_man/scripts/enemy_hurt_box.gd" id="7_j7xky"]
+[ext_resource type="Script" path="res://hp.gd" id="7_pfa8f"]
+[ext_resource type="Script" path="res://hp_data.gd" id="8_oglln"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="9_8oxaf"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="10_sphx6"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="11_ndbwg"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="12_6bhh1"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="13_fc7rk"]
+[ext_resource type="AudioStream" uid="uid://cwsdi5ldyv0lw" path="res://sounds/FootstepsConcrete1.wav" id="18_fb0pk"]
+[ext_resource type="AudioStream" uid="uid://bu3onseqxqxr4" path="res://sounds/FootstepsConcrete2.wav" id="19_l6pm8"]
+[ext_resource type="AudioStream" uid="uid://v22gujduwi5g" path="res://sounds/FootstepsConcrete3.wav" id="20_evd47"]
+[ext_resource type="AudioStream" uid="uid://b6esg2k4522sy" path="res://sounds/FootstepsConcrete4.wav" id="21_jq6le"]
+[ext_resource type="AudioStream" uid="uid://cll4pc581tfnl" path="res://sounds/Shot.wav" id="22_e666a"]
+[ext_resource type="AudioStream" uid="uid://by2665ht5pm7b" path="res://sounds/Sword Impact Hit.wav" id="23_eb3mx"]
+[ext_resource type="AudioStream" uid="uid://bwfgdu7kg1bsr" path="res://sounds/Bolt.wav" id="24_typ3f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_huqft"]
+size = Vector2(21, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ncqk5"]
+size = Vector2(21, 60)
+
+[sub_resource type="Resource" id="Resource_6m447"]
+script = ExtResource("8_oglln")
+max_hp = 1
+initial_hp = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4e3jm"]
+streams_count = 4
+stream_0/stream = ExtResource("18_fb0pk")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("19_l6pm8")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("20_evd47")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("21_jq6le")
+stream_3/weight = 1.0
+
+[node name="RifleMan" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_7i8ll")
+animation = &"death"
+
+[node name="BodyParts" type="Node2D" parent="."]
+
+[node name="Head" type="Node2D" parent="BodyParts"]
+position = Vector2(-1, -16)
+
+[node name="ShootHead" type="Sprite2D" parent="BodyParts/Head"]
+position = Vector2(1, 16)
+texture = ExtResource("2_wvgeu")
+
+[node name="Arms" type="Node2D" parent="BodyParts"]
+position = Vector2(-1, -14)
+
+[node name="ProjectileSpawn" type="Marker2D" parent="BodyParts/Arms"]
+position = Vector2(23, 10)
+
+[node name="ShootArms" type="Sprite2D" parent="BodyParts/Arms"]
+position = Vector2(1, 14)
+texture = ExtResource("3_2lpsw")
+
+[node name="CharacterBodyShape" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_huqft")
+
+[node name="BasicCharacterMovement" type="Node" parent="." node_paths=PackedStringArray("character_body")]
+script = ExtResource("2_wjbqi")
+movement_data = ExtResource("3_566ko")
+character_body = NodePath("..")
+
+[node name="RifleManAnimationController" type="Node" parent="." node_paths=PackedStringArray("state_chart", "animated_sprite", "root", "head_part", "arms_part")]
+script = ExtResource("6_0dejm")
+state_chart = NodePath("../StateChart")
+animated_sprite = NodePath("../AnimatedSprite2D")
+root = NodePath("..")
+head_part = NodePath("../BodyParts/Head")
+arms_part = NodePath("../BodyParts/Arms")
+
+[node name="EnemyHurtBox" type="Area2D" parent="." node_paths=PackedStringArray("movement_component") groups=["enemy"]]
+collision_layer = 2
+script = ExtResource("7_j7xky")
+damage_impulse = 170.0
+additional_impulse = Vector2(0, -50)
+movement_component = NodePath("../BasicCharacterMovement")
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="EnemyHurtBox"]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_ncqk5")
+debug_color = Color(0, 1, 0, 0.419608)
+
+[node name="HP" type="Node" parent="EnemyHurtBox"]
+script = ExtResource("7_pfa8f")
+hp_data = SubResource("Resource_6m447")
+
+[node name="RifleManController" type="Node" parent="." node_paths=PackedStringArray("movement_component", "shoot_component", "hurt_box", "state_chart", "animation_controller", "root")]
+script = ExtResource("2_74xtn")
+movement_component = NodePath("../BasicCharacterMovement")
+shoot_component = NodePath("../ShootComponent")
+hurt_box = NodePath("../EnemyHurtBox")
+state_chart = NodePath("../StateChart")
+animation_controller = NodePath("../RifleManAnimationController")
+root = NodePath("..")
+
+[node name="ShootComponent" type="Node" parent="." node_paths=PackedStringArray("projectile_spawn", "root")]
+script = ExtResource("4_v77bp")
+shoot_data = ExtResource("5_cvpqw")
+projectile_spawn = NodePath("../BodyParts/Arms/ProjectileSpawn")
+root = NodePath("..")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("9_8oxaf")
+
+[node name="ParallelState" type="Node" parent="StateChart"]
+script = ExtResource("10_sphx6")
+
+[node name="LogicStates" type="Node" parent="StateChart/ParallelState"]
+script = ExtResource("11_ndbwg")
+initial_state = NodePath("AliveStates")
+
+[node name="AliveStates" type="Node" parent="StateChart/ParallelState/LogicStates"]
+script = ExtResource("10_sphx6")
+
+[node name="OnKill" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Dead")
+event = &"kill"
+
+[node name="MovingStates" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates"]
+script = ExtResource("11_ndbwg")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/MovingStates"]
+script = ExtResource("13_fc7rk")
+
+[node name="OnPlayerOutOfRange" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/MovingStates/Idle"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../MovingToPlayer")
+event = &"player_out_of_range"
+
+[node name="MovingToPlayer" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/MovingStates"]
+script = ExtResource("13_fc7rk")
+
+[node name="OnPlayerInRange" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/MovingStates/MovingToPlayer"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Idle")
+event = &"player_in_range"
+
+[node name="AttackStates" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates"]
+script = ExtResource("11_ndbwg")
+initial_state = NodePath("OutOfRange")
+
+[node name="OutOfRange" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/AttackStates"]
+script = ExtResource("13_fc7rk")
+
+[node name="OnPlayerInRange" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/OutOfRange"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Cooldown")
+event = &"player_in_range"
+
+[node name="Cooldown" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/AttackStates"]
+script = ExtResource("13_fc7rk")
+
+[node name="OnCooldownEnded" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Cooldown"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Shoot")
+event = &"cooldown_ended"
+
+[node name="OnPlayerOutOfRange" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Cooldown"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../OutOfRange")
+event = &"player_out_of_range"
+
+[node name="Shoot" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/AttackStates"]
+script = ExtResource("13_fc7rk")
+
+[node name="OnShoot" type="Node" parent="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Shoot"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Cooldown")
+event = &"shoot"
+
+[node name="Dead" type="Node" parent="StateChart/ParallelState/LogicStates"]
+script = ExtResource("13_fc7rk")
+
+[node name="AnimationStates" type="Node" parent="StateChart/ParallelState"]
+script = ExtResource("11_ndbwg")
+initial_state = NodePath("NonCombat")
+
+[node name="OnKill" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../Death")
+event = &"kill"
+
+[node name="NonCombat" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+script = ExtResource("11_ndbwg")
+initial_state = NodePath("Moving")
+
+[node name="OnPlayerInRange" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombat"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Combat")
+event = &"player_in_range"
+
+[node name="Moving" type="Node" parent="StateChart/ParallelState/AnimationStates/NonCombat"]
+script = ExtResource("13_fc7rk")
+
+[node name="Combat" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+script = ExtResource("11_ndbwg")
+initial_state = NodePath("Cooldown")
+
+[node name="OnPlayerOutOfRange" type="Node" parent="StateChart/ParallelState/AnimationStates/Combat"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../NonCombat/Moving")
+event = &"player_out_of_range"
+
+[node name="Cooldown" type="Node" parent="StateChart/ParallelState/AnimationStates/Combat"]
+script = ExtResource("13_fc7rk")
+
+[node name="OnCooldownEnded" type="Node" parent="StateChart/ParallelState/AnimationStates/Combat/Cooldown"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Shoot")
+event = &"cooldown_ended"
+
+[node name="Shoot" type="Node" parent="StateChart/ParallelState/AnimationStates/Combat"]
+script = ExtResource("13_fc7rk")
+
+[node name="OnShoot" type="Node" parent="StateChart/ParallelState/AnimationStates/Combat/Shoot"]
+script = ExtResource("12_6bhh1")
+to = NodePath("../../Cooldown")
+event = &"shoot"
+
+[node name="Death" type="Node" parent="StateChart/ParallelState/AnimationStates"]
+script = ExtResource("13_fc7rk")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="FootSteps" type="AudioStreamPlayer2D" parent="Node2D"]
+stream = SubResource("AudioStreamRandomizer_4e3jm")
+
+[node name="Shoot" type="AudioStreamPlayer2D" parent="Node2D"]
+stream = ExtResource("22_e666a")
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="Node2D"]
+stream = ExtResource("23_eb3mx")
+
+[node name="Reload" type="AudioStreamPlayer2D" parent="Node2D"]
+visible = false
+stream = ExtResource("24_typ3f")
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="RifleManAnimationController" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="killed" from="EnemyHurtBox/HP" to="StateChart" method="send_event" binds= [&"kill"]]
+[connection signal="attack" from="ShootComponent" to="StateChart" method="send_event" binds= [&"shoot"]]
+[connection signal="attack_ready" from="ShootComponent" to="StateChart" method="send_event" binds= [&"cooldown_ended"]]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/AliveStates/MovingStates" to="RifleManController" method="_on_moving_states_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/AliveStates/MovingStates/Idle" to="BasicCharacterMovement" method="decelerate_to_stop" unbinds=1]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/AliveStates/MovingStates/MovingToPlayer" to="RifleManController" method="_on_moving_to_player_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/OutOfRange" to="ShootComponent" method="reset_cooldown"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Cooldown" to="ShootComponent" method="reset_cooldown"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Cooldown" to="Node2D/Reload" method="play"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Cooldown" to="ShootComponent" method="tick_cooldown"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Shoot" to="RifleManController" method="_on_shoot_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/AliveStates/AttackStates/Shoot" to="Node2D/Shoot" method="play"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/Dead" to="RifleManController" method="_on_dead_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/LogicStates/Dead" to="Node2D/Hurt" method="play"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/LogicStates/Dead" to="RifleManController" method="_on_dead_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/NonCombat/Moving" to="RifleManAnimationController" method="_on_moving_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/Combat" to="RifleManAnimationController" method="_on_combat_state_entered"]
+[connection signal="state_exited" from="StateChart/ParallelState/AnimationStates/Combat" to="RifleManAnimationController" method="_on_combat_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/AnimationStates/Combat/Cooldown" to="RifleManAnimationController" method="_on_cooldown_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/AnimationStates/Death" to="RifleManAnimationController" method="_on_death_state_entered"]

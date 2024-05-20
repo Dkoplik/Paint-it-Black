@@ -56,7 +56,9 @@ func _ready() -> void:
 		push_error("Невозможно изменять hitbox атаки без _animation_player")
 		return
 
-	_custom_speed = (_animation_player.get_animation(hit_box_animation_name).length / attack_data.duration)
+	_custom_speed = (
+		_animation_player.get_animation(hit_box_animation_name).length / attack_data.duration
+	)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
@@ -124,7 +126,12 @@ func _attack(direction: Vector2, impulse: float) -> void:
 
 	# Импульс в заданном направлении
 	direction = direction.normalized()
-	movement_component.add_velocity(direction * impulse)
+	_calc_velocity(direction * impulse)
+	_handle_y_axe_offset(direction)
+
+	# Задать новое направление атаки в ресурс
+	_hit_box.attack_data.direction = direction
+	$"../VFX".look_at(direction + $"../VFX".global_position)
 
 	# Вращение хитбокса в заданном направлении
 	_hit_box.look_at(direction + _hit_box.global_position)
@@ -134,6 +141,24 @@ func _attack(direction: Vector2, impulse: float) -> void:
 	await get_tree().create_timer(attack_data.cooldown + attack_data.duration).timeout
 	_is_attack_ready = true
 	attack_ready.emit()
+
+
+## Отвечает за сдвиг коллизии
+func _handle_y_axe_offset(direction: Vector2) -> void:
+	const MAX_OFFSET := 16.0
+	var y_direction: int = sign(direction.y)
+	var current_y_offset := lerpf(0.0, y_direction * MAX_OFFSET, abs(direction.y))
+	position.y = current_y_offset
+
+
+func _calc_velocity(velocity: Vector2):
+	if sign(movement_component.character_body.velocity.x) == sign(velocity.x):
+		velocity.x += movement_component.character_body.velocity.x
+
+	if sign(movement_component.character_body.velocity.y) != sign(velocity.y):
+		velocity.y += movement_component.character_body.velocity.y
+
+	movement_component.set_character_velocity(velocity)
 
 
 ## Отменяет атаку при пересечении с твёрдой поверхностью.

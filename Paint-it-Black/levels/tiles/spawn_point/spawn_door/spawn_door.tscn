@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://5pqt4vqme52s"]
+
+[ext_resource type="SpriteFrames" uid="uid://be23yhvt07iw" path="res://levels/tiles/spawn_point/spawn_door/spawn_door_frames.tres" id="1_lbk0c"]
+[ext_resource type="Script" path="res://levels/tiles/spawn_point/spawn_door/spawn_door.gd" id="1_yiccr"]
+
+[node name="spawn_door" type="Node2D"]
+script = ExtResource("1_yiccr")
+animation_duration = 0.2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-24.5, 13.5)
+sprite_frames = ExtResource("1_lbk0c")
+animation = &"door_anim"
+frame = 5
+frame_progress = 1.0

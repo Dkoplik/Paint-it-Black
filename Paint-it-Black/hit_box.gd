@@ -42,7 +42,7 @@ func check_configuration(warnings: PackedStringArray = []) -> bool:
 ## Обрабатывает пересечение с [Area2D]: если [Area2D] является
 ## [BasicHitBox], то передаёт ему данные об атаке [member attack_data].
 func _on_area_entered(area: Area2D) -> void:
-	if area is BasicHurtBox:
+	if area.has_method("receive_attack"):
 		# Эту группу можно атаковать?
 		if area.get_groups().any(func(group): return group in hittable_groups):
 			hit.emit(area)

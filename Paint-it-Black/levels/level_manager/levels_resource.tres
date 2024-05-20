@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelsResource" load_steps=6 format=3 uid="uid://cxuie8qwwhggv"]
+
+[ext_resource type="PackedScene" uid="uid://62vj0n5jarao" path="res://final_scene.tscn" id="1_5t8x6"]
+[ext_resource type="PackedScene" uid="uid://ch7tc4tog6i6j" path="res://levels/level_manager/fading_screen/fading_screen.tscn" id="1_7mtty"]
+[ext_resource type="PackedScene" uid="uid://cigqxgmwsxsbv" path="res://levels/level_manager/loading_screen/loading_sceen.tscn" id="1_rc6ku"]
+[ext_resource type="PackedScene" uid="uid://cn2u8ntjh4m3r" path="res://main_menu.tscn" id="3_b32nb"]
+[ext_resource type="Script" path="res://levels/level_manager/levels_resource.gd" id="4_iwe1t"]
+
+[resource]
+script = ExtResource("4_iwe1t")
+levels = PackedStringArray("res://levels/level_0.tscn", "res://levels/level_1.tscn", "res://levels/level_2.tscn", "res://levels/level_3.tscn", "res://levels/level_4.tscn")
+main_menu = ExtResource("3_b32nb")
+default_scene = ExtResource("1_5t8x6")
+loading_sceen = ExtResource("1_rc6ku")
+fading_screen = ExtResource("1_7mtty")

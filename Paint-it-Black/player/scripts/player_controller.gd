@@ -1,13 +1,12 @@
 @tool
 class_name PlayerController
-extends CustomNode
+extends CustomNode2D
 ## Обработчик управления для игрока.
 ##
 ## Наследование от [CustomNode2D] позволяет использовать этот узел в качестве
 ## корня игрока. Этот узел дублирует координаты дочернего [CharacterBody2D],
 ## благодаря чему остальные компоненты будут следовать за перемещением игрока.
 
-# ToDo для @export полей нужны setter'ы с обновлением ошибок конфигурации
 ## Компонента движения.
 @export var movement_component: PlayerMovement:
 	set = set_movement_component
@@ -20,6 +19,8 @@ extends CustomNode
 ## Корень игрока.
 @export var root: CharacterBody2D:
 	set = set_root
+
+var is_dead := false
 
 ## Есть ли компонента [PlayerMovement] в качестве дочернего узла?
 var _has_movement_component := false
@@ -38,6 +39,7 @@ func _ready() -> void:
 		return
 
 	GameManager.player = root
+	$"../BasicHurtBox/HP".connect("killed", GameManager._player_dead)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
@@ -80,6 +82,10 @@ func _on_moving_states_state_physics_processing(_delta):
 	if Engine.is_editor_hint():
 		return
 
+	if is_dead:
+		movement_component.decelerate_to_stop()
+		return
+
 	if not _has_movement_component:
 		push_error("Невозможно осуществить движение без _movement_component")
 		return
@@ -102,6 +108,9 @@ func _on_jump_fall_states_state_physics_processing(_delta):
 	if Engine.is_editor_hint():
 		return
 
+	if is_dead:
+		return
+
 	if not _has_movement_component:
 		push_error("Невозможно обработать текущее состояние игрока без _movement_component")
 		return
@@ -120,6 +129,9 @@ func _on_can_jump_state_unhandled_input(event):
 	if Engine.is_editor_hint():
 		return
 
+	if is_dead:
+		return
+
 	if event.is_action_pressed("jump"):
 		if not _has_movement_component:
 			push_error("Невозможно совершить прыжок без _movement_component")
@@ -128,7 +140,7 @@ func _on_can_jump_state_unhandled_input(event):
 		movement_component.jump()
 		# Необходима небольшая пауза, иначе игрок не успеет оторваться от земли,
 		# из-за чего из состояния "jump" сразу же перейдёт в "grounded".
-		await Utilities.wait_for(0.05)
+		await AutoloadUtilities.wait_for(0.05)
 		state_chart.send_event("jump")
 
 
@@ -137,30 +149,36 @@ func _on_can_strong_attack_state_unhandled_input(event):
 	if Engine.is_editor_hint():
 		return
 
-	if event.is_action_pressed("attack"):
-		if not _has_movement_component:
-			push_error("Невозможно совершить атаку без _movement_component")
-			return
-		var attack_direction: Vector2 = (
-			get_viewport().get_mouse_position() - movement_component.character_body.position
-		)
-		attack_component.strong_impulse_attack(attack_direction)
-
-
-## Обработка слабой атаки
-func _on_can_weak_attack_state_unhandled_input(event):
-	if Engine.is_editor_hint():
+	if is_dead:
 		return
 
 	if event.is_action_pressed("attack"):
 		if not _has_movement_component:
 			push_error("Невозможно совершить атаку без _movement_component")
 			return
-		var attack_direction: Vector2 = (
-			get_viewport().get_mouse_position() - movement_component.character_body.position
-		)
+		var attack_direction: Vector2 = _get_attack_direction()
+		attack_component.strong_impulse_attack(attack_direction)
+
+
+## Обработка слабой атаки
+func _on_can_weak_attack_state_unhandled_input(event: InputEvent):
+	if Engine.is_editor_hint():
+		return
+
+	if is_dead:
+		return
+
+	if event.is_action_pressed("attack"):
+		if not _has_movement_component:
+			push_error("Невозможно совершить атаку без _movement_component")
+			return
+		var attack_direction: Vector2 = _get_attack_direction()
 		attack_component.weak_impulse_attack(attack_direction)
 
+
+func _get_attack_direction() -> Vector2:
+	var global_mouse_pos: Vector2 = get_global_mouse_position()
+	return global_mouse_pos - movement_component.character_body.position
 
 func _on_player_attack_attack():
 	state_chart.send_event("attack")
@@ -168,3 +186,35 @@ func _on_player_attack_attack():
 
 func _on_player_attack_attack_ready():
 	state_chart.send_event("attack_ready")
+
+
+func _on_hit_box_hit(hurt_box):
+	if hurt_box is Parryable:
+		return
+	GameManager.on_hit_hit_stop()
+
+
+func _on_basic_hurt_box_hurt(_attack):
+	GameManager.on_hurt_hit_stop()
+
+
+func _on_stay_on_platform_state_unhandled_input(event: InputEvent):
+	if event.is_action_pressed("fall_through_platform"):
+		state_chart.send_event("fall_through_platform")
+
+
+func _on_stay_on_platform_state_entered():
+	movement_component.turn_on_platform_collision()
+
+
+func _on_fall_though_platform_state_unhandled_input(event):
+	if event.is_action_released("fall_through_platform"):
+		state_chart.send_event("stay_on_platform")
+
+
+func _on_fall_though_platform_state_entered():
+	movement_component.turn_off_platform_collision()
+
+
+func turn_on_is_dead() -> void:
+	is_dead = true

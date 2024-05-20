@@ -11,6 +11,9 @@ signal character_look_right
 ## Персонаж смотрит налево
 signal character_look_left
 
+## Номер слоя физики для платформ.
+const PLATFORM_PHYSICS_LAYER := 5
+
 ## Ресурс [BasicMovementData], необходим для работы данной компоненты.
 @export var movement_data: BasicMovementData:
 	set = set_movement_data
@@ -39,6 +42,15 @@ func _physics_process(delta) -> void:
 
 	_apply_gravity(delta)
 	character_body.move_and_slide()
+	_crop_speed()
+
+
+func turn_on_platform_collision() -> void:
+	character_body.set_collision_mask_value(PLATFORM_PHYSICS_LAYER, true)
+
+
+func turn_off_platform_collision() -> void:
+	character_body.set_collision_mask_value(PLATFORM_PHYSICS_LAYER, false)
 
 
 func check_configuration(warnings: PackedStringArray = []) -> bool:
@@ -79,6 +91,11 @@ func move_in_direction(direction: Vector2) -> void:
 
 	direction = direction.normalized()
 	character_body.velocity.x = _calculate_speed_in_direction(direction)
+
+
+func move_to_target(target: Node2D) -> void:
+	var move_direction := (target.global_position - character_body.global_position).normalized()
+	return move_in_direction(move_direction)
 
 
 ## Вычисляет и возвращает текущую скорость для осуществления движения в
@@ -146,11 +163,55 @@ func _calculate_fall_speed(delta_time: float) -> float:
 
 
 ## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
-## вектор скорости [param velocity]. Эта функция нужна для тех случаев, когда на
-## движение персонажа влияют какие-то внешние явления, по типу атаки игрока или
-## откидывание при получении урона.
+## вектор скорости [param velocity] и испускает новый сигнал направления игрока.
+func add_character_velocity(velocity: Vector2) -> void:
+	if not _has_character_body:
+		push_error("Невозможно осуществить add_character_velocity() без character_body")
+		return
+	character_body.velocity += velocity
+	_crop_speed()
+
+	if velocity.x > 0:
+		character_look_right.emit()
+	if velocity.x < 0:
+		character_look_left.emit()
+
+
+## Устанавливает новую скорость [member CharacterBody2D.velocity] равную
+## вектору скорости [param velocity] и испускает новый сигнал направления игрока.
+func set_character_velocity(velocity: Vector2) -> void:
+	if not _has_character_body:
+		push_error("Невозможно осуществить set_character_velocity() без character_body")
+		return
+	character_body.velocity = velocity
+	_crop_speed()
+
+	if velocity.x > 0:
+		character_look_right.emit()
+	if velocity.x < 0:
+		character_look_left.emit()
+
+
+## Добавляет к текущей скорости [member CharacterBody2D.velocity] заданный
+## вектор скорости [param velocity], но не меняет направление персонажа.
 func add_velocity(velocity: Vector2) -> void:
 	if not _has_character_body:
 		push_error("Невозможно осуществить add_velocity() без character_body")
 		return
 	character_body.velocity += velocity
+	_crop_speed()
+
+
+## Устанавливает новую скорость [member CharacterBody2D.velocity] равную
+## вектору скорости [param velocity], но не меняет направление персонажа.
+func set_velocity(velocity: Vector2) -> void:
+	if not _has_character_body:
+		push_error("Невозможно осуществить set_velocity() без character_body")
+		return
+	character_body.velocity = velocity
+	_crop_speed()
+
+
+func _crop_speed() -> void:
+	character_body.velocity.x = clampf(character_body.velocity.x, -movement_data.max_horizontal_speed, movement_data.max_horizontal_speed)
+	character_body.velocity.y = clampf(character_body.velocity.y, -movement_data.max_up_speed, movement_data.max_fall_speed)

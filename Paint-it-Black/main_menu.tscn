@@ -44,32 +44,6 @@ theme_override_fonts/font = ExtResource("2_16us4")
 theme_override_font_sizes/font_size = 23
 text = "Выбор уровня"
 
-[node name="TempPopUp" type="AcceptDialog" parent="."]
-title = "ReadMe"
-initial_position = 2
-size = Vector2i(600, 291)
-ok_button_text = "Продолжить"
-
-[node name="Label" type="Label" parent="TempPopUp"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -292.0
-offset_top = 8.0
-offset_right = 292.0
-offset_bottom = 242.0
-grow_horizontal = 2
-text = "Управление:
-+ перемещение: A/D
-+ прыжок: пробел
-+ атака: ЛКМ
-+ меню паузы: esc"
-autowrap_mode = 3
-
-[node name="Button" type="Button" parent="TempPopUp"]
-offset_right = 8.0
-offset_bottom = 8.0
-
 [node name="ButtonHoverSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_o8yxc")
 

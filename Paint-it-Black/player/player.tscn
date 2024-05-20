@@ -192,7 +192,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2tum"]
-size = Vector2(20, 64)
+size = Vector2(14, 54)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jc71w"]
 streams_count = 4
@@ -212,9 +212,7 @@ floor_constant_speed = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_mc37b")
-animation = &"attack_up"
-frame = 2
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="VFX" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -251,7 +249,7 @@ movement_component = NodePath("../PlayerMovement")
 hit_box_animation_name = &"hitbox_animation"
 
 [node name="HitBox" type="Area2D" parent="PlayerAttack"]
-position = Vector2(0, -10)
+position = Vector2(0, -5)
 collision_mask = 14
 script = ExtResource("10_urtlw")
 hittable_groups = Array[StringName]([&"enemy", &"bullet"])
@@ -277,6 +275,7 @@ script = ExtResource("10_kupgm")
 hp_data = ExtResource("11_g58xn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHurtBox"]
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_v2tum")
 debug_color = Color(0.0156863, 1, 0, 0.419608)
 

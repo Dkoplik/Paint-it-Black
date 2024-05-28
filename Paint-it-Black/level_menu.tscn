@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddu8jwpf3pfr1"]
+[gd_scene load_steps=5 format=3 uid="uid://ddu8jwpf3pfr1"]
 
 [ext_resource type="Script" path="res://level_menu.gd" id="1_nufnf"]
 [ext_resource type="AudioStream" uid="uid://cjb5cbm68ilgy" path="res://sounds/Interface Button Hover.wav" id="1_q46oy"]
 [ext_resource type="AudioStream" uid="uid://bv6u5athkvt4j" path="res://sounds/Button Click.wav" id="2_hmsub"]
+[ext_resource type="FontFile" uid="uid://bnvnw1nbot7fr" path="res://font/PublicPixel-E447g.ttf" id="2_xly5p"]
 
 [node name="LevelMenu" type="Control"]
 layout_mode = 3
@@ -11,40 +12,59 @@ offset_right = 960.0
 offset_bottom = 540.0
 script = ExtResource("1_nufnf")
 
-[node name="PlayButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 283.0
-offset_top = 133.0
-offset_right = 683.0
-offset_bottom = 213.0
-theme_override_font_sizes/font_size = 48
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -195.0
+offset_right = 220.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xly5p")
+theme_override_font_sizes/font_size = 35
+text = "Уровень 0
+"
+icon_alignment = 1
+
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xly5p")
+theme_override_font_sizes/font_size = 35
 text = "Уровень 1
 "
 icon_alignment = 1
 
-[node name="TempPopUp" type="AcceptDialog" parent="."]
-title = "ReadMe"
-initial_position = 2
-size = Vector2i(600, 291)
-ok_button_text = "Продолжить"
+[node name="PlayButton3" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xly5p")
+theme_override_font_sizes/font_size = 35
+text = "Уровень 2
+"
+icon_alignment = 1
 
-[node name="Label" type="Label" parent="TempPopUp"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -292.0
-offset_top = 8.0
-offset_right = 292.0
-offset_bottom = 242.0
-grow_horizontal = 2
-text = "На данный момент какие-либо анимации отсутсвуют, поэтому, для большей наглядности, мы добавили отображение хитбоксов и хёртбоксов.
+[node name="PlayButton4" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xly5p")
+theme_override_font_sizes/font_size = 35
+text = "Уровень 3
+"
+icon_alignment = 1
 
-Управление:
-+ перемещение: A/D
-+ прыжок: пробел
-+ атака: ЛКМ
-+ меню паузы: esc"
-autowrap_mode = 3
+[node name="PlayButton5" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_xly5p")
+theme_override_font_sizes/font_size = 35
+text = "Уровень 4
+"
+icon_alignment = 1
 
 [node name="ButtonHoverSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_q46oy")
@@ -52,62 +72,22 @@ stream = ExtResource("1_q46oy")
 [node name="ButtonClickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_hmsub")
 
-[node name="PlayButton2" type="Button" parent="."]
-offset_left = 283.0
-offset_top = 21.0
-offset_right = 683.0
-offset_bottom = 101.0
-theme_override_font_sizes/font_size = 48
-text = "Уровень 0
-"
-icon_alignment = 1
-
-[node name="PlayButton3" type="Button" parent="."]
-offset_left = 283.0
-offset_top = 218.0
-offset_right = 683.0
-offset_bottom = 298.0
-theme_override_font_sizes/font_size = 48
-text = "Уровень 2
-"
-icon_alignment = 1
-
-[node name="PlayButton4" type="Button" parent="."]
-offset_left = 283.0
-offset_top = 303.0
-offset_right = 683.0
-offset_bottom = 383.0
-theme_override_font_sizes/font_size = 48
-text = "Уровень 3
-"
-icon_alignment = 1
-
-[node name="PlayButton" type="Button" parent="PlayButton4"]
-offset_left = -1.0
-offset_top = 82.0
-offset_right = 399.0
-offset_bottom = 162.0
-theme_override_font_sizes/font_size = 48
-text = "Уровень 4
-"
-icon_alignment = 1
-
-[connection signal="button_down" from="PlayButton" to="ButtonClickSound" method="play" flags=18]
-[connection signal="mouse_entered" from="PlayButton" to="ButtonHoverSound" method="play" flags=18]
-[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed" flags=18]
-[connection signal="pressed" from="PlayButton" to="." method="_on_level1_button_pressed"]
-[connection signal="button_down" from="PlayButton2" to="ButtonClickSound" method="play" flags=18]
-[connection signal="mouse_entered" from="PlayButton2" to="ButtonHoverSound" method="play" flags=18]
-[connection signal="pressed" from="PlayButton2" to="." method="_on_play_button_pressed" flags=18]
-[connection signal="button_down" from="PlayButton3" to="ButtonClickSound" method="play" flags=18]
-[connection signal="mouse_entered" from="PlayButton3" to="ButtonHoverSound" method="play" flags=18]
-[connection signal="pressed" from="PlayButton3" to="." method="_on_play_button_pressed" flags=18]
-[connection signal="pressed" from="PlayButton3" to="." method="_on_level2_button_pressed"]
-[connection signal="button_down" from="PlayButton4" to="ButtonClickSound" method="play" flags=18]
-[connection signal="mouse_entered" from="PlayButton4" to="ButtonHoverSound" method="play" flags=18]
-[connection signal="pressed" from="PlayButton4" to="." method="_on_play_button_pressed" flags=18]
-[connection signal="pressed" from="PlayButton4" to="." method="_on_level3_button_pressed"]
-[connection signal="button_down" from="PlayButton4/PlayButton" to="ButtonClickSound" method="play" flags=18]
-[connection signal="mouse_entered" from="PlayButton4/PlayButton" to="ButtonHoverSound" method="play" flags=18]
-[connection signal="pressed" from="PlayButton4/PlayButton" to="." method="_on_play_button_pressed" flags=18]
-[connection signal="pressed" from="PlayButton4/PlayButton" to="." method="_on_level4_button_pressed"]
+[connection signal="button_down" from="VBoxContainer/PlayButton2" to="ButtonClickSound" method="play" flags=18]
+[connection signal="mouse_entered" from="VBoxContainer/PlayButton2" to="ButtonHoverSound" method="play" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton2" to="." method="_on_play_button_pressed" flags=18]
+[connection signal="button_down" from="VBoxContainer/PlayButton" to="ButtonClickSound" method="play" flags=18]
+[connection signal="mouse_entered" from="VBoxContainer/PlayButton" to="ButtonHoverSound" method="play" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_level1_button_pressed"]
+[connection signal="button_down" from="VBoxContainer/PlayButton3" to="ButtonClickSound" method="play" flags=18]
+[connection signal="mouse_entered" from="VBoxContainer/PlayButton3" to="ButtonHoverSound" method="play" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton3" to="." method="_on_play_button_pressed" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton3" to="." method="_on_level2_button_pressed"]
+[connection signal="button_down" from="VBoxContainer/PlayButton4" to="ButtonClickSound" method="play" flags=18]
+[connection signal="mouse_entered" from="VBoxContainer/PlayButton4" to="ButtonHoverSound" method="play" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton4" to="." method="_on_play_button_pressed" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton4" to="." method="_on_level3_button_pressed"]
+[connection signal="button_down" from="VBoxContainer/PlayButton5" to="ButtonClickSound" method="play" flags=18]
+[connection signal="mouse_entered" from="VBoxContainer/PlayButton5" to="ButtonHoverSound" method="play" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton5" to="." method="_on_play_button_pressed" flags=18]
+[connection signal="pressed" from="VBoxContainer/PlayButton5" to="." method="_on_level4_button_pressed"]
